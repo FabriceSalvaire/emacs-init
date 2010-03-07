@@ -1,0 +1,55 @@
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(after-save-hook (quote (executable-make-buffer-file-executable-if-script-p)))
+ '(auto-compression-mode t nil (jka-compr))
+ '(auto-fill-inhibit-regexp nil)
+ '(auto-image-file-mode t nil (image-file))
+ '(blink-matching-paren nil)
+ '(blink-matching-paren-on-screen nil)
+ '(c++-font-lock-extra-types (quote ("\\sw+_t" "\\([iof]\\|str\\)+stream\\(buf\\)?" "ios" "string" "rope" "list" "slist" "deque" "vector" "bit_vector" "set" "multiset" "map" "multimap" "hash\\(_\\(m\\(ap\\|ulti\\(map\\|set\\)\\)\\|set\\)\\)?" "stack" "queue" "priority_queue" "type_info" "iterator" "const_iterator" "reverse_iterator" "const_reverse_iterator" "reference" "const_reference" "gu?\\(boolean\\|char\\|int[0-9]*\\|float\\|double\\|pointer\\)" "bool" "T[A-Z]\\w+" "H1[A-Z]\\w+" "uint")))
+ '(c-echo-syntactic-information-p t)
+ '(c-font-lock-extra-types (quote ("FILE" "\\sw+_t" "Lisp_Object" "gu?\\(boolean\\|char\\|int[0-9]*\\|float\\|double\\|pointer\\)" "bool")))
+ '(c-strict-syntax-p nil)
+ '(case-fold-search t)
+ '(column-number-mode t)
+ '(compilation-scroll-output t)
+ '(compile-auto-highlight t)
+ '(dabbrev-abbrev-char-regexp nil)
+ '(dabbrev-abbrev-skip-leading-regexp "\\\\$")
+ '(delete-selection-mode nil nil (delsel))
+ '(dired-omit-files "^\\.$\\|^\\..+")
+ '(dired-omit-mode nil t)
+ '(dired-recursive-deletes (quote top))
+ '(dired-trivial-filenames "^\\.$\\|^#")
+ '(fill-column 100)
+ '(flyspell-default-dictionary "francais")
+ '(global-font-lock-mode t nil (font-lock))
+ '(perl-continued-brace-offset -2)
+ '(perl-continued-statement-offset 2)
+ '(perl-indent-level 2)
+ '(scroll-bar-mode (quote right))
+ '(sh-basic-offset 2)
+ '(sh-indentation 2)
+ '(show-paren-mode t nil (paren))
+ '(show-paren-ring-bell-on-mismatch t)
+ '(show-paren-style (quote mixed))
+ '(speedbar-frame-parameters (quote ((minibuffer) (width . 50) (border-width . 0) (menu-bar-lines . 0) (tool-bar-lines . 0) (unsplittable . t))))
+ '(speedbar-supported-extension-expressions (quote ("\\.vhdl?\\'" ".[ch]\\(\\+\\+\\|pp\\|c\\|h\\|xx\\)?" ".tex\\(i\\(nfo\\)?\\)?" ".el" ".emacs" ".l" ".lsp" ".p" ".java" ".f\\(90\\|77\\|or\\)?" ".ada" ".p[lm]" ".tcl" ".m\\(4\\)?" ".scm" ".pm" ".py" ".g" ".\\(s?ht\\|x\\)ml" "[Mm]akefile\\(\\.am\\)?" "configure\\.ac" ".i" ".PL" ".in")))
+ '(standard-indent 2)
+ '(vc-handled-backends (quote (RCS CVS SVN SCCS Git Hg Arch MCVS)))
+ '(version-control (quote never)))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "black" :foreground "wheat" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 143 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
+ '(cperl-array-face ((t (:inherit font-lock-variable-name-face :foreground "lime green"))))
+ '(cperl-hash-face ((t (:inherit font-lock-variable-name-face :foreground "light green"))))
+ '(nxml-attribute-value-delimiter-face ((t (:inherit nxml-delimiter-face :foreground "LightSalmon"))))
+ '(show-paren-match ((t (:bold t :foreground "blue"))))
+ '(show-paren-mismatch ((t (:bold t :inverse-video t :foreground "red")))))
+
