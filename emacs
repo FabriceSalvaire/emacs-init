@@ -23,7 +23,7 @@
 ; Frame settings
 ;
 
-;(speedbar t)
+; (speedbar t)
 
 ; Disable the tool bar
 (tool-bar-mode 0)
@@ -39,7 +39,7 @@
 (global-font-lock-mode t)
 (setq font-lock-maximum-decoration t)
 
-(defun initialise_font ()
+(defun setup-font ()
   (interactive)
   (if window-system
       (progn
@@ -56,7 +56,7 @@
 ;       (setq-default line-spacing .15) ; %
         )))
 
-(initialise_font )  
+(setup-font )  
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
