@@ -30,6 +30,7 @@
  '(perl-continued-brace-offset -2)
  '(perl-continued-statement-offset 2)
  '(perl-indent-level 2)
+ '(rst-level-face-base-light 50)
  '(scroll-bar-mode (quote right))
  '(sh-basic-offset 2)
  '(sh-indentation 2)
