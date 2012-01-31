@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; 
+; Insert CopyRight
 ;
 
 (defun insert-copyright ()
@@ -26,7 +26,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; 
+; Insert Frame
 ;
 
 (defun insert-audit ()
@@ -43,7 +43,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; 
+; Insert Audit Date
 ;
 
 (defun insert-audit-date ()
@@ -53,10 +53,10 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; 
+; Insert Long Rule
 ;
 
-(defun insert-rule ()
+(defun insert-long-rule ()
   (interactive)
   (save-excursion
     (let ((file (file-name-nondirectory buffer-file-name)))
@@ -68,7 +68,24 @@
 	(if (string-match "\\.\\(h\\|c\\|hpp\\|cpp\\|cc\\)$" file)
 	    (insert (concat ?\\ (make-string 98 ?*)) ?\\))
 	))))
-(global-set-key [f6] 'insert-rule)
+(global-set-key [f6] 'insert-long-rule)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Insert Long Rule
+;
+
+(defun insert-short-rule ()
+  (interactive)
+  (save-excursion
+    (let ((file (file-name-nondirectory buffer-file-name)))
+      (progn
+	(if (string-match "\\.py$" file)
+	    (insert (concat
+		     (make-string 4 ? )
+		     (make-string 46 ?#))))
+	))))
+(global-set-key [f7] 'insert-short-rule)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

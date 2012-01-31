@@ -106,41 +106,11 @@
 ; Python
 ;
 
-; (setq auto-mode-alist
-;       (cons '("\\.py$" . python-mode) auto-mode-alist))
 ; (setq interpreter-mode-alist
 ;       (cons '("python" . python-mode)
 ;             interpreter-mode-alist))
-; 
-; (autoload 'python-mode "python-mode" "Python editing mode." t)
 
-;(when (load "flymake" t)
-;  (defun flymake-pylint-init ()
-;    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-;		       'flymake-create-temp-inplace))
-;           (local-file (file-relative-name
-;                        temp-file
-;                        (file-name-directory buffer-file-name))))
-;      (list "epylint" (list local-file))))
-;  
-;  (add-to-list 'flymake-allowed-file-name-masks
-;               '("\\.py\\'" flymake-pylint-init)))
-
-;;; (when (load "flymake" t)
-;;;   (defun flymake-pylint-init (&optional trigger-type)
-;;;     (let* ((temp-file (flymake-init-create-temp-buffer-copy
-;;;                        'flymake-create-temp-with-folder-structure))
-;;; 	   (local-file (file-relative-name
-;;; 			temp-file
-;;; 			(file-name-directory buffer-file-name)))
-;;; 	   (options (when trigger-type (list "--trigger-type" trigger-type))))
-;;;       (list "/home/etc/users/emacs-site-lisp/flymake-python/pyflymake.py"
-;;; 	    (append options (list local-file)))))
-;;; 
-;;;   (add-to-list 'flymake-allowed-file-name-masks
-;;; 	       '("\\.py\\'" flymake-pylint-init)))
-;;; 
-;;; (add-hook 'find-file-hook 'flymake-find-file-hook)
+; (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

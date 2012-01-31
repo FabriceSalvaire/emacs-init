@@ -32,6 +32,7 @@
 
 (load "emacs-document-editing-modes.el" t t)
 (load "emacs-edition-settings.el" t t)
+(load "emacs-flymake.el" t t)
 (load "emacs-frame-font-settings.el" t t)
 (load "emacs-key-bindings.el" t t)
 (load "emacs-mode.el" t t)
