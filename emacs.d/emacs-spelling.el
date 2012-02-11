@@ -4,11 +4,7 @@
 ;
 
 (setq-default ispell-program-name "aspell")
-
-(autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
-(autoload 'flyspell-delay-command "flyspell" "Delay on command." t)
-(autoload 'tex-mode-flyspell-verify "flyspell" "" t) 
-(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(ispell-change-dictionary "british" "globally")
 
 (defun fr ()
   "Use fr_FR dictionary"
@@ -23,6 +19,17 @@
   (progn
     (ispell-change-dictionary "british")))
     ;(ispell-change-dictionary "en_GB-ise-w_accents")))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Flyspell
+;
+
+(autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
+(autoload 'flyspell-delay-command "flyspell" "Delay on command." t)
+(autoload 'tex-mode-flyspell-verify "flyspell" "" t) 
+
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

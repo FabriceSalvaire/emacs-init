@@ -62,7 +62,7 @@
 ; Graphviz Dot
 ;
 
-(load-file "/home/etc/users/emacs-site-lisp/graphviz-dot-mode.el") 
+(load "graphviz-dot-mode.el" t t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

@@ -6,21 +6,22 @@
 (defun insert-copyright ()
   (interactive)
   (save-excursion
-    (let ((file (file-name-nondirectory buffer-file-name)))
+    (let ((file (file-name-nondirectory buffer-file-name))
+	  (copyright_file))
       (progn
-	(if (string-match "\\([^\\.]*\\)\\.\\(h\\|c\\)" file)
-	    (if (string-equal (match-string 2 file) "h")
-		(let* ((name (concat "__" (upcase (match-string 1 file)) "_H__"))
-		       (text (concat "\n#ifndef " name "\n"
-				     "#define "   name "\n\n\n\n"
-				     "#endif /* " name " */")))
-		  (goto-char (point-min))
-		  (insert text))))
+	(if (string-equal (file-name-extension file) "h")
+	    ((let* ((name (concat "__" (upcase (file-name-sans-extension file)) "_H__"))
+		    (text (concat "\n#ifndef " name "\n"
+				  "#define "   name "\n\n\n\n"
+				  "#endif /* " name " */")))
+	       (goto-char (point-min))
+	       (insert text))))
 	(goto-char (point-min))
-	(if (string-match "\\.py$" file)
-	    (insert-file-contents (concat local local_emacs_d_path "copyright-header.py")))
-	(if (string-match "\\.\\(h\\|c\\|hpp\\|cpp\\|cc\\)$" file)
-	    (insert-file-contents (concat "copyright-header.c")))
+	(cond ((string-match "\\.py\\'" file)
+	       (setq copyright_file "copyright-header.py"))
+	      ((string-match "\\.\\(h\\|c\\|hpp\\|cpp\\|cc\\)\\'" file)
+	       (setq copyright_file "copyright-header.c")))
+	(insert-file-contents (concat local_emacs_d_path copyright_file))
 	))))
 (global-set-key [f3] 'insert-copyright)
 
@@ -29,15 +30,19 @@
 ; Insert Frame
 ;
 
+ ;; file-name-extension
+
 (defun insert-audit ()
   (interactive)
   (save-excursion
-    (let ((file (file-name-nondirectory buffer-file-name)))
+    (let ((file (file-name-nondirectory buffer-file-name))
+	  (audit_file))
       (progn
-	(if (string-match "\\.py$" file)
-	    (insert-file-contents (concat local_emacs_d_path "audit-header.py")))
-	(if (string-match "\\.\\(h\\|c\\|hpp\\|cpp\\|cc\\)$" file)
-	    (insert-file-contents (concat local_emacs_d_path "audit-header.c")))
+	(cond ((string-match "\\.py\\'" file)
+	       (setq audit_file "audit-header.py"))
+	      ((string-match "\\.\\(h\\|c\\|hpp\\|cpp\\|cc\\)\\'" file)
+	       (setq audit_file "audit-header.c")))
+	(insert-file-contents (concat local_emacs_d_path audit_file))
 	))))
 (global-set-key [f4] 'insert-audit)
 
@@ -61,12 +66,12 @@
   (save-excursion
     (let ((file (file-name-nondirectory buffer-file-name)))
       (progn
-	(if (string-match "\\.el$" file)
-	    (insert (make-string 100 ?\;)))
-	(if (string-match "\\.py$" file)
-	    (insert (make-string 100 ?#)))
-	(if (string-match "\\.\\(h\\|c\\|hpp\\|cpp\\|cc\\)$" file)
-	    (insert (concat ?\\ (make-string 98 ?*)) ?\\))
+	(cond ((string-match "\\.el\\'" file)
+	       (insert (make-string 100 ?\;)))
+	      ((string-match "\\.py\\'" file)
+	       (insert (make-string 100 ?#)))
+	      ((string-match "\\.\\(h\\|c\\|hpp\\|cpp\\|cc\\)\\'" file)
+	       (insert (concat ?\\ (make-string 98 ?*)) ?\\)))
 	))))
 (global-set-key [f6] 'insert-long-rule)
 
@@ -80,7 +85,7 @@
   (save-excursion
     (let ((file (file-name-nondirectory buffer-file-name)))
       (progn
-	(if (string-match "\\.py$" file)
+	(if (string-match "\\.py\\'" file)
 	    (insert (concat
 		     (make-string 4 ? )
 		     (make-string 46 ?#))))
