@@ -3,6 +3,8 @@
 ; FlyMake
 ;
 
+(add-to-list 'load-path (concat local_emacs_site_lisp_path "flymake-python"))
+
 (when (load "flymake" t)
   (defun flymake-pylint-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
@@ -16,7 +18,7 @@
                '("\\.py\\'" flymake-pylint-init)))
 
 ;; Set as a minor mode for python
-(add-hook 'python-mode-hook '(lambda () (flymake-mode)))
+(add-hook 'python-mode-hook '(lambda () (flymake-mode 1)))
 
 ;; Configure to wait a bit longer after edits before starting
 (setq-default flymake-no-changes-timeout '3)

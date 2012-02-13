@@ -23,7 +23,6 @@
 
 (add-to-list 'load-path local_emacs_d_path)
 (add-to-list 'load-path local_emacs_site_lisp_path)
-(add-to-list 'load-path (concat local_emacs_site_lisp_path "flymake-python"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -32,15 +31,16 @@
 
 (load "emacs-document-editing-modes.el" t t)
 (load "emacs-edition-settings.el" t t)
-(load "emacs-flymake.el" t t)
 (load "emacs-frame-font-settings.el" t t)
 (load "emacs-key-bindings.el" t t)
 (load "emacs-mode.el" t t)
-(load "emacs-programming.el" t t)
 (load "emacs-spelling.el" t t)
 (load "emacs-sysadmin.el" t t)
-(load "emacs-user-functions.el" t t)
 
+(load "emacs-programming.el" t t)
+(load "emacs-flymake.el" t t)
+
+(load "emacs-user-functions.el" t t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Custum Settings

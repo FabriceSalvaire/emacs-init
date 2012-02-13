@@ -1,0 +1,17 @@
+= KeyMap =
+
+ * S-right : selection
+ * C-right/left M-right/left : forward-word
+
+= Programming =
+
+ * anything :
+ * auto-complete : completion menu
+ * etags : code navigation
+ * outline-minor-mode : code outline
+ * pyflake : on-the-fly check
+ * pylookup : xdg-open documentation
+ * ropemacs : refactoring, code completion, documentation
+ * vc : cersion control
+ * yasnippet : code snippet
+
