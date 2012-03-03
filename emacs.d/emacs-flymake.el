@@ -3,8 +3,10 @@
 ; FlyMake
 ;
 
-(add-to-list 'load-path (concat local_emacs_site_lisp_path "flymake-python"))
+; (add-to-list 'load-path (concat local_emacs_site_lisp_path "flymake-python"))
 
+;; Configure flymake for python
+(setq pylint (concat local_emacs_site_lisp_path "pylint/epylint"))
 (when (load "flymake" t)
   (defun flymake-pylint-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
@@ -12,8 +14,7 @@
            (local-file (file-relative-name
                         temp-file
                         (file-name-directory buffer-file-name))))
-      (list "epylint" (list local-file))))
-
+      (list (expand-file-name pylint "") (list local-file))))
   (add-to-list 'flymake-allowed-file-name-masks
                '("\\.py\\'" flymake-pylint-init)))
 
@@ -27,8 +28,8 @@
 (add-hook 'python-mode-hook '(lambda () (define-key python-mode-map "\C-cn" 'flymake-goto-next-error)))
 (add-hook 'python-mode-hook '(lambda () (define-key python-mode-map "\C-cp" 'flymake-goto-prev-error)))
 
-;; To avoid having to mouse hover for the error message, these
-;; functions make flymake error messages appear in the minibuffer
+;; To avoid having to mouse hover for the error message, these functions make flymake error messages
+;; appear in the minibuffer
 (defun show-fly-err-at-point ()
   "If the cursor is sitting on a flymake error, display the message in the minibuffer"
   (require 'cl)
@@ -53,7 +54,6 @@
 ; 	   (options (when trigger-type (list "--trigger-type" trigger-type))))
 ;       (list "/home/etc/users/emacs-site-lisp/flymake-python/pyflymake.py"
 ; 	    (append options (list local-file)))))
-; 
 ;   (add-to-list 'flymake-allowed-file-name-masks
 ; 	       '("\\.py\\'" flymake-pylint-init)))
 ; 
