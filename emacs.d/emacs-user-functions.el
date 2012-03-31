@@ -1,5 +1,26 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
+; Python Mode Kill Word
+;
+
+(defun py-kill-word (arg)
+  "Kill characters forward until encountering the end of a word.
+With argument ARG, do this that many times."
+  (interactive "p")
+  (kill-region (point) (progn (py-forward-into-nomenclature arg) (point))))
+;(global-set-key [M-delete] 'kill-word)
+(global-set-key [C-delete] 'py-kill-word)
+
+(defun py-backward-kill-word (arg)
+  "Kill characters backward until encountering the beginning of a word.
+With argument ARG, do this that many times."
+  (interactive "p")
+  (kill-region (point) (progn (py-backward-into-nomenclature arg) (point))))
+;(global-set-key [M-backspace] 'backward-kill-word)
+(global-set-key [C-backspace] 'py-backward-kill-word)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
 ; Insert CopyRight
 ;
 
@@ -71,7 +92,7 @@
 	      ((string-match "\\.py\\'" file)
 	       (insert (make-string 100 ?#)))
 	      ((string-match "\\.\\(h\\|c\\|hpp\\|cpp\\|cc\\)\\'" file)
-	       (insert (concat ?\\ (make-string 98 ?*)) ?\\)))
+	       (insert (concat "/" (make-string 98 ?*) "/"))))
 	))))
 (global-set-key [f6] 'insert-long-rule)
 
