@@ -112,12 +112,12 @@
 
 ; (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
 
-(autoload 'python-mode "python-mode" "Python Mode." t)   
-(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))   
-(add-to-list 'interpreter-mode-alist '("python" . python-mode))   
-
-(global-set-key [M-right] 'py-forward-into-nomenclature)
-(global-set-key [M-left] 'py-backward-into-nomenclature)
+; (autoload 'python-mode "python-mode" "Python Mode." t)   
+; (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))   
+; (add-to-list 'interpreter-mode-alist '("python" . python-mode))   
+; 
+; (global-set-key [M-right] 'py-forward-into-nomenclature)
+; (global-set-key [M-left] 'py-backward-into-nomenclature)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
