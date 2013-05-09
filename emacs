@@ -41,6 +41,7 @@
 (load "emacs-flymake.el" t t)
 
 (load "emacs-user-functions.el" t t)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Custum Settings

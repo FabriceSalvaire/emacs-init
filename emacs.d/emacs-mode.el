@@ -4,7 +4,8 @@
 ;
 
 (require 'iswitchb) 
-(iswitchb-default-keybindings) 
+; (iswitchb-default-keybindings) 
+(iswitchb-mode 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

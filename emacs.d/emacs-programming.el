@@ -281,6 +281,26 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
+; Modelica
+;
+
+(setq local_emacs_site_lisp_path (concat local_path_prefix "emacs-site-lisp/"))
+(setq local_emacs_d_path (concat local_path_prefix "emacs.d/"))
+
+(add-to-list 'load-path (concat local_emacs_site_lisp_path "modelica/"))
+(autoload 'modelica-mode "modelica-mode" "Modelica Editing Mode" t)
+(setq auto-mode-alist (cons '("\.mo$" . modelica-mode) auto-mode-alist))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; QML
+;
+
+(autoload 'qml-mode "qml-mode" "Qml Editing Mode" t)
+(setq auto-mode-alist (cons '("\.qml$" . qml-mode) auto-mode-alist))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
 ; End
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
