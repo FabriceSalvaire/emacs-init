@@ -5,11 +5,15 @@
 
 (global-set-key [delete] 'delete-char) 
 
-(global-set-key [C-up]   'ignore) ; was backward-paragraph
-(global-set-key [C-down] 'ignore) ; was forward-paragraph
+(global-unset-key [C-up]) ; was backward-paragraph
+(global-unset-key [C-down]) ; was forward-paragraph
  
-(global-set-key [C-prior] 'ignore) ; was scroll-right
-(global-set-key [C-next]  'ignore) ; was scroll-left
+(global-unset-key [C-prior]) ; was scroll-right
+(global-unset-key [C-next]) ; was scroll-left
+
+(global-set-key (kbd "C-$")  'comment-or-uncomment-region)
+
+(global-set-key (kbd "M-o")  'dired-omit-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

@@ -89,7 +89,7 @@ With argument ARG, do this that many times."
       (progn
 	(cond ((string-match "\\.el\\'" file)
 	       (insert (make-string 100 ?\;)))
-	      ((string-match "\\.py\\'" file)
+	      ((string-match "\\.\\(py\\|sh\\)\\'" file)
 	       (insert (make-string 100 ?#)))
 	      ((string-match "\\.\\(h\\|c\\|hpp\\|cpp\\|cc\\)\\'" file)
 	       (insert (concat "/" (make-string 98 ?*) "/"))))
@@ -112,6 +112,58 @@ With argument ARG, do this that many times."
 		     (make-string 46 ?#))))
 	))))
 (global-set-key [f7] 'insert-short-rule)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Indent 
+;
+
+(defun custom-indent ()
+  (interactive)
+  (save-excursion
+    (let ((from_to_list (list
+			 '(" +//" "   //")
+			 ;; '("else +//" "else   //")
+			 ;; '("; +//" ";   //")
+			 ;; '(", +//" ",   //")
+			 ;; '(": +//" ":   //")
+			 ;; '("{ +//" "{   //")
+			 ;; '("} +//" "}   //")
+			 )))
+      (progn
+	(untabify (point-min) (point-max))
+	(dolist (from_to from_to_list)
+	  (replace-regexp (car from_to) (cdr from_to) nil (point-min) (point-max))
+	  )
+	(indent-region (point-min) (point-max))
+	))))
+(global-set-key [f12] 'custom-indent)
+
+(defun custom-doxygen ()
+  (interactive)
+  (save-excursion
+    (let ((from_to_list (list
+			 '("^\\( +\\)// " "\\1/// ")
+			 '(";\\( +\\)// " ";\\1///< ")
+			 '(",\\( +\\)// " ",\\1///< ")
+			 )))
+      (progn
+	(dolist (from_to from_to_list)
+	  (replace-regexp (car from_to) (cdr from_to) nil (point-min) (point-max))
+	  )
+	))))
+(global-set-key [f11] 'custom-doxygen)
+
+(defun c-comment-to-inline-style (start end)
+  "Convert an ANSI-C style to C++ style"
+  (interactive "r")
+  (setq content (buffer-substring start end))
+  (uncomment-region start end)
+  (set (make-local-variable 'comment-start) "//")
+  (set (make-local-variable 'comment-padding) " ")
+  (set (make-local-variable 'comment-end) "")
+  (comment-region start end)
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

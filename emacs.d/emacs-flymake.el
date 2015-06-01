@@ -7,6 +7,7 @@
 
 ;; Configure flymake for python
 (setq pylint (concat local_emacs_site_lisp_path "pylint/epylint"))
+; (setq pylint "epylint")
 (when (load "flymake" t)
   (defun flymake-pylint-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy

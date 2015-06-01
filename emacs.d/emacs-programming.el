@@ -19,9 +19,21 @@
 (add-hook 'c-mode-common-hook
           '(lambda () (c-set-style "gnu")))
 
+(defun c-set-indent-fabrice ()
+  (interactive)
+  
+  (c-set-style "gnu")
+  
+  (c-set-offset 'brace-list-open 0)
+  (c-set-offset 'inextern-lang 0)
+  
+  (message "Fabrice indentation."))
+
+;; (add-hook 'c-mode-common-hook 'c-set-indent-fabrice)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; CSS
+					; CSS
 ;
 
 (autoload 'css-mode "css-mode")
@@ -112,10 +124,10 @@
 
 ; (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
 
-; (autoload 'python-mode "python-mode" "Python Mode." t)   
-; (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))   
-; (add-to-list 'interpreter-mode-alist '("python" . python-mode))   
-; 
+; (autoload 'python-mode "python-mode" "Python Mode." t)
+; (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
+; (add-to-list 'interpreter-mode-alist '("python" . python-mode))
+;
 ; (global-set-key [M-right] 'py-forward-into-nomenclature)
 ; (global-set-key [M-left] 'py-backward-into-nomenclature)
 
@@ -184,7 +196,7 @@
 (autoload 'pylookup-lookup "pylookup"
   "Lookup SEARCH-TERM in the Python HTML indexes." t)
 
-(autoload 'pylookup-update "pylookup" 
+(autoload 'pylookup-update "pylookup"
   "Run pylookup-update and create the database at `pylookup-db-file'." t)
 
 (global-set-key "\C-ch" 'pylookup-lookup)
@@ -245,8 +257,8 @@
 ; Line Number
 ;
 
-; (require 'linum)   
-; (global-linum-mode 1)  
+; (require 'linum)
+; (global-linum-mode 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -284,9 +296,6 @@
 ; Modelica
 ;
 
-(setq local_emacs_site_lisp_path (concat local_path_prefix "emacs-site-lisp/"))
-(setq local_emacs_d_path (concat local_path_prefix "emacs.d/"))
-
 (add-to-list 'load-path (concat local_emacs_site_lisp_path "modelica/"))
 (autoload 'modelica-mode "modelica-mode" "Modelica Editing Mode" t)
 (setq auto-mode-alist (cons '("\.mo$" . modelica-mode) auto-mode-alist))
@@ -298,6 +307,22 @@
 
 (autoload 'qml-mode "qml-mode" "Qml Editing Mode" t)
 (setq auto-mode-alist (cons '("\.qml$" . qml-mode) auto-mode-alist))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; PHP
+;
+
+(require 'php-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Modelica
+;
+
+(add-to-list 'load-path (concat local_emacs_site_lisp_path "modelica-mode"))
+(autoload 'modelica-mode "modelica-mode" "Modelica Editing Mode" t)
+(setq auto-mode-alist (cons '("\.mo$" . modelica-mode) auto-mode-alist))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

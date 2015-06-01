@@ -24,6 +24,8 @@
 (add-to-list 'load-path local_emacs_d_path)
 (add-to-list 'load-path local_emacs_site_lisp_path)
 
+; (byte-recompile-directory local_emacs_site_lisp_path 0)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Load sub-config files
@@ -38,6 +40,7 @@
 (load "emacs-sysadmin.el" t t)
 
 (load "emacs-programming.el" t t)
+(load "emacs-web.el" t t)
 (load "emacs-flymake.el" t t)
 
 (load "emacs-user-functions.el" t t)

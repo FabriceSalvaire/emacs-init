@@ -25,6 +25,7 @@
             ; (setq dired-omit-files-p t)
             (setq dired-omit-files
                   ; do not wish to see `dot' files (files starting with a `.')
+		  ;  '(dired-omit-files "^\\.$")
                   (concat dired-omit-files "\\|^\\..+$"))
             ))
 
