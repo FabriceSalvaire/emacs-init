@@ -57,7 +57,7 @@
 ; 	    (append options (list local-file)))))
 ;   (add-to-list 'flymake-allowed-file-name-masks
 ; 	       '("\\.py\\'" flymake-pylint-init)))
-; 
+;
 ; (add-hook 'find-file-hook 'flymake-find-file-hook)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

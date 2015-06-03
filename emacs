@@ -40,6 +40,7 @@
 (load "emacs-sysadmin.el" t t)
 
 (load "emacs-programming.el" t t)
+(load "emacs-programming-languages.el" t t)
 (load "emacs-web.el" t t)
 (load "emacs-flymake.el" t t)
 

@@ -51,7 +51,7 @@ With argument ARG, do this that many times."
 ; Insert Frame
 ;
 
- ;; file-name-extension
+;; file-name-extension
 
 (defun insert-audit ()
   (interactive)
@@ -92,7 +92,12 @@ With argument ARG, do this that many times."
 	      ((string-match "\\.\\(py\\|sh\\)\\'" file)
 	       (insert (make-string 100 ?#)))
 	      ((string-match "\\.\\(h\\|c\\|hpp\\|cpp\\|cc\\)\\'" file)
-	       (insert (concat "/" (make-string 98 ?*) "/"))))
+	       (insert (concat "/" (make-string 98 ?*) "/")))
+	      ((string-match "\\.\\(sass\\|css\\)\\'" file)
+	       (insert (concat "//" (make-string 98 ?*))))
+	      ;; ((string-match "\\.\\(h\\|c\\|hpp\\|cpp\\|cc\\|sass\\|css\\)\\'" file)
+	      ;;  (insert (concat "/" (make-string 98 ?*) "/")))
+	      )
 	))))
 (global-set-key [f6] 'insert-long-rule)
 
@@ -115,7 +120,7 @@ With argument ARG, do this that many times."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; Indent 
+; Indent
 ;
 
 (defun custom-indent ()
@@ -167,7 +172,7 @@ With argument ARG, do this that many times."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; 
+;
 ;
 
 (defun insert-and ()
@@ -200,28 +205,28 @@ With argument ARG, do this that many times."
 ;   (save-excursion
 ;     (insert "}")))
 ; (global-set-key "\M-{" 'insert-braces)
-; 
+;
 ; (defun insert-brakets ()
 ;   (interactive)
 ;   (insert "[")
 ;   (save-excursion
 ;     (insert "]")))
 ; (global-set-key "\M-[" 'insert-brakets)
-; 
+;
 ; (defun insert-backticks ()
 ;   (interactive)
 ;   (insert "`")
 ;   (save-excursion
 ;     (insert "`")))
 ; (global-set-key "\M-`" 'insert-backticks)
-; 
+;
 ; (defun insert-simple-quotes ()
 ;   (interactive)
 ;   (insert "'")
 ;   (save-excursion
 ;     (insert "'")))
 ; (global-set-key "\M-'" 'insert-simple-quotes)
-; 
+;
 ; (defun insert-double-quotes ()
 ;   (interactive)
 ;   (insert "\"")

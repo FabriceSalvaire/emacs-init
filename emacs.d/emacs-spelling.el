@@ -14,7 +14,7 @@
     ;(ispell-change-dictionary "fr_FR")))
 
 (defun gb ()
-  "Use gb dictionary" 
+  "Use gb dictionary"
   (interactive)
   (progn
     (ispell-change-dictionary "british")))
@@ -27,7 +27,7 @@
 
 (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
 (autoload 'flyspell-delay-command "flyspell" "Delay on command." t)
-(autoload 'tex-mode-flyspell-verify "flyspell" "" t) 
+(autoload 'tex-mode-flyspell-verify "flyspell" "" t)
 
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 
@@ -44,18 +44,18 @@
 ;;; (eval-after-load "ispell"
 ;;;   ;; so that following modifications won't be lost when ispell is loaded
 ;;;   '(progn
-;;;      
+;;;
 ;;;      ;; default dictionary to use (if `ispell-local-dictionary' is nil)
 ;;;      ; (setq ispell-dictionary "fr_FR")
-;;;      
+;;;
 ;;;      ;; save the personal dictionary without confirmation
 ;;;      ; (setq ispell-silently-savep t)
-;;; 
+;;;
 ;;;      ;; extra switches to pass to the `ispell' program
 ;;;      ;; TODO Check they are right!
 ;;;      ; /usr/bin/hunspell -a  -B -i iso-8859-1
 ;;;      (setq ispell-extra-args '("-a" "-i" "utf-8"))
-;;; 
+;;;
 ;;;      ;; redefine the list of installed dictionaries
 ;;;      ;; ??? FIXME This variable is reset once latter in this .emacs file!!!
 ;;;      (setq ispell-dictionary-alist
