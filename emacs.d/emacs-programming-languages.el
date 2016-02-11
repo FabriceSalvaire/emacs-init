@@ -21,15 +21,25 @@
 
 (defun c-set-indent-fabrice ()
   (interactive)
-  
+
   (c-set-style "gnu")
-  
+
   (c-set-offset 'brace-list-open 0)
   (c-set-offset 'inextern-lang 0)
-  
+
   (message "Fabrice indentation."))
 
 ;; (add-hook 'c-mode-common-hook 'c-set-indent-fabrice)
+
+(c-add-style "qt-gnu" '("gnu"
+                        (c-access-key .
+"\\<\\(signals\\|public\\|protected\\|private\\|public slots\\|protected slots\\|private slots\\):")
+                         (c-basic-offset . 4)))
+
+(defun c-set-qt-style ()
+  (interactive)
+  (c-set-style "qt-gnu")
+  (message "Qt indentation."))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -180,6 +190,13 @@
 (add-to-list 'load-path (concat local_emacs_site_lisp_path "modelica-mode"))
 (autoload 'modelica-mode "modelica-mode" "Modelica Editing Mode" t)
 (setq auto-mode-alist (cons '("\.mo$" . modelica-mode) auto-mode-alist))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; QMake
+;
+
+(require 'qmake-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

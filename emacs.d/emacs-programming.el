@@ -108,6 +108,7 @@
 ; Column Marker
 ;
 
+;; python-mode.el-6.0.4/tools/column-marker.el
 (require 'column-marker)
 
 ;; Highlight column 100 in python mode.
@@ -128,7 +129,8 @@
 ; Highlight Indentation
 ;
 
-; (require 'highlight-indentation)
+;; python-mode.el-6.0.4/highlight-indentation.el
+(require 'highlight-indentation)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -141,6 +143,18 @@
 ;; (setq indent-guide-delay 0.1)
 ;; (setq indent-guide-recursive t)
 ;; (setq indent-guide-char ":")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Flycheck Mode
+;
+
+;; (add-to-list 'load-path (concat local_emacs_site_lisp_path "flycheck"))
+;; (require 'flycheck)
+;; (add-hook 'after-init-hook #'global-flycheck-mode)
+
+;; ((c++-mode
+;;   (flycheck-gcc-include-path "" ) ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

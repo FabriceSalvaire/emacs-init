@@ -3,24 +3,39 @@
 ; FlyMake
 ;
 
+;; (when (load "flymake" t)
+;; )
+
+(require 'flymake)
+(setq flymake-log-level 3)
+
+(add-to-list 'flymake-allowed-file-name-masks
+	     '(".+\\.cpp$"
+	       flymake-simple-make-init
+	       flymake-simple-cleanup
+	       flymake-get-real-file-name))
+
 ; (add-to-list 'load-path (concat local_emacs_site_lisp_path "flymake-python"))
 
 ;; Configure flymake for python
-(setq pylint (concat local_emacs_site_lisp_path "pylint/epylint"))
+; (setq pylint (concat local_emacs_site_lisp_path "pylint/epylint"))
 ; (setq pylint "epylint")
-(when (load "flymake" t)
-  (defun flymake-pylint-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      (list (expand-file-name pylint "") (list local-file))))
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" "Python" flymake-pylint-init)))
+(setq pylint "/usr/bin/python3-epylint")
+
+(defun flymake-pylint-init ()
+  (let* ((temp-file (flymake-init-create-temp-buffer-copy
+		     'flymake-create-temp-inplace))
+	 (local-file (file-relative-name
+		      temp-file
+		      (file-name-directory buffer-file-name))))
+    (list (expand-file-name pylint "") (list temp-file)))) ; temp-file vs local-file
+
+(add-to-list 'flymake-allowed-file-name-masks
+	     '("\\.py\\'" flymake-pylint-init))
 
 ;; Set as a minor mode for python
 (add-hook 'python-mode-hook '(lambda () (flymake-mode 1)))
+; (add-hook 'c++-mode-hook '(lambda () (flymake-mode 1)))
 
 ;; Configure to wait a bit longer after edits before starting
 (setq-default flymake-no-changes-timeout '3)
@@ -28,6 +43,8 @@
 ;; Keymaps to navigate to the errors
 (add-hook 'python-mode-hook '(lambda () (define-key python-mode-map "\C-cn" 'flymake-goto-next-error)))
 (add-hook 'python-mode-hook '(lambda () (define-key python-mode-map "\C-cp" 'flymake-goto-prev-error)))
+(add-hook 'cpp-mode-hook '(lambda () (define-key python-mode-map "\C-cn" 'flymake-goto-next-error)))
+(add-hook 'cpp-mode-hook '(lambda () (define-key python-mode-map "\C-cp" 'flymake-goto-prev-error)))
 
 ;; To avoid having to mouse hover for the error message, these functions make flymake error messages
 ;; appear in the minibuffer
