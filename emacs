@@ -31,6 +31,8 @@
 ; Load sub-config files
 ;
 
+(load "melpa.el" t t)
+
 (load "emacs-document-editing-modes.el" t t)
 (load "emacs-edition-settings.el" t t)
 (load "emacs-frame-font-settings.el" t t)
