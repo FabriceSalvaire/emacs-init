@@ -44,7 +44,8 @@
 (load "emacs-programming.el" t t)
 (load "emacs-programming-languages.el" t t)
 (load "emacs-web.el" t t)
-(load "emacs-flymake.el" t t)
+; (load "emacs-flymake.el" t t)
+(load "emacs-flycheck.el" t t)
 
 (load "emacs-user-functions.el" t t)
 

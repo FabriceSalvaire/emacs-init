@@ -1,11 +1,28 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Powerline
+; https://github.com/milkypostman/powerline
+                                        ;
+
+(require 'powerline)
+(powerline-default-theme)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; iswitchb
 ;
 
-(require 'iswitchb)
-; (iswitchb-default-keybindings)
-(iswitchb-mode 1)
+;; (require 'iswitchb)
+;; ; (iswitchb-default-keybindings)
+;; (iswitchb-mode 1)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; icomplete-mode (replaces iswitchb-mode)
+; https://www.emacswiki.org/emacs/IcompleteMode
+					;
+
+ (icomplete-mode 99)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -44,10 +61,10 @@
 ; Mutt
 ;
 
-(autoload 'muttrc-mode "muttrc-mode.el" "Major mode to edit muttrc files" t)
-(setq auto-mode-alist
-      (append '(("muttrc\\'" . muttrc-mode))
-              auto-mode-alist))
+;; (autoload 'muttrc-mode "muttrc-mode.el" "Major mode to edit muttrc files" t)
+;; (setq auto-mode-alist
+;;       (append '(("muttrc\\'" . muttrc-mode))
+;;               auto-mode-alist))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

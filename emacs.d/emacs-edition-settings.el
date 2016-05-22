@@ -3,7 +3,7 @@
 ; Fill-column & Auto fill mode
 ;
 
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
+; (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 (setq fill-column 100)
 

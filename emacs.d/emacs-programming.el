@@ -10,11 +10,11 @@
 ;          ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Anything
-;
+;;
+;; Anything
+;;
 
-(add-to-list 'load-path (concat local_emacs_site_lisp_path "anything"))
+;; (add-to-list 'load-path (concat local_emacs_site_lisp_path "anything"))
 
 ;; (require 'anything)
 ;; (require 'anything-ipython)
@@ -26,6 +26,14 @@
 ; (require 'anything-match-plugin)
 ; (global-set-key "\C-ca" 'anything)
 ; (global-set-key "\C-ce" 'anything-for-files)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Helm
+;; https://github.com/emacs-helm/helm
+;; Emacs incremental completion and selection narrowing framework
+
+(require 'helm-config)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -61,10 +69,8 @@
 
 ; yas/insert-snippet: C-c & C-s
 
-(add-to-list 'load-path (concat local_emacs_site_lisp_path "yasnippet"))
-
 (require 'yasnippet)
-(setq yas/snippet-dirs (concat local_emacs_d_path "snippets"))
+;; (setq yas/snippet-dirs (concat local_emacs_d_path "snippets"))
 (yas/global-mode 1)
 ;; (load "snippet-bundel.el" t t)
 
@@ -73,8 +79,26 @@
 ; Auto-Complete
 ;
 
-(require 'auto-complete)
-(global-auto-complete-mode t)
+;; (require 'auto-complete)
+;; (global-auto-complete-mode t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Company Mode
+;
+
+(add-hook 'after-init-hook 'global-company-mode)
+
+(eval-after-load 'company
+  '(add-to-list 'company-backends 'company-irony))
+
+(eval-after-load 'company
+  '(add-to-list 'company-backends 'company-c-headers))
+
+(require 'company-irony-c-headers)
+;; Load with `irony-mode` as a grouped backend
+(eval-after-load 'company
+  '(add-to-list 'company-backends '(company-irony-c-headers company-irony)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -143,18 +167,6 @@
 ;; (setq indent-guide-delay 0.1)
 ;; (setq indent-guide-recursive t)
 ;; (setq indent-guide-char ":")
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Flycheck Mode
-;
-
-;; (add-to-list 'load-path (concat local_emacs_site_lisp_path "flycheck"))
-;; (require 'flycheck)
-;; (add-hook 'after-init-hook #'global-flycheck-mode)
-
-;; ((c++-mode
-;;   (flycheck-gcc-include-path "" ) ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

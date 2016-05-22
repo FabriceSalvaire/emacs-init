@@ -6,10 +6,10 @@
 ;(speedbar t)
 
 ; Disable the tool bar
-(tool-bar-mode 0)
+(tool-bar-mode nil)
 
 ; Menu for recently opened files
-(recentf-mode 1)
+(recentf-mode t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
