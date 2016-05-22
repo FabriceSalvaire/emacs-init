@@ -3,22 +3,6 @@
 ; FlyMake
 ;
 
-;; (when (load "flymake" t)
-;; )
-
-(require 'flymake)
-(setq flymake-log-level 3)
-
-(add-to-list 'flymake-allowed-file-name-masks
-	     '(".+\\.cpp$"
-	       flymake-simple-make-init
-	       flymake-simple-cleanup
-	       flymake-get-real-file-name))
-
-; (add-to-list 'load-path (concat local_emacs_site_lisp_path "flymake-python"))
-
-;; Configure flymake for python
-; (setq pylint (concat local_emacs_site_lisp_path "pylint/epylint"))
 ; (setq pylint "epylint")
 (setq pylint "/usr/bin/python3-epylint")
 
@@ -30,12 +14,40 @@
 		      (file-name-directory buffer-file-name))))
     (list (expand-file-name pylint "") (list temp-file)))) ; temp-file vs local-file
 
+(defun flymake-make-init ()
+  (let* ((temp-file (flymake-init-create-temp-buffer-copy
+		     'flymake-create-temp-inplace))
+	 (base-dir (file-name-directory temp-file))
+	 )
+    (list "make"
+	  (list "-s" "-C"
+		base-dir
+		(concat "CHK_SOURCES=" temp-file)
+		"SYNTAX_CHECK_MODE=1"
+		"check-syntax"))))
+
+;; (when (load "flymake" t)
+;; )
+
+(require 'flymake)
+(setq flymake-log-level 3)
+
 (add-to-list 'flymake-allowed-file-name-masks
 	     '("\\.py\\'" flymake-pylint-init))
 
+; /!\ Emacs use relative and buggy path ../../../..
+;; (add-to-list 'flymake-allowed-file-name-masks
+;; 	     '(".+\\.cpp$"
+;; 	       flymake-simple-make-init
+;; 	       flymake-simple-cleanup
+;; 	       flymake-get-real-file-name))
+
+(add-to-list 'flymake-allowed-file-name-masks
+	     '(".+\\.cpp$" flymake-make-init))
+
 ;; Set as a minor mode for python
 (add-hook 'python-mode-hook '(lambda () (flymake-mode 1)))
-; (add-hook 'c++-mode-hook '(lambda () (flymake-mode 1)))
+(add-hook 'c++-mode-hook '(lambda () (flymake-mode 1)))
 
 ;; Configure to wait a bit longer after edits before starting
 (setq-default flymake-no-changes-timeout '3)

@@ -15,6 +15,10 @@
 
 (global-set-key (kbd "M-o")  'dired-omit-mode)
 
+; https://github.com/akicho8/string-inflection
+(require 'string-inflection)
+(global-set-key (kbd "M-n")  'string-inflection-underscore)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; End
