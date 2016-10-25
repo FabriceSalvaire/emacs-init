@@ -1,7 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Aspell
-;
+;;
+;; Aspell
 
 (setq-default ispell-program-name "aspell")
 (ispell-change-dictionary "british" "globally")
@@ -21,9 +20,8 @@
     ;(ispell-change-dictionary "en_GB-ise-w_accents")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Flyspell
-;
+;;
+;; Flyspell
 
 (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
 (autoload 'flyspell-delay-command "flyspell" "Delay on command." t)
@@ -31,10 +29,20 @@
 
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 
+(dolist (hook
+         '(text-mode-hook)
+         '(LaTeX-mode-hook))
+  (add-hook hook (lambda () (flyspell-mode 1))))
+
+(dolist (hook
+         '(python-mode-hook)
+         '(c-mode-hook)
+         '(c++-mode-hook))
+  (add-hook hook (lambda () (flyspell-prog-mode))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; hunspell
-;
+;;
+;; hunspell
 
 ;;; (setq-default ispell-program-name "hunspell")
 ;;; (ispell-change-dictionary "fr_FR")
@@ -65,21 +73,21 @@
 ;;;      	     (nil
 ;;;      	      "[A-Za-z]" "[^A-Za-z]"
 ;;;      	      "[']" nil ("-B") nil iso-8859-1)
-;;;      	     
+;;;
 ;;;      	     ;; US English
 ;;;      	     ("en_US"
 ;;;      	      "[A-Za-z]" "[^A-Za-z]"
 ;;;      	      "[']" nil ("-B") nil utf-8)
-;;;      	     
+;;;
 ;;;      	     ;; standard French
 ;;;      	     ("fr_FR"
 ;;;      	      "[a-zàâäéèêëîïôöùûüçA-ZÀÂÄÉÈÊËÎÏÔÖÙÛÜÇ]" "[^a-zàâäéèêëîïôöùûüçA-ZÀÂÄÉÈÊËÎÏÔÖÙÛÜÇ]"
 ;;;      	      "[-']" t nil "~list" utf-8)
 ;;;      	     ))
-;;;      
+;;;
 ;;;      ;; `aspell' extensions should *not* be used
 ;;;      (setq ispell-really-aspell nil)
-;;;      
+;;;
 ;;;      ;; `hunspell' extensions should be used
 ;;;      (setq ispell-really-hunspell t)
 ;;;      )

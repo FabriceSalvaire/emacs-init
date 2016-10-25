@@ -38,6 +38,7 @@
 (load "emacs-frame-font-settings.el" t t)
 (load "emacs-key-bindings.el" t t)
 (load "emacs-mode.el" t t)
+(load "emacs-completion.el" t t)
 (load "emacs-spelling.el" t t)
 (load "emacs-sysadmin.el" t t)
 

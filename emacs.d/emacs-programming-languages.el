@@ -14,6 +14,8 @@
 ; C
 ;
 
+(add-hook 'c-mode-common-hook 'hs-minor-mode)
+
 (add-to-list 'auto-mode-alist '("\\.txx\\'" . c-mode))
 
 (defun my-c-common-hook ()
@@ -121,24 +123,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; Python
-;
-
-; (setq interpreter-mode-alist
-;       (cons '("python" . python-mode)
-;             interpreter-mode-alist))
-
-; (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
-
-; (autoload 'python-mode "python-mode" "Python Mode." t)
-; (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
-; (add-to-list 'interpreter-mode-alist '("python" . python-mode))
-;
-; (global-set-key [M-right] 'py-forward-into-nomenclature)
-; (global-set-key [M-left] 'py-backward-into-nomenclature)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
 ; VB
 ;
 
@@ -189,6 +173,12 @@
 
 (autoload 'qml-mode "qml-mode" "Qml Editing Mode" t)
 (setq auto-mode-alist (cons '("\.qml$" . qml-mode) auto-mode-alist))
+
+(defun my-qml-hook ()
+    (progn
+      (setq-default js-indent-level 4)
+      ))
+(add-hook 'qml-mode-hook 'my-qml-hook)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

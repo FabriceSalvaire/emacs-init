@@ -1,18 +1,72 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; GTags
-;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Yasnippet
 
-; (autoload 'gtags-mode "gtags" "" t)
-; (setq c-mode-hook
-;       '(lambda ()
-;          (gtags-mode 1)
-;          ))
+; yas/insert-snippet: C-c & C-s
+
+(require 'yasnippet)
+(yas/global-mode 1)
+;; (setq yas/snippet-dirs (concat local_emacs_d_path "snippets"))
+;; (load "snippet-bundel.el" t t)
+
+;; http://sethlakowske.com/why-i-use-emacs/fix-yasnippet-and-autocomplete-tab-key-collision/
+;; Remove Yasnippet's default tab key binding
+(define-key yas-minor-mode-map (kbd "<tab>") nil)
+(define-key yas-minor-mode-map (kbd "TAB") nil)
+;; Set Yasnippet's key binding to shift+tab
+(define-key yas-minor-mode-map (kbd "<backtab>") 'yas-expand)
+;; Alternatively use Control-c + tab
+; (define-key yas-minor-mode-map (kbd "\C-c TAB") 'yas-expand)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Irony
+;; https://github.com/Sarcasm/irony-mode   A C/C++ minor mode powered by libclang
+;; https://github.com/Sarcasm/flycheck-irony/
+
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+; (add-hook 'objc-mode-hook 'irony-mode)
+
+;; replace the `completion-at-point' and `complete-symbol' bindings in
+;; irony-mode's buffers by irony-mode's function
+(defun my-irony-mode-hook ()
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async))
+(add-hook 'irony-mode-hook 'my-irony-mode-hook)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+(add-hook 'irony-mode-hook 'irony-eldoc)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Company Mode
+;; Completion
+
+(add-hook 'after-init-hook 'global-company-mode)
+
+(eval-after-load 'company
+  '(add-to-list 'company-backends 'company-c-headers))
+
+(eval-after-load 'company
+  '(add-to-list 'company-backends 'company-irony))
+
+(require 'company-irony-c-headers)
+;; Load with `irony-mode` as a grouped backend
+(eval-after-load 'company
+  '(add-to-list 'company-backends '(company-irony-c-headers company-irony)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Auto-Complete
+
+;; (require 'auto-complete)
+;; (global-auto-complete-mode t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Anything
-;;
 
 ;; (add-to-list 'load-path (concat local_emacs_site_lisp_path "anything"))
 
@@ -29,108 +83,14 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; Helm
-;; https://github.com/emacs-helm/helm
-;; Emacs incremental completion and selection narrowing framework
-
-(require 'helm-config)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Pylookup
-;
-
-(setq pylookup-dir (concat local_emacs_site_lisp_path "pylookup"))
-(add-to-list 'load-path pylookup-dir)
-
-;; load pylookup when compile time
-(eval-when-compile (require 'pylookup))
-
-;; set executable file and db file
-(setq pylookup-program (concat pylookup-dir "/pylookup.py"))
-(setq pylookup-db-file (concat pylookup-dir "/pylookup.db"))
-
-;; set search option if you want
-;; (setq pylookup-search-options '("--insensitive" "0" "--desc" "0"))
-
-;; to speedup, just load it on demand
-(autoload 'pylookup-lookup "pylookup"
-  "Lookup SEARCH-TERM in the Python HTML indexes." t)
-
-(autoload 'pylookup-update "pylookup"
-  "Run pylookup-update and create the database at `pylookup-db-file'." t)
-
-(global-set-key "\C-ch" 'pylookup-lookup)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Yasnippet
-;
-
-; yas/insert-snippet: C-c & C-s
-
-(require 'yasnippet)
-;; (setq yas/snippet-dirs (concat local_emacs_d_path "snippets"))
-(yas/global-mode 1)
-;; (load "snippet-bundel.el" t t)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Auto-Complete
-;
-
-;; (require 'auto-complete)
-;; (global-auto-complete-mode t)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Company Mode
-;
-
-(add-hook 'after-init-hook 'global-company-mode)
-
-(eval-after-load 'company
-  '(add-to-list 'company-backends 'company-irony))
-
-(eval-after-load 'company
-  '(add-to-list 'company-backends 'company-c-headers))
-
-(require 'company-irony-c-headers)
-;; Load with `irony-mode` as a grouped backend
-(eval-after-load 'company
-  '(add-to-list 'company-backends '(company-irony-c-headers company-irony)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Ropemacs
-;
-
-; (require 'pymacs)
-; (pymacs-load "ropemacs" "rope-")
-
-(defun load-ropemacs ()
-  "Load pymacs and ropemacs"
-  (interactive)
-  (require 'pymacs)
-  (pymacs-load "ropemacs" "rope-")
-  ;; Automatically save project python buffers before refactorings
-  (setq ropemacs-confirm-saving 'nil)
-  ; (setq ropemacs-enable-autoimport t)
-  )
-; (global-set-key "\C-xpl" 'load-ropemacs)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Line Number
-;
+;; Line Number
 
 ; (require 'linum)
 ; (global-linum-mode 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Column Marker
-;
+;;
+;; Column Marker
 
 ;; python-mode.el-6.0.4/tools/column-marker.el
 (require 'column-marker)
@@ -149,12 +109,32 @@
 ;; (global-set-key [?\C-c ?m] 'column-marker-1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Highlight Indentation
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; Highlight Indentation
+; Fill-column & Auto fill mode
 ;
+
+;; https://www.emacswiki.org/emacs/HighlightEndOfBuffer
+(setq-default indicate-empty-lines t)
 
 ;; python-mode.el-6.0.4/highlight-indentation.el
 (require 'highlight-indentation)
+
+;; https://www.emacswiki.org/emacs/ShowWhiteSpace
+;; https://github.com/Lindydancer/char-font-lock
+
+;; https://www.emacswiki.org/emacs/WhiteSpace
+;; (require 'whitespace)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Clean Indentation Mode
+
+(require 'clean-aindent-mode)
+(add-hook 'prog-mode-hook 'clean-aindent-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -167,6 +147,11 @@
 ;; (setq indent-guide-delay 0.1)
 ;; (setq indent-guide-recursive t)
 ;; (setq indent-guide-char ":")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Magit
+;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

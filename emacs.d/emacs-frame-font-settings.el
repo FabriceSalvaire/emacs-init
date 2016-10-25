@@ -8,9 +8,6 @@
 ; Disable the tool bar
 (tool-bar-mode nil)
 
-; Menu for recently opened files
-(recentf-mode t)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Set Font

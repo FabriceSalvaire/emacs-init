@@ -1,43 +1,39 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Powerline
-; https://github.com/milkypostman/powerline
+;;
+;; Powerline
+;; https://github.com/milkypostman/powerline
                                         ;
 
 (require 'powerline)
 (powerline-default-theme)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; iswitchb
-;
+;;
+;; ido
+;; http://ergoemacs.org/emacs/emacs_buffer_switching.html
 
-;; (require 'iswitchb)
-;; ; (iswitchb-default-keybindings)
-;; (iswitchb-mode 1)
+;; (require 'ido-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; icomplete-mode (replaces iswitchb-mode)
-; https://www.emacswiki.org/emacs/IcompleteMode
-					;
-
- (icomplete-mode 99)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Uniquify
-;
+;;
+;; Uniquify
 
 (setq uniquify-buffer-name-style 'reverse)
 (setq uniquify-separator "/")
 (setq uniquify-after-kill-buffer-p t) ; rename after killing uniquified
 (setq uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers (or Gnus mail buffers)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; dired
-;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Recent
+
+; Menu for recently opened files
+(recentf-mode t)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; dired
 
 (add-hook 'dired-load-hook
           (lambda ()
@@ -56,17 +52,7 @@
                   (concat dired-omit-files "\\|^\\..+$"))
             ))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Mutt
-;
-
-;; (autoload 'muttrc-mode "muttrc-mode.el" "Major mode to edit muttrc files" t)
-;; (setq auto-mode-alist
-;;       (append '(("muttrc\\'" . muttrc-mode))
-;;               auto-mode-alist))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Info
 ;
