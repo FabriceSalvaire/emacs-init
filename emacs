@@ -12,11 +12,17 @@
 ; M-x byte-compile-file RET
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; To disable icicle warning
+; (setq warning-minimum-level :emergency)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Path Settings
 ;
 
 ; expand-file-name
+
 
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
@@ -38,18 +44,20 @@
 ; Load sub-config files
 ;
 
-(load "melpa.el" t t)
-
+(load "emacs-package-repository.el" t t)
 (load "emacs-document-editing-modes.el" t t)
 (load "emacs-edition-settings.el" t t)
 (load "emacs-frame-font-settings.el" t t)
 (load "emacs-key-bindings.el" t t)
 (load "emacs-mode.el" t t)
-(load "emacs-completion.el" t t)
+(load "emacs-buffer-switch.el" t t)
 (load "emacs-spelling.el" t t)
 (load "emacs-sysadmin.el" t t)
+; (load "emacs-helm.el" t t)
 
 (load "emacs-programming.el" t t)
+(load "emacs-programming-c.el" t t)
+; (load "emacs-programming-python.el" t t)
 (load "emacs-programming-languages.el" t t)
 (load "emacs-web.el" t t)
 ; (load "emacs-flymake.el" t t)
@@ -71,9 +79,3 @@
 ;
 
 (load "emacs-server.el" t t)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; End
-;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

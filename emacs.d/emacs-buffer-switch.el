@@ -5,7 +5,8 @@
 ;; icomplete-mode (replaces iswitchb-mode)
 ;; https://www.emacswiki.org/emacs/IcompleteMode
 
-(icomplete-mode 99)
+(icomplete-mode 1)
+
 (eval-after-load "icomplete" '(progn (require 'icomplete+)))
 ;; (icomplete-cycling-mode 99)
 (icompletep-cycling-mode 99)
@@ -15,15 +16,7 @@
 ;; icicles
 ;; https://www.emacswiki.org/emacs/Icicles
 
-;; (require 'icicles)
-;; (icy-mode 1)
+(require 'icicles)
+(icy-mode 1)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(load "emacs-mode.el" t t)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; End
-;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq icicle-buffer-include-recent-files-nflag t)

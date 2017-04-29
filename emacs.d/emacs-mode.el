@@ -2,7 +2,7 @@
 ;;
 ;; Powerline
 ;; https://github.com/milkypostman/powerline
-                                        ;
+
 
 (require 'powerline)
 (powerline-default-theme)
@@ -30,7 +30,6 @@
 ; Menu for recently opened files
 (recentf-mode t)
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; dired
@@ -52,6 +51,8 @@
                   (concat dired-omit-files "\\|^\\..+$"))
             ))
 
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Info
@@ -59,9 +60,3 @@
 
 ; (setq Info-directory-list Info-default-directory-list)
 ; (add-to-list 'Info-directory-list "/media/home/salvaire/local_stow/info")
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; End
-;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
