@@ -37,6 +37,9 @@
  '(dired-trivial-filenames "^\\.$\\|^#")
  '(global-font-lock-mode t nil (font-lock))
  '(js-indent-level 4)
+ '(package-selected-packages
+   (quote
+    (cmake-project cmake-ide cmake-font-lock modern-cpp-font-lock cpputils-cmake cff auto-complete-c-headers pyimport elpy ein jinja2-mode flycheck qml-mode nginx-mode csharp-mode string-inflection solarized-theme scss-mode sass-mode salt-mode pyvenv python-mode python-django pylint puppet-mode protobuf-mode powerline php-mode magit irony-eldoc indent-guide icomplete+ icicles highlight-indentation helm graphviz-dot-mode gradle-mode glsl-mode flymake-shell flycheck-tip flycheck-pos-tip flycheck-irony flycheck-color-mode-line django-mode cuda-mode company-shell company-qml company-math company-jedi company-irony-c-headers company-irony company-c-headers company-auctex company-anaconda column-marker cmake-mode clean-aindent-mode auto-complete auctex-lua anything)))
  '(perl-continued-brace-offset -2)
  '(perl-continued-statement-offset 2)
  '(perl-indent-level 2)

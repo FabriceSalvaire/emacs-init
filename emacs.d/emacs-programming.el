@@ -4,6 +4,8 @@
 
 ; yas/insert-snippet: C-c & C-s
 
+; /home/fabrice/.emacs.d/snippets ->
+
 (require 'yasnippet)
 (yas/global-mode 1)
 ;; (setq yas/snippet-dirs (concat local_emacs_d_path "snippets"))
