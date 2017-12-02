@@ -1,30 +1,27 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; Yasnippet
+;; Company Mode - Completion
+;;
 
-; yas/insert-snippet: C-c & C-s
+(add-hook 'after-init-hook 'global-company-mode)
 
-; /home/fabrice/.emacs.d/snippets ->
+(eval-after-load 'company
+  '(add-to-list 'company-backends 'company-c-headers))
 
-(require 'yasnippet)
-(yas/global-mode 1)
-;; (setq yas/snippet-dirs (concat local_emacs_d_path "snippets"))
-;; (load "snippet-bundel.el" t t)
+(eval-after-load 'company
+  '(add-to-list 'company-backends 'company-irony))
 
-;; http://sethlakowske.com/why-i-use-emacs/fix-yasnippet-and-autocomplete-tab-key-collision/
-;; Remove Yasnippet's default tab key binding
-(define-key yas-minor-mode-map (kbd "<tab>") nil)
-(define-key yas-minor-mode-map (kbd "TAB") nil)
-;; Set Yasnippet's key binding to shift+tab
-(define-key yas-minor-mode-map (kbd "<backtab>") 'yas-expand)
-;; Alternatively use Control-c + tab
-; (define-key yas-minor-mode-map (kbd "\C-c TAB") 'yas-expand)
+(require 'company-irony-c-headers)
+;; Load with `irony-mode` as a grouped backend
+(eval-after-load 'company
+  '(add-to-list 'company-backends '(company-irony-c-headers company-irony)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Irony
-;; https://github.com/Sarcasm/irony-mode   A C/C++ minor mode powered by libclang
-;; https://github.com/Sarcasm/flycheck-irony/
+;;   https://github.com/Sarcasm/irony-mode   A C/C++ minor mode powered by libclang
+;;   https://github.com/Sarcasm/flycheck-irony/
+;;
 
 (add-hook 'c++-mode-hook 'irony-mode)
 (add-hook 'c-mode-hook 'irony-mode)
@@ -43,23 +40,33 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; Company Mode
-;; Completion
+;; Yasnippet
+;;
 
-(add-hook 'after-init-hook 'global-company-mode)
+;; yas/insert-snippet: C-c & C-s
+;; /home/fabrice/.emacs.d/snippets ->
 
-(eval-after-load 'company
-  '(add-to-list 'company-backends 'company-c-headers))
+(require 'yasnippet)
+(yas/global-mode 1)
+;; (setq yas/snippet-dirs (concat local_emacs_d_path "snippets"))
+;; (load "snippet-bundel.el" t t)
 
-(eval-after-load 'company
-  '(add-to-list 'company-backends 'company-irony))
+;; http://sethlakowske.com/why-i-use-emacs/fix-yasnippet-and-autocomplete-tab-key-collision/
+;; Remove Yasnippet's default tab key binding
+(define-key yas-minor-mode-map (kbd "<tab>") nil)
+(define-key yas-minor-mode-map (kbd "TAB") nil)
+;; Set Yasnippet's key binding to shift+tab
+(define-key yas-minor-mode-map (kbd "<backtab>") 'yas-expand)
+;; Alternatively use Control-c + tab
+;; (define-key yas-minor-mode-map (kbd "\C-c TAB") 'yas-expand)
 
-(require 'company-irony-c-headers)
-;; Load with `irony-mode` as a grouped backend
-(eval-after-load 'company
-  '(add-to-list 'company-backends '(company-irony-c-headers company-irony)))
 
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;

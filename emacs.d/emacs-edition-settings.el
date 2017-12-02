@@ -1,25 +1,10 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Fill-column & Auto fill mode
-;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Clean Indentation Mode
+;;
 
-; (add-hook 'text-mode-hook 'turn-on-auto-fill)
-
-(setq fill-column 100)
-
-(add-hook 'TeX-mode-hook '(lambda () (setq fill-column 100)))
-(add-hook 'c-mode-hook '(lambda () (setq fill-column 100)))
-(add-hook 'cmake-mode-hook '(lambda () (setq fill-column 100)))
-(add-hook 'glsl-mode-hook '(lambda () (setq fill-column 100)))
-(add-hook 'outline-mode-hook '(lambda () (setq fill-column 100)))
-(add-hook 'python-mode-hook '(lambda () (setq fill-column 100)))
-(add-hook 'rst-mode-hook '(lambda () (setq fill-column 100)))
-(add-hook 'sass-mode-hook '(lambda () (setq fill-column 100)))
-(add-hook 'text-mode-hook '(lambda () (setq fill-column 100)))
-(add-hook 'web-mode-hook '(lambda () (setq fill-column 100)))
-(add-hook 'yaml-mode-hook '(lambda () (setq fill-column 100)))
-
-(setq column-number-mode t)
+(require 'clean-aindent-mode)
+(add-hook 'prog-mode-hook 'clean-aindent-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -41,14 +26,32 @@
 ;; Use `C-c m' interactively to highlight with face `column-marker-1'.
 ;; (global-set-key [?\C-c ?m] 'column-marker-1)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Fill-column & Auto fill mode
+;;
+
+; (add-hook 'text-mode-hook 'turn-on-auto-fill)
+
+(setq fill-column 100)
+
+(add-hook 'TeX-mode-hook '(lambda () (setq fill-column 100)))
+(add-hook 'c-mode-hook '(lambda () (setq fill-column 100)))
+(add-hook 'cmake-mode-hook '(lambda () (setq fill-column 100)))
+(add-hook 'glsl-mode-hook '(lambda () (setq fill-column 100)))
+(add-hook 'outline-mode-hook '(lambda () (setq fill-column 100)))
+(add-hook 'python-mode-hook '(lambda () (setq fill-column 100)))
+(add-hook 'rst-mode-hook '(lambda () (setq fill-column 100)))
+(add-hook 'sass-mode-hook '(lambda () (setq fill-column 100)))
+(add-hook 'text-mode-hook '(lambda () (setq fill-column 100)))
+(add-hook 'web-mode-hook '(lambda () (setq fill-column 100)))
+(add-hook 'yaml-mode-hook '(lambda () (setq fill-column 100)))
+
+(setq column-number-mode t)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Highlight Indentation
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Fill-column & Auto fill mode
-;
 
 ;; https://www.emacswiki.org/emacs/HighlightEndOfBuffer
 (setq-default indicate-empty-lines t)
@@ -63,9 +66,9 @@
 ;; (require 'whitespace)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Indent Guide
-;
+;;
+;; Indent Guide
+;;
 
 (require 'indent-guide)
 ;; (indent-guide-global-mode)
@@ -74,14 +77,13 @@
 ;; (setq indent-guide-recursive t)
 ;; (setq indent-guide-char ":")
 
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Clean Indentation Mode
-
-(require 'clean-aindent-mode)
-(add-hook 'prog-mode-hook 'clean-aindent-mode)
-
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
