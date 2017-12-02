@@ -16,7 +16,11 @@
 ;; icicles
 ;; https://www.emacswiki.org/emacs/Icicles
 
-(require 'icicles)
-(icy-mode 1)
+;; Issues:
+;;  M-x history
+;;  find-file
 
-(setq icicle-buffer-include-recent-files-nflag t)
+;; (require 'icicles)
+;; (icy-mode 1)
+
+;; (setq icicle-buffer-include-recent-files-nflag t)

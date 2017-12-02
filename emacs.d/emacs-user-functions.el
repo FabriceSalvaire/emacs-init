@@ -29,11 +29,15 @@ With argument ARG, do this that many times."
   (save-excursion
     (let ((file (file-name-nondirectory buffer-file-name)))
       (progn
-	(cond ((eq 'major-mode "emacs-lisp-mode")
+	(message "mode is [%s]" major-mode)
+	(cond ((equal major-mode 'emacs-lisp-mode)
 	       (insert (make-string 100 ?\;)))
-	      ((or (eq 'major-mode "python-mode") (eq 'major-mode "shell-mode"))
+	      ((or (equal major-mode 'python-mode)
+                   (equal major-mode 'shell-mode)
+                   (equal major-mode 'cmake-mode))
 	       (insert (make-string 100 ?#)))
-	      ((or (eq 'major-mode "c-mode") (eq 'major-mode "cpp-mode"))
+	      ((or (equal major-mode 'c-mode)
+                   (equal major-mode 'c++-mode))
 	       (insert (concat "/" (make-string 98 ?*) "/")))
 	      ((string-match "\\.\\(sass\\|css\\)\\'" file)
 	       (insert (concat "//" (make-string 98 ?*))))
@@ -53,7 +57,7 @@ With argument ARG, do this that many times."
   (save-excursion
     (let ((file (file-name-nondirectory buffer-file-name)))
       (progn
-	(if (eq 'major-mode "python-mode")
+	(if (equal major-mode 'python-mode)
 	    (insert (concat
 		     (make-string 4 ? )
 		     (make-string 46 ?#))))

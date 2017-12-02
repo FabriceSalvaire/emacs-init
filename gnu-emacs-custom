@@ -39,7 +39,7 @@
  '(js-indent-level 4)
  '(package-selected-packages
    (quote
-    (web-mode spice-mode cmake-project cmake-ide cmake-font-lock modern-cpp-font-lock cpputils-cmake cff auto-complete-c-headers pyimport elpy ein jinja2-mode flycheck qml-mode nginx-mode csharp-mode string-inflection solarized-theme scss-mode sass-mode salt-mode pyvenv python-mode python-django pylint puppet-mode protobuf-mode powerline php-mode magit irony-eldoc indent-guide icomplete+ icicles highlight-indentation helm graphviz-dot-mode gradle-mode glsl-mode flymake-shell flycheck-tip flycheck-pos-tip flycheck-irony flycheck-color-mode-line django-mode cuda-mode company-shell company-qml company-math company-jedi company-irony-c-headers company-irony company-c-headers company-auctex company-anaconda column-marker cmake-mode clean-aindent-mode auto-complete auctex-lua anything)))
+    (spice-mode cmake-project cmake-ide cmake-font-lock modern-cpp-font-lock cpputils-cmake cff auto-complete-c-headers pyimport elpy ein jinja2-mode flycheck qml-mode csharp-mode string-inflection solarized-theme scss-mode sass-mode pyvenv python-mode python-django pylint protobuf-mode powerline php-mode magit irony-eldoc indent-guide icomplete+ icicles highlight-indentation helm graphviz-dot-mode gradle-mode glsl-mode flymake-shell flycheck-tip flycheck-pos-tip flycheck-irony flycheck-color-mode-line django-mode cuda-mode company-shell company-qml company-math company-jedi company-irony-c-headers company-irony company-c-headers company-auctex company-anaconda column-marker cmake-mode clean-aindent-mode auto-complete auctex-lua anything)))
  '(perl-continued-brace-offset -2)
  '(perl-continued-statement-offset 2)
  '(perl-indent-level 2)
@@ -95,6 +95,10 @@
  '(default ((t (:stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 143 :width normal :foundry "PfEd" :family "DejaVu Sans Mono"))))
  '(cperl-array-face ((t (:inherit font-lock-variable-name-face :foreground "lime green"))))
  '(cperl-hash-face ((t (:inherit font-lock-variable-name-face :foreground "light green"))))
+ '(flycheck-color-mode-line-error-face ((t (:background "salmon"))))
+ '(flycheck-color-mode-line-info-face ((t (:background "pale green"))))
+ '(flycheck-color-mode-line-running-face ((t (:background "lavender"))))
+ '(flycheck-color-mode-line-warning-face ((t (:background "orange"))))
  '(nxml-attribute-value-delimiter-face ((t (:inherit nxml-delimiter-face :foreground "LightSalmon"))))
  '(powerline-active1 ((t (:inherit mode-line :background "grey52"))))
  '(powerline-active2 ((t (:inherit mode-line :background "grey70"))))
