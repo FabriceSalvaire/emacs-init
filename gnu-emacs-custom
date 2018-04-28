@@ -29,7 +29,7 @@
  '(delete-selection-mode nil nil (delsel))
  '(dired-omit-extensions
    (quote
-    (".o" "~" ".bin" ".lbin" ".so" ".a" ".ln" ".blg" ".bbl" ".elc" ".lof" ".glo" ".idx" ".lot" ".svn/" ".hg/" ".git/" ".bzr/" "CVS/" "_darcs/" "_MTN/" ".fmt" ".tfm" ".class" ".fas" ".lib" ".mem" ".x86f" ".sparcf" ".dfsl" ".pfsl" ".d64fsl" ".p64fsl" ".lx64fsl" ".lx32fsl" ".dx64fsl" ".dx32fsl" ".fx64fsl" ".fx32fsl" ".sx64fsl" ".sx32fsl" ".wx64fsl" ".wx32fsl" ".fasl" ".ufsl" ".fsl" ".dxl" ".lo" ".la" ".gmo" ".toc" ".aux" ".cp" ".fn" ".ky" ".pg" ".tp" ".vr" ".cps" ".fns" ".kys" ".pgs" ".tps" ".vrs" ".pyc" ".pyo" ".idx" ".lof" ".lot" ".glo" ".blg" ".bbl" ".cp" ".cps" ".fn" ".fns" ".ky" ".kys" ".pg" ".pgs" ".tp" ".tps" ".vr" ".vrs")))
+    (".o" "~" ".bin" ".lbin" ".so" ".a" ".ln" ".blg" ".bbl" ".elc" ".lof" ".glo" ".idx" ".lot" ".svn/" ".hg/" ".git/" ".bzr/" "CVS/" "_darcs/" "_MTN/" ".fmt" ".tfm" ".class" ".fas" ".lib" ".mem" ".x86f" ".sparcf" ".dfsl" ".pfsl" ".d64fsl" ".p64fsl" ".lx64fsl" ".lx32fsl" ".dx64fsl" ".dx32fsl" ".fx64fsl" ".fx32fsl" ".sx64fsl" ".sx32fsl" ".wx64fsl" ".wx32fsl" ".fasl" ".ufsl" ".fsl" ".dxl" ".lo" ".la" ".gmo" ".toc" ".aux" ".cp" ".fn" ".ky" ".pg" ".tp" ".vr" ".cps" ".fns" ".kys" ".pgs" ".tps" ".vrs" ".pyc" ".pyo" ".idx" ".lof" ".lot" ".glo" ".blg" ".bbl" ".cp" ".cps" ".fn" ".fns" ".ky" ".kys" ".pg" ".pgs" ".tp" ".tps" ".vr" ".vrs" ".qmlc")))
  '(dired-omit-files "^\\.$\\|^\\..+$\\|^__pycache__$")
  '(dired-omit-mode nil t)
  '(dired-recursive-deletes (quote top))
@@ -39,7 +39,7 @@
  '(js-indent-level 4)
  '(package-selected-packages
    (quote
-    (spice-mode cmake-project cmake-ide cmake-font-lock modern-cpp-font-lock cpputils-cmake cff auto-complete-c-headers pyimport elpy ein jinja2-mode flycheck qml-mode csharp-mode string-inflection solarized-theme scss-mode sass-mode pyvenv python-mode python-django pylint protobuf-mode powerline php-mode magit irony-eldoc indent-guide icomplete+ icicles highlight-indentation helm graphviz-dot-mode gradle-mode glsl-mode flymake-shell flycheck-tip flycheck-pos-tip flycheck-irony flycheck-color-mode-line django-mode cuda-mode company-shell company-qml company-math company-jedi company-irony-c-headers company-irony company-c-headers company-auctex company-anaconda column-marker cmake-mode clean-aindent-mode auto-complete auctex-lua anything)))
+    (systemd apache-mode react-snippets rjsx-mode pippel live-py-mode importmagic typoscript-mode spice-mode cmake-project cmake-ide cmake-font-lock modern-cpp-font-lock cpputils-cmake cff auto-complete-c-headers pyimport elpy ein jinja2-mode flycheck qml-mode csharp-mode string-inflection solarized-theme scss-mode sass-mode pyvenv python-mode python-django pylint protobuf-mode powerline php-mode magit irony-eldoc indent-guide icomplete+ icicles highlight-indentation helm graphviz-dot-mode gradle-mode glsl-mode flymake-shell flycheck-tip flycheck-pos-tip flycheck-irony flycheck-color-mode-line django-mode cuda-mode company-shell company-qml company-math company-jedi company-irony-c-headers company-irony company-c-headers company-auctex company-anaconda column-marker cmake-mode clean-aindent-mode auto-complete auctex-lua anything)))
  '(perl-continued-brace-offset -2)
  '(perl-continued-statement-offset 2)
  '(perl-indent-level 2)

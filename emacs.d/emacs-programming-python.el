@@ -3,6 +3,10 @@
 ;; Python
 ;;
 
+;; https://gitlab.com/python-mode-devs
+(setq py-outline-minor-mode-p 'nil)
+(setq py-underscore-word-syntax-p 'nil)
+
 ; (setq interpreter-mode-alist
 ;       (cons '("python" . python-mode)
 ;             interpreter-mode-alist))
@@ -35,6 +39,39 @@
 (require 'ein-loaddefs)
 (require 'ein-notebook)
 (require 'ein-subpackages)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; importmagic.el
+;;   https://github.com/anachronic/importmagic.el
+;;
+;;   The default behavior sets only one key binding: C-c C-l. It
+;;   solves imports for every unresolved symbol in the buffer,
+;;   prompting for one import at a time. If there are no imports found
+;;   for a given symbol, importmagic will let you know at the end of
+;;   the process.
+
+; use to much cpu
+; (add-hook 'python-mode-hook 'importmagic-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Live Coding in Python
+;;   http://donkirkby.github.io/live-py-plugin/
+;;
+;;   To use it, open a Python file and run M-x live-py-mode
+;;   If that doesn't work, put the following in your Emacs configuration file:
+
+(require 'live-py-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Frontend to python package manager pip
+;;   https://github.com/brotzeitmacher/pippel
+;;
+;;   M-x pippel-list-packages
+
+(require 'pippel)
 
 
 

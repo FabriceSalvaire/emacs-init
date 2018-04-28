@@ -38,6 +38,7 @@
 (add-hook 'TeX-mode-hook '(lambda () (setq fill-column 100)))
 (add-hook 'c-mode-hook '(lambda () (setq fill-column 100)))
 (add-hook 'cmake-mode-hook '(lambda () (setq fill-column 100)))
+(add-hook 'django-mode-hook '(lambda () (setq fill-column 100)))
 (add-hook 'glsl-mode-hook '(lambda () (setq fill-column 100)))
 (add-hook 'outline-mode-hook '(lambda () (setq fill-column 100)))
 (add-hook 'python-mode-hook '(lambda () (setq fill-column 100)))

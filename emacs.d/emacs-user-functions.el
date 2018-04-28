@@ -33,11 +33,16 @@ With argument ARG, do this that many times."
 	(cond ((equal major-mode 'emacs-lisp-mode)
 	       (insert (make-string 100 ?\;)))
 	      ((or (equal major-mode 'python-mode)
+		   (equal major-mode 'django-mode)
                    (equal major-mode 'shell-mode)
                    (equal major-mode 'cmake-mode))
 	       (insert (make-string 100 ?#)))
 	      ((or (equal major-mode 'c-mode)
-                   (equal major-mode 'c++-mode))
+                   (equal major-mode 'c++-mode)
+		   (equal major-mode 'js-mode)
+		   (equal major-mode 'rjsx-mode)
+		   (equal major-mode 'scss-mode)
+		   )
 	       (insert (concat "/" (make-string 98 ?*) "/")))
 	      ((string-match "\\.\\(sass\\|css\\)\\'" file)
 	       (insert (concat "//" (make-string 98 ?*))))
@@ -57,7 +62,8 @@ With argument ARG, do this that many times."
   (save-excursion
     (let ((file (file-name-nondirectory buffer-file-name)))
       (progn
-	(if (equal major-mode 'python-mode)
+	(if (or (equal major-mode 'python-mode)
+		(equal major-mode 'django-mode))
 	    (insert (concat
 		     (make-string 4 ? )
 		     (make-string 46 ?#))))
