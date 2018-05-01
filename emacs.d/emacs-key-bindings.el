@@ -18,3 +18,6 @@
 ; https://github.com/akicho8/string-inflection
 (require 'string-inflection)
 (global-set-key (kbd "M-n")  'string-inflection-underscore)
+
+(global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
