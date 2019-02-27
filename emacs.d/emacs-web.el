@@ -70,4 +70,12 @@
 
 ;; https://github.com/felipeochoa/rjsx-mode/
 
-;; (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
+(add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
+
+(add-hook 'jsx-mode-hook (lambda ()
+                           (setq c-basic-offset 4
+                                 indent-tabs-mode nil)))
+
+(add-hook 'js2-mode-hook (lambda ()
+                           (setq c-basic-offset 4
+                                 indent-tabs-mode nil)))

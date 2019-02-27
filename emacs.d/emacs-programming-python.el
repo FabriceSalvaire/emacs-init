@@ -36,7 +36,7 @@
 ;;   http://millejoh.github.io/emacs-ipython-notebook/#quick-try
 
 (require 'ein)
-(require 'ein-loaddefs)
+;; (require 'ein-loaddefs)
 (require 'ein-notebook)
 (require 'ein-subpackages)
 

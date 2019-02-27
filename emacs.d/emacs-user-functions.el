@@ -40,6 +40,7 @@ With argument ARG, do this that many times."
 	      ((or (equal major-mode 'c-mode)
                    (equal major-mode 'c++-mode)
 		   (equal major-mode 'js-mode)
+		   (equal major-mode 'js2-mode)
 		   (equal major-mode 'rjsx-mode)
 		   (equal major-mode 'scss-mode)
 		   )
@@ -61,12 +62,18 @@ With argument ARG, do this that many times."
   (interactive)
   (save-excursion
     (let ((file (file-name-nondirectory buffer-file-name)))
+
+
       (progn
-	(if (or (equal major-mode 'python-mode)
-		(equal major-mode 'django-mode))
-	    (insert (concat
-		     (make-string 4 ? )
-		     (make-string 46 ?#))))
+	(message "mode is [%s]" major-mode)
+	(cond ((or (equal major-mode 'python-mode)
+		   (equal major-mode 'django-mode))
+	       (insert (concat
+			(make-string 4 ? )
+			(make-string 46 ?#))))
+	      ((or (equal major-mode 'qml-mode))
+	       (insert (concat "    /" (make-string 54 ?*) "/")))
+	      )
 	))))
 (global-set-key [f7] 'insert-short-rule)
 

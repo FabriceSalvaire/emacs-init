@@ -17,3 +17,11 @@
 
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex) ; with AUCTeX LaTeX mode
 (add-hook 'latex-mode-hook 'turn-on-reftex) ; with Emacs latex mode
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; ReST
+;;
+
+(add-hook 'rest-mode-hook (lambda ()
+                            (setq indent-tabs-mode nil)))

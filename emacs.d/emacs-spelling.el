@@ -35,17 +35,32 @@
   (add-hook hook (lambda () (flyspell-mode 1))))
 
 (dolist (hook
-         '(python-mode-hook)
+	 '(python-mode-hook))
+  (add-hook hook (lambda () (flyspell-prog-mode))))
+(dolist (hook
          '(c-mode-hook)
          '(c++-mode-hook))
   (add-hook hook (lambda () (flyspell-prog-mode))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Google Translate
 
+(require 'google-translate)
+;; (require 'google-translate-default-ui)
+(require 'google-translate-smooth-ui)
 
+;; (global-set-key "\C-ct" 'google-translate-at-point)
+(global-set-key "\C-ct" 'google-translate-smooth-translate)
+(global-set-key "\C-cT" 'google-translate-query-translate)
+
+(setq google-translate-translation-directions-alist
+      '(("en" . "fr") ("fr" . "en")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;;                                            Trash
+;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
