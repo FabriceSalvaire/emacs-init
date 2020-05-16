@@ -37,9 +37,10 @@
  '(global-font-lock-mode t nil (font-lock))
  '(icicle-buffer-include-recent-files-nflag 1)
  '(js-indent-level 4)
+ '(markdown-command "pandoc")
  '(package-selected-packages
    (quote
-    (flycheck-pycheckers google-translate magit haskell-mode systemd apache-mode react-snippets rjsx-mode pippel live-py-mode importmagic typoscript-mode spice-mode cmake-project cmake-ide cmake-font-lock modern-cpp-font-lock cpputils-cmake cff auto-complete-c-headers pyimport jinja2-mode qml-mode csharp-mode string-inflection scss-mode sass-mode pyvenv python-django pylint protobuf-mode powerline php-mode irony-eldoc indent-guide icomplete+ icicles highlight-indentation graphviz-dot-mode gradle-mode glsl-mode flymake-shell flycheck-tip flycheck-pos-tip flycheck-irony flycheck-color-mode-line django-mode cuda-mode company-shell company-qml company-math company-jedi company-irony-c-headers company-irony company-c-headers company-auctex company-anaconda column-marker cmake-mode clean-aindent-mode auto-complete auctex-lua anything)))
+    (markdown-mode+ markdown-preview-mode markdown-mode tern graphql-mode json-mode flycheck-pycheckers google-translate magit haskell-mode systemd apache-mode react-snippets rjsx-mode pippel live-py-mode importmagic typoscript-mode spice-mode cmake-project cmake-ide cmake-font-lock modern-cpp-font-lock cpputils-cmake cff auto-complete-c-headers pyimport jinja2-mode qml-mode csharp-mode string-inflection scss-mode sass-mode pyvenv python-django pylint protobuf-mode powerline php-mode irony-eldoc indent-guide icomplete+ icicles highlight-indentation graphviz-dot-mode gradle-mode glsl-mode flymake-shell flycheck-tip flycheck-pos-tip flycheck-irony flycheck-color-mode-line django-mode cuda-mode company-shell company-qml company-math company-jedi company-irony-c-headers company-irony company-c-headers company-auctex company-anaconda column-marker cmake-mode clean-aindent-mode auto-complete auctex-lua anything)))
  '(perl-continued-brace-offset -2)
  '(perl-continued-statement-offset 2)
  '(perl-indent-level 2)
