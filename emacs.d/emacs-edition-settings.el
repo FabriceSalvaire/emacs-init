@@ -33,6 +33,7 @@
 
 ; (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
+; SET AS CUSTOM ELSE NOT SET !!!
 (setq fill-column 100)
 
 (add-hook 'TeX-mode-hook '(lambda () (setq fill-column 100)))

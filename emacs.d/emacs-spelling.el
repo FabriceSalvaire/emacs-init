@@ -59,6 +59,33 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
+;; https://github.com/PillFall/Emacs-LanguageTool.el
+
+(setq languagetool-language-tool-jar "/usr/local/stow/LanguageTool-5.3/languagetool-commandline.jar")
+;; (setq languagetool-server-language-tool-jar "/usr/local/stow/LanguageTool-5.3/languagetool-server.jar")
+;; (languagetool-server-start)
+(setq languagetool-java-arguments '("-Dfile.encoding=UTF-8"))
+(setq languagetool-default-language "en-GB")
+(global-set-key "\C-clc" 'languagetool-check)
+(global-set-key "\C-cld" 'languagetool-clear-buffer)
+(global-set-key "\C-clp" 'languagetool-correct-at-point)
+(global-set-key "\C-clb" 'languagetool-correct-buffer)
+(global-set-key "\C-cll" 'languagetool-set-language)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; https://github.com/emacs-languagetool/flycheck-languagetool
+;; https://dev.languagetool.org/http-server
+
+(use-package flycheck-languagetool
+  :ensure t
+  :hook (text-mode . (lambda ()
+                       (require 'flycheck-languagetool)))
+  :init
+  (setq flycheck-languagetool-commandline-jar "/usr/local/stow/LanguageTool-5.3/languagetool-commandline.jar"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;;                                            Trash
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -111,6 +111,14 @@
 ;;        (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Go
+;
+
+(autoload 'go-mode "go-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -179,3 +187,26 @@
 ;; (autoload 'visual-basic-mode "visual-basic-mode" "Visual Basic mode." t)
 ;; (setq auto-mode-alist (append '(("\\.\\(frm\\|bas\\|cls\\)$" .
 ;;                                 visual-basic-mode)) auto-mode-alist))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Go
+;
+
+(add-hook 'go-mode-hook
+  (lambda ()
+    (setq-default)
+    (setq tab-width 4)
+    (setq standard-indent 4)
+    (setq indent-tabs-mode nil)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Kotlin
+;
+
+;; (require 'kotlin-mode)
+;; (add-to-list 'auto-mode-alist '("\\.kt\\'" . kotlin-mode))
+
+(autoload 'kotlin-mode "kotlin-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.kt\\'" . kotlin-mode))

@@ -26,10 +26,12 @@
 (c-add-style "qt-gnu" '("gnu"
                         (c-access-key . "\\<\\(signals\\|public\\|protected\\|private\\|public slots\\|protected slots\\|private slots\\):")
                          (c-basic-offset . 4)))
+
 (defun c-set-qt-style ()
   (interactive)
   (c-set-style "qt-gnu")
   (message "Qt indentation."))
+
 
 ;; modern-cpp-font-lock - Font-locking for Modern C++
 ;; https://github.com/ludwigpacifici/modern-cpp-font-lock
