@@ -3,9 +3,10 @@
 ;; Frame settings
 ;;
 
-;(speedbar t)
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Speedbar.html
+;; (speedbar t)
 
-; Disable the tool bar
+;; Disable the tool bar
 (tool-bar-mode nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -16,7 +17,13 @@
 (global-font-lock-mode t)
 (setq font-lock-maximum-decoration t)
 
-; '(default ((t (:stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 143 :width normal :foundry "PfEd" :family "DejaVu Sans Mono"))))
+;; '(default ((t
+;;             (:stipple nil
+;;              :background "white" :foreground "black"
+;;              :inverse-video nil :box nil :strike-through nil
+;;              :overline nil :underline nil :slant normal :weight normal :height 143 :width normal
+;;              :foundry "PfEd" :family "DejaVu Sans Mono"
+;;              ))))
 
 (defun set_font_normal ()
   (interactive)
