@@ -62,7 +62,7 @@
 (load "mode-web.el" t t)
 
 (load "spelling.el" t t)
-(load "flycheck.el" t t)
+(load "flycheck-settings.el" t t)
 
 (load "user-functions.el" t t)
 
@@ -82,4 +82,4 @@
 ; Load post-config files
 ;
 
-(load "server.el" t t)
+(load "server-settings.el" t t)

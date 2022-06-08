@@ -2,7 +2,6 @@
 ;;
 ;; FlyCheck - Syntax checking for GNU Emacs
 ;; http://www.flycheck.org/en/latest/
-;;
 
 ;; (package-install 'flycheck)
 ;; (global-flycheck-mode)
@@ -38,8 +37,6 @@
 
 ;; (setq error-tip-notify-keep-messages t)
 
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; C, C++ and Objective-C support for Flycheck, using Irony Mode
@@ -48,7 +45,6 @@
 
 (eval-after-load 'flycheck
   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
