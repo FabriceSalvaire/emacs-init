@@ -74,7 +74,7 @@
 ; Custum Settings
 ;
 
-(setq custom-file (concat local_path_prefix "gnu-emacs-custom"))
+(setq custom-file (concat local_path_prefix "gnu-emacs-custom.el"))
 (load custom-file t t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
