@@ -44,30 +44,30 @@
 ; Load sub-config files
 ;
 
-(load "emacs-package-repository.el" t t)
+(load "package-repository.el" t t)
 
-(load "emacs-frame.el" t t)
-(load "emacs-font.el" t t)
-(load "emacs-behaviour.el" t t)
-(load "emacs-completion.el" t t) ; buffer switch
-(load "emacs-edition-settings.el" t t)
+(load "frame.el" t t)
+(load "font.el" t t)
+(load "behaviour.el" t t)
+(load "completion.el" t t) ; buffer switch
+(load "edition-settings.el" t t)
 
-(load "emacs-modes.el" t t)
-(load "emacs-sysadmin.el" t t)
+(load "modes.el" t t)
+(load "sysadmin.el" t t)
 
-(load "emacs-programming.el" t t)
-(load "emacs-mode-languages.el" t t)
-(load "emacs-mode-c.el" t t)
-(load "emacs-mode-python.el" t t)
-(load "emacs-mode-web.el" t t)
+(load "programming.el" t t)
+(load "mode-languages.el" t t)
+(load "mode-c.el" t t)
+(load "mode-python.el" t t)
+(load "mode-web.el" t t)
 
-(load "emacs-spelling.el" t t)
-(load "emacs-flycheck.el" t t)
+(load "spelling.el" t t)
+(load "flycheck.el" t t)
 
-(load "emacs-user-functions.el" t t)
+(load "user-functions.el" t t)
 
 ;; must be after
-(load "emacs-keys.el" t t)
+(load "keys.el" t t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -82,4 +82,4 @@
 ; Load post-config files
 ;
 
-(load "emacs-server.el" t t)
+(load "server.el" t t)
