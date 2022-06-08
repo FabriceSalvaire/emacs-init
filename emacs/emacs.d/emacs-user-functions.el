@@ -1,26 +1,5 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; Python Mode Kill Word
-;
-
-(defun py-kill-word (arg)
-  "Kill characters forward until encountering the end of a word.
-With argument ARG, do this that many times."
-  (interactive "p")
-  (kill-region (point) (progn (py-forward-into-nomenclature arg) (point))))
-;(global-set-key [M-delete] 'kill-word)
-(global-set-key [C-delete] 'py-kill-word)
-
-(defun py-backward-kill-word (arg)
-  "Kill characters backward until encountering the beginning of a word.
-With argument ARG, do this that many times."
-  (interactive "p")
-  (kill-region (point) (progn (py-backward-into-nomenclature arg) (point))))
-;(global-set-key [M-backspace] 'backward-kill-word)
-(global-set-key [C-backspace] 'py-backward-kill-word)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
 ; Insert Long Rule
 ;
 
@@ -51,7 +30,6 @@ With argument ARG, do this that many times."
 	      ;;  (insert (concat "/" (make-string 98 ?*) "/")))
 	      )
 	))))
-(global-set-key [f6] 'insert-long-rule)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -62,8 +40,6 @@ With argument ARG, do this that many times."
   (interactive)
   (save-excursion
     (let ((file (file-name-nondirectory buffer-file-name)))
-
-
       (progn
 	(message "mode is [%s]" major-mode)
 	(cond ((or (equal major-mode 'python-mode)
@@ -75,7 +51,6 @@ With argument ARG, do this that many times."
 	       (insert (concat "    /" (make-string 54 ?*) "/")))
 	      )
 	))))
-(global-set-key [f7] 'insert-short-rule)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -101,7 +76,6 @@ With argument ARG, do this that many times."
 	  )
 	(indent-region (point-min) (point-max))
 	))))
-(global-set-key [f12] 'custom-indent)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -118,7 +92,6 @@ With argument ARG, do this that many times."
 	  (replace-regexp (car from_to) (cdr from_to) nil (point-min) (point-max))
 	  )
 	))))
-(global-set-key [f11] 'custom-doxygen)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -138,9 +111,24 @@ With argument ARG, do this that many times."
 (defun insert-and ()
   (interactive)
   (insert "&&"))
-(global-set-key "\M-&" 'insert-and)
 
 (defun insert-or ()
   (interactive)
   (insert "||"))
-(global-set-key "\M-|" 'insert-or)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Python Mode Kill Word
+;
+
+(defun py-kill-word (arg)
+  "Kill characters forward until encountering the end of a word.
+With argument ARG, do this that many times."
+  (interactive "p")
+  (kill-region (point) (progn (py-forward-into-nomenclature arg) (point))))
+
+(defun py-backward-kill-word (arg)
+  "Kill characters backward until encountering the beginning of a word.
+With argument ARG, do this that many times."
+  (interactive "p")
+  (kill-region (point) (progn (py-backward-into-nomenclature arg) (point))))

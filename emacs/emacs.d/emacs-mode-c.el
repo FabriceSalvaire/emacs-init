@@ -3,6 +3,18 @@
 ; C
 ;
 
+(add-to-list 'auto-mode-alist '("\\.txx\\'" . c-mode))
+
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Hideshow.html
+;; Hideshow mode is a buffer-local minor mode that allows you to selectively display portions of a program, which are referred to as blocks. 
+(add-hook 'c-mode-common-hook 'hs-minor-mode)
+
+;; modern-cpp-font-lock - Font-locking for Modern C++
+;; https://github.com/ludwigpacifici/modern-cpp-font-lock
+(add-hook 'c++-mode-hook #'modern-c++-font-lock-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defun my-c-common-hook ()
   (progn
     (c-set-style "gnu")
@@ -31,14 +43,5 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(add-to-list 'auto-mode-alist '("\\.txx\\'" . c-mode))
-
-;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Hideshow.html
-(add-hook 'c-mode-common-hook 'hs-minor-mode)
-
 (add-hook 'c-mode-common-hook 'my-c-common-hook)
 ;; (add-hook 'c-mode-common-hook 'c-set-indent-fabrice)
-
-;; modern-cpp-font-lock - Font-locking for Modern C++
-;; https://github.com/ludwigpacifici/modern-cpp-font-lock
-(add-hook 'c++-mode-hook #'modern-c++-font-lock-mode)

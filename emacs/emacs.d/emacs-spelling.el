@@ -50,10 +50,6 @@
 ;; (require 'google-translate-default-ui)
 (require 'google-translate-smooth-ui)
 
-;; (global-set-key "\C-ct" 'google-translate-at-point)
-(global-set-key "\C-ct" 'google-translate-smooth-translate)
-(global-set-key "\C-cT" 'google-translate-query-translate)
-
 (setq google-translate-translation-directions-alist
       '(("en" . "fr") ("fr" . "en")))
 
@@ -66,11 +62,6 @@
 ;; (languagetool-server-start)
 (setq languagetool-java-arguments '("-Dfile.encoding=UTF-8"))
 (setq languagetool-default-language "en-GB")
-(global-set-key "\C-clc" 'languagetool-check)
-(global-set-key "\C-cld" 'languagetool-clear-buffer)
-(global-set-key "\C-clp" 'languagetool-correct-at-point)
-(global-set-key "\C-clb" 'languagetool-correct-buffer)
-(global-set-key "\C-cll" 'languagetool-set-language)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -85,60 +76,58 @@
   (setq flycheck-languagetool-commandline-jar "/usr/local/stow/LanguageTool-5.3/languagetool-commandline.jar"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;;                                            Trash
-;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; hunspell
 
-;;; (setq-default ispell-program-name "hunspell")
-;;; (ispell-change-dictionary "fr_FR")
-;;; (setq ispell-extra-args '("-a" "-i" "utf-8"))
+;; (setq-default ispell-program-name "hunspell")
+;; (ispell-change-dictionary "fr_FR")
+;; (setq ispell-extra-args '("-a" "-i" "utf-8"))
 
-;;; (require 'ispell)
-;;; (eval-after-load "ispell"
-;;;   ;; so that following modifications won't be lost when ispell is loaded
-;;;   '(progn
-;;;
-;;;      ;; default dictionary to use (if `ispell-local-dictionary' is nil)
-;;;      ; (setq ispell-dictionary "fr_FR")
-;;;
-;;;      ;; save the personal dictionary without confirmation
-;;;      ; (setq ispell-silently-savep t)
-;;;
-;;;      ;; extra switches to pass to the `ispell' program
-;;;      ;; TODO Check they are right!
-;;;      ; /usr/bin/hunspell -a  -B -i iso-8859-1
-;;;      (setq ispell-extra-args '("-a" "-i" "utf-8"))
-;;;
-;;;      ;; redefine the list of installed dictionaries
-;;;      ;; ??? FIXME This variable is reset once latter in this .emacs file!!!
-;;;      (setq ispell-dictionary-alist
-;;;      	   ;; those not here will be "undefined dictionary"
-;;;      	   '(
-;;;      	     ;; default
-;;;      	     (nil
-;;;      	      "[A-Za-z]" "[^A-Za-z]"
-;;;      	      "[']" nil ("-B") nil iso-8859-1)
-;;;
-;;;      	     ;; US English
-;;;      	     ("en_US"
-;;;      	      "[A-Za-z]" "[^A-Za-z]"
-;;;      	      "[']" nil ("-B") nil utf-8)
-;;;
-;;;      	     ;; standard French
-;;;      	     ("fr_FR"
-;;;      	      "[a-zàâäéèêëîïôöùûüçA-ZÀÂÄÉÈÊËÎÏÔÖÙÛÜÇ]" "[^a-zàâäéèêëîïôöùûüçA-ZÀÂÄÉÈÊËÎÏÔÖÙÛÜÇ]"
-;;;      	      "[-']" t nil "~list" utf-8)
-;;;      	     ))
-;;;
-;;;      ;; `aspell' extensions should *not* be used
-;;;      (setq ispell-really-aspell nil)
-;;;
-;;;      ;; `hunspell' extensions should be used
-;;;      (setq ispell-really-hunspell t)
-;;;      )
-;;; )
+;; (require 'ispell)
+;; (eval-after-load "ispell"
+;;   ;; so that following modifications won't be lost when ispell is loaded
+;;   '(progn
+;;
+;;      ;; default dictionary to use (if `ispell-local-dictionary' is nil)
+;;      ; (setq ispell-dictionary "fr_FR")
+;;
+;;      ;; save the personal dictionary without confirmation
+;;      ; (setq ispell-silently-savep t)
+;;
+;;      ;; extra switches to pass to the `ispell' program
+;;      ;; TODO Check they are right!
+;;      ; /usr/bin/hunspell -a  -B -i iso-8859-1
+;;      (setq ispell-extra-args '("-a" "-i" "utf-8"))
+;;
+;;      ;; redefine the list of installed dictionaries
+;;      ;; ??? FIXME This variable is reset once latter in this .emacs file!!!
+;;      (setq ispell-dictionary-alist
+;;      	   ;; those not here will be "undefined dictionary"
+;;      	   '(
+;;      	     ;; default
+;;      	     (nil
+;;      	      "[A-Za-z]" "[^A-Za-z]"
+;;      	      "[']" nil ("-B") nil iso-8859-1)
+;;
+;;      	     ;; US English
+;;      	     ("en_US"
+;;      	      "[A-Za-z]" "[^A-Za-z]"
+;;      	      "[']" nil ("-B") nil utf-8)
+;;
+;;      	     ;; standard French
+;;      	     ("fr_FR"
+;;      	      "[a-zàâäéèêëîïôöùûüçA-ZÀÂÄÉÈÊËÎÏÔÖÙÛÜÇ]" "[^a-zàâäéèêëîïôöùûüçA-ZÀÂÄÉÈÊËÎÏÔÖÙÛÜÇ]"
+;;      	      "[-']" t nil "~list" utf-8)
+;;      	     ))
+;;
+;;      ;; `aspell' extensions should *not* be used
+;;      (setq ispell-really-aspell nil)
+;;
+;;      ;; `hunspell' extensions should be used
+;;      (setq ispell-really-hunspell t)
+;;      )
+;; )

@@ -1,5 +1,3 @@
-; -*- lisp -*-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;                                                                                                   ;
 ;                                              GNU-Emacs                                            ;
@@ -30,7 +28,9 @@
 ;; You may delete these explanatory comments.
 ;; (package-initialize)
 
-(setq local_path_prefix "/home/etc/users/")
+;; This is the only absolut path for Emacs files
+(setq local_path_prefix "/home/etc/users/emacs/")
+
 (setq local_emacs_site_lisp_path (concat local_path_prefix "emacs-site-lisp/"))
 (setq local_emacs_d_path (concat local_path_prefix "emacs.d/"))
 
@@ -45,24 +45,29 @@
 ;
 
 (load "emacs-package-repository.el" t t)
-(load "emacs-document-editing-modes.el" t t)
+
+(load "emacs-frame.el" t t)
+(load "emacs-font.el" t t)
+(load "emacs-behaviour.el" t t)
+(load "emacs-completion.el" t t) ; buffer switch
 (load "emacs-edition-settings.el" t t)
-(load "emacs-frame-font-settings.el" t t)
-(load "emacs-key-bindings.el" t t)
-(load "emacs-mode.el" t t)
-(load "emacs-buffer-switch.el" t t)
-(load "emacs-spelling.el" t t)
+
+(load "emacs-modes.el" t t)
 (load "emacs-sysadmin.el" t t)
-; (load "emacs-helm.el" t t)
 
 (load "emacs-programming.el" t t)
-(load "emacs-programming-c.el" t t)
-(load "emacs-programming-python.el" t t)
-(load "emacs-programming-languages.el" t t)
-(load "emacs-web.el" t t)
+(load "emacs-mode-languages.el" t t)
+(load "emacs-mode-c.el" t t)
+(load "emacs-mode-python.el" t t)
+(load "emacs-mode-web.el" t t)
+
+(load "emacs-spelling.el" t t)
 (load "emacs-flycheck.el" t t)
 
 (load "emacs-user-functions.el" t t)
+
+;; must be after
+(load "emacs-keys.el" t t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

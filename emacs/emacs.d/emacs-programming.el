@@ -1,7 +1,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; Company Mode - Completion
-;;
+;; Company
+;;  Company is a text completion framework for Emacs
+;;  https://company-mode.github.io
 
 (add-hook 'after-init-hook 'global-company-mode)
 
@@ -19,8 +20,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Irony
-;;   https://github.com/Sarcasm/irony-mode   A C/C++ minor mode powered by libclang
-;;   https://github.com/Sarcasm/flycheck-irony/
+;;   A C/C++ minor mode powered by libclang
+;;   https://github.com/Sarcasm/irony-mode
+;;   https://github.com/Sarcasm/flycheck-irony
 ;;
 
 (add-hook 'c++-mode-hook 'irony-mode)
@@ -65,21 +67,65 @@
 ;; clang-format
 
 (require 'clang-format)
-(global-set-key [C-M-tab] 'clang-format-region)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Projectile
 ;;   https://github.com/bbatsov/projectile
 ;;   https://docs.projectile.mx/projectile/index.html
+;;   https://github.com/ericdanan/counsel-projectile
 
 ; (add-to-list 'package-pinned-packages '(projectile . "melpa-stable") t)
 
 (projectile-mode +1)
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
+;; https://docs.projectile.mx/projectile/projects.html
+(projectile-register-project-type 'CMakeGit
+                                  '("CMakeLists.txt" ".git")
+                                  :project-file "CMakeLists.txt"
+                                  :compile ""
+                                  :test ""
+                                  :run ""
+                                  :test-suffix ""
+                                  )
 
 ;; https://github.com/anshulverma/projectile-speedbar
 (require 'projectile-speedbar)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; LSP
+;;   https://emacs-lsp.github.io
+
+(use-package lsp-mode
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (
+         (c-mode . lsp-deferred)
+	 (c++-mode . lsp-deferred)
+	 (java-mode . lsp-deferred)
+	 (python-mode . lsp-deferred)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+
+;; optionally
+(use-package lsp-ui :commands lsp-ui-mode)
+;; if you are helm user
+;; (use-package helm-lsp :commands helm-lsp-workspace-symbol)
+;; if you are ivy user
+(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+
+;; optionally if you want to use debugger
+(use-package dap-mode)
+;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+
+;; optional if you want which-key integration
+(use-package which-key
+    :config
+    (which-key-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -104,7 +150,7 @@
 ;;   (use-anything-show-completion 'anything-ipython-complete
 ;; 				'(length initial-pattern)))
 
-; (require 'anything-config)
-; (require 'anything-match-plugin)
-; (global-set-key "\C-ca" 'anything)
-; (global-set-key "\C-ce" 'anything-for-files)
+;; (require 'anything-config)
+;; (require 'anything-match-plugin)
+;; (global-set-key "\C-ca" 'anything)
+;; (global-set-key "\C-ce" 'anything-for-files)
