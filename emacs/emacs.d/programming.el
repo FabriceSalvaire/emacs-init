@@ -12,10 +12,18 @@
 (eval-after-load 'company
   '(add-to-list 'company-backends 'company-irony))
 
-(require 'company-irony-c-headers)
+(use-package company-irony-c-headers)
 ;; Load with `irony-mode` as a grouped backend
 (eval-after-load 'company
   '(add-to-list 'company-backends '(company-irony-c-headers company-irony)))
+
+;; company-box — A company front-end with icons
+;;   https://github.com/sebastiencs/company-box/
+(use-package company-box
+  :hook (company-mode . company-box-mode))
+;; or
+;;   (require 'company-box)
+;;   (add-hook 'company-mode-hook 'company-box-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -48,25 +56,28 @@
 ;; yas/insert-snippet: C-c & C-s
 ;; /home/fabrice/.emacs.d/snippets ->
 
-(require 'yasnippet)
-(yas/global-mode 1)
-;; (setq yas/snippet-dirs (concat local_emacs_d_path "snippets"))
-;; (load "snippet-bundel.el" t t)
+(use-package yasnippet
+  :config
+  (yas/global-mode 1)
 
-;; http://sethlakowske.com/why-i-use-emacs/fix-yasnippet-and-autocomplete-tab-key-collision/
-;; Remove Yasnippet's default tab key binding
-(define-key yas-minor-mode-map (kbd "<tab>") nil)
-(define-key yas-minor-mode-map (kbd "TAB") nil)
-;; Set Yasnippet's key binding to shift+tab
-(define-key yas-minor-mode-map (kbd "<backtab>") 'yas-expand)
-;; Alternatively use Control-c + tab
-;; (define-key yas-minor-mode-map (kbd "\C-c TAB") 'yas-expand)
+  ;; (setq yas/snippet-dirs (concat local_emacs_d_path "snippets"))
+  ;; (load "snippet-bundel.el" t t)
+
+  ;; http://sethlakowske.com/why-i-use-emacs/fix-yasnippet-and-autocomplete-tab-key-collision/
+  ;; Remove Yasnippet's default tab key binding
+  (define-key yas-minor-mode-map (kbd "<tab>") nil)
+  (define-key yas-minor-mode-map (kbd "TAB") nil)
+  ;; Set Yasnippet's key binding to shift+tab
+  (define-key yas-minor-mode-map (kbd "<backtab>") 'yas-expand)
+  ;; Alternatively use Control-c + tab
+  ;; (define-key yas-minor-mode-map (kbd "\C-c TAB") 'yas-expand)
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; clang-format
 
-(require 'clang-format)
+(use-package clang-format)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -90,11 +101,12 @@
                                   )
 
 ;; https://github.com/anshulverma/projectile-speedbar
-(require 'projectile-speedbar)
+;; versus treemacs-projectile
+;; (require 'projectile-speedbar)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; LSP
+;; LSP — Language Server Protocol
 ;;   https://emacs-lsp.github.io
 
 (use-package lsp-mode
@@ -126,6 +138,9 @@
 (use-package which-key
     :config
     (which-key-mode))
+
+;; (with-eval-after-load 'lsp-mode
+;;   (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

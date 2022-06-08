@@ -1,26 +1,34 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; FlyCheck - Syntax checking for GNU Emacs
-;; http://www.flycheck.org/en/latest/
+;;   http://www.flycheck.org/en/latest
 
-;; (package-install 'flycheck)
-;; (global-flycheck-mode)
+(use-package flycheck
+  :ensure t
 
-(add-hook 'after-init-hook #'global-flycheck-mode)
+  :init
+  (global-flycheck-mode)
+  (flycheck-pos-tip-mode)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; C, C++ and Objective-C support for Flycheck, using Irony Mode
+  ;;   https://github.com/Sarcasm/flycheck-irony/
+  :hook (flycheck-mode . flycheck-irony-setup)
 
-(require 'flycheck-color-mode-line)
-(eval-after-load "flycheck"
-  '(add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode))
+  ;; JavaScript
+  ;;   cf. supra
+  )
+
+;; A minor-mode for Flycheck which colors the mode line according to the Flycheck state of the current buffer.
+;; https://github.com/flycheck/flycheck-color-mode-line
+(use-package flycheck-color-mode-line
+  :after (flycheck)
+  :hook (flycheck-mode . flycheck-color-mode-line-mode)
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; customize flycheck temp file prefix
 ;; (setq-default flycheck-temp-prefix ".flycheck")
-
-(with-eval-after-load 'flycheck
-  (flycheck-pos-tip-mode))
 
 ;; (require 'flycheck-tip)
 ;; (define-key your-prog-mode (kbd "C-c C-n") 'flycheck-tip-cycle)
@@ -39,17 +47,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; C, C++ and Objective-C support for Flycheck, using Irony Mode
-;; https://github.com/Sarcasm/flycheck-irony/
-;;
-
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
 ;; JavaScript
-;;
 ;;   http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html
 ;;
 
@@ -88,7 +86,6 @@
     (when (and eslint (file-executable-p eslint))
       (setq-local flycheck-javascript-eslint-executable eslint))))
 (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

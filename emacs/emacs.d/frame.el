@@ -21,5 +21,6 @@
 ;;  NOTE: This project is in maintenance mode and not currently being developed or maintained
 ;;  last 2022/01
 
-(require 'powerline)
-(powerline-default-theme)
+(use-package powerline
+  :init
+  (powerline-default-theme))

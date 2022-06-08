@@ -49,6 +49,7 @@
 (load "frame.el" t t)
 (load "font.el" t t)
 (load "behaviour.el" t t)
+(load "treemacs-settings.el" t t)
 (load "completion.el" t t) ; buffer switch
 (load "edition-settings.el" t t)
 

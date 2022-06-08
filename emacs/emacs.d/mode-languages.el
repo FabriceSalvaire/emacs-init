@@ -21,19 +21,16 @@
 ; CMake
 ;
 
-(require 'cmake-mode)
-(setq auto-mode-alist
-      (append '(("CMakeLists\\.txt\\'" . cmake-mode)
-                ("\\.cmake\\'" . cmake-mode))
-              auto-mode-alist))
+(use-package cmake-mode
+  :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Cuda
 ;
 
-(autoload 'cuda-mode "cuda-mode")
-(add-to-list 'auto-mode-alist '("\\.cu\\'" . cuda-mode))
+(autoload 'cuda-mode "cuda-mode"
+  :mode "\\.cu\\'")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -88,7 +85,7 @@
 ; Kotlin
 ;
 
-;; (require 'kotlin-mode)
+;; (use-package kotlin-mode)
 ;; (add-to-list 'auto-mode-alist '("\\.kt\\'" . kotlin-mode))
 
 (autoload 'kotlin-mode "kotlin-mode" nil t)
@@ -110,7 +107,7 @@
 ; QMake
 ;
 
-(require 'qmake-mode)
+(use-package qmake-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -150,7 +147,7 @@
 (setq-default TeX-master nil)
 
 ; (if window-system
-;     (require 'font-latex))
+;     (use-package font-latex))
 
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex) ; with AUCTeX LaTeX mode
 (add-hook 'latex-mode-hook 'turn-on-reftex) ; with Emacs latex mode
@@ -160,8 +157,8 @@
 ; Yaml
 ;
 
-(require 'yaml-mode)
-(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(use-package yaml-mode
+  :mode "\\.yml\\'")
 
 ;; Unlike python-mode, this mode follows the Emacs convention of not
 ;; binding the ENTER key to `newline-and-indent'.  To get this
@@ -189,7 +186,7 @@
 ; Doxygen
 ;
 
-; (require 'doxymacs)
+; (use-package doxymacs)
 ; (add-hook 'c-mode-common-hook 'doxymacs-mode)
 ; (defun my-doxymacs-font-lock-hook ()
 ;   (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
@@ -201,7 +198,7 @@
 ; Graddle
 ;
 
-;; (require 'gradle-mode)
+;; (use-package gradle-mode)
 ;; (gradle-mode 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -225,7 +222,7 @@
 ; PHP
 ;
 
-; (require 'php-mode)
+; (use-package php-mode)
 ; (add-hook 'php-mode-user-hook 'turn-on-font-lock)
 ; (add-hook 'php-mode-user-hook
 ;         '(lambda () (define-abbrev php-mode-abbrev-table "ex" "extends")))

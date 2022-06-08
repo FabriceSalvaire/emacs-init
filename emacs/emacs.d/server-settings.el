@@ -3,4 +3,5 @@
 ;; Server
 ;;
 
-(server-start) ; Starts server for (among others) emacsclient
+;; Starts server for (among others) emacsclient
+(server-start)

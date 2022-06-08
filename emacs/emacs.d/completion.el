@@ -4,7 +4,7 @@
 ;;
 ;;   Fixme: icomplete / icicles / helm
 ;;
-;;  https://github.com/alphapapa/burly.el — Save and restore frames and windows with their buffers in Emacs 
+;;  https://github.com/alphapapa/burly.el — Save and restore frames and windows with their buffers in Emacs
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -12,11 +12,10 @@
 ;;
 ;; Helm - Emacs incremental completion and selection narrowing framework
 ;;   https://github.com/emacs-helm/helm
-;;
 
 (if nil
     (progn
-      (require 'helm-config)
+      (use-package helm-config)
       (helm-mode 1)
 
       (setq default-frame-alist '((vertical-scroll-bars . nil)
@@ -100,14 +99,14 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; icicles
-;; https://www.emacswiki.org/emacs/Icicles
-
+;; icicles — Emacs enhances minibuffer completion
+;;   https://www.emacswiki.org/emacs/Icicles
+;;
 ;; Issues:
-;;  M-x history
-;;  find-file
+;;   M-x history
+;;   find-file
 
-;; (require 'icicles)
+;; (use-package icicles)
 ;; (icy-mode 1)
 
 ;; (setq icicle-buffer-include-recent-files-nflag t)
@@ -115,6 +114,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; ido
-;; http://ergoemacs.org/emacs/emacs_buffer_switching.html
+;;   http://ergoemacs.org/emacs/emacs_buffer_switching.html
 
-;; (require 'ido-mode)
+;; (use-package ido-mode)

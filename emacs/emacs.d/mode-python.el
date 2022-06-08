@@ -35,10 +35,10 @@
 ;; The Emacs IPython Notebook
 ;;   http://millejoh.github.io/emacs-ipython-notebook/#quick-try
 
-(require 'ein)
-;; (require 'ein-loaddefs)
-(require 'ein-notebook)
-;; (require 'ein-subpackages)
+(use-package ein)
+;; (use-package ein-loaddefs)
+(use-package ein-notebook)
+;; (use-package ein-subpackages)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -62,7 +62,7 @@
 ;;   To use it, open a Python file and run M-x live-py-mode
 ;;   If that doesn't work, put the following in your Emacs configuration file:
 
-(require 'live-py-mode)
+(use-package live-py-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -71,7 +71,7 @@
 ;;
 ;;   M-x pippel-list-packages
 
-(require 'pippel)
+(use-package pippel)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -91,7 +91,7 @@
 ;; (add-to-list 'load-path pylookup-dir)
 ;;
 ;; ;; load pylookup when compile time
-;; (eval-when-compile (require 'pylookup))
+;; (eval-when-compile (use-package pylookup))
 ;;
 ;; ;; set executable file and db file
 ;; (setq pylookup-program (concat pylookup-dir "/pylookup.py"))
@@ -114,13 +114,13 @@
 ; Ropemacs
 ;
 
-;; ; (require 'pymacs)
+;; ; (use-package pymacs)
 ;; ; (pymacs-load "ropemacs" "rope-")
 ;;
 ;; (defun load-ropemacs ()
 ;;   "Load pymacs and ropemacs"
 ;;   (interactive)
-;;   (require 'pymacs)
+;;   (use-package pymacs)
 ;;   (pymacs-load "ropemacs" "rope-")
 ;;   ;; Automatically save project python buffers before refactorings
 ;;   (setq ropemacs-confirm-saving 'nil)
