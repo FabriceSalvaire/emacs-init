@@ -1,0 +1,8 @@
+# name: outline
+# key: outline
+# --
+`
+(progn 
+  (goto-char (point-min))
+  (insert "# -*- outline -*-\n"))
+`

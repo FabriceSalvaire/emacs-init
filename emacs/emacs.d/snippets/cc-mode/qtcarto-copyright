@@ -1,0 +1,34 @@
+# name: qtcarto-copyright
+# key: qtcarto-copyright
+# --
+`
+(let ((rule (make-string 98 ?*))
+      (empty-line "*\n"))
+  (progn
+;   (goto-char (point-min))
+    (insert (concat "/" rule "*\n"))
+    (insert empty-line)
+    (insert "* $QTCARTO_BEGIN_LICENSE:GPL3$\n")
+    (insert empty-line)
+    (insert (concat "* Copyright (C) " (format-time-string "%Y") " Fabrice Salvaire.\n"))
+    (insert "* Contact: http://www.fabrice-salvaire.fr\n")
+    (insert empty-line)
+    (insert "* This file is part of the QtCarto library.\n")
+    (insert empty-line)
+    (insert "* This program is free software: you can redistribute it and/or modify\n")
+    (insert "* it under the terms of the GNU General Public License as published by\n")
+    (insert "* the Free Software Foundation, either version 3 of the License, or\n")
+    (insert "* (at your option) any later version.\n")
+    (insert empty-line)
+    (insert "* This program is distributed in the hope that it will be useful,\n")
+    (insert "* but WITHOUT ANY WARRANTY; without even the implied warranty of\n")
+    (insert "* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n")
+    (insert "* GNU General Public License for more details.\n")
+    (insert empty-line)
+    (insert "* You should have received a copy of the GNU General Public License\n")
+    (insert "* along with this program.  If not, see <http://www.gnu.org/licenses/>.\n")
+    (insert empty-line)
+    (insert "* $QTCARTO_END_LICENSE$\n")
+    (insert empty-line)
+    (insert (concat " " rule "/\n"))))
+`

@@ -1,0 +1,5 @@
+# name: init-attribute
+# -binding: M-s a
+# binding: C-< a
+# --
+self._$1 = $1

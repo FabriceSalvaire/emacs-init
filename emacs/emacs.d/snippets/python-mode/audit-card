@@ -1,0 +1,17 @@
+# name: audit-card
+# key: audit-card
+# --
+`
+(let ((rule (concat (make-string 100 ?#) "\n"))
+     (empty-line "# \n"))
+  (progn 
+    ; (goto-char (point-min))
+    (insert rule)
+    (insert empty-line)
+    (insert (concat "#" (make-string 46 ? ) "audit \n"))
+    (insert empty-line)
+    (insert (format-time-string "# - %d/%m/%Y Fabrice\n")))
+    (insert "#   xx\n")
+    (insert empty-line)
+    (insert rule)))
+`

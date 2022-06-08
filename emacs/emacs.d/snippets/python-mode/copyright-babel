@@ -1,0 +1,15 @@
+# name: copyright-babel
+# key: copyright-babel
+# --
+`
+(let ((rule (concat (make-string 100 ?#) "\n"))
+     (empty-line "#\n"))
+  (progn
+    ; (goto-char (point-min))
+    (insert rule)
+    (insert empty-line)
+    (insert "# Babel - A Bibliography Manager\n")
+    (insert (concat "# Copyright (C) Salvaire Fabrice " (format-time-string "%Y") "\n"))
+    (insert empty-line)
+    (insert rule)))
+`

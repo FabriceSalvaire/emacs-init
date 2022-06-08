@@ -1,0 +1,17 @@
+# name: doxygen-group
+# key: doxygen-group
+# --
+`
+(let* ((name (file-name-sans-extension (file-name-nondirectory buffer-file-name)))
+       (defgroup (concat "\n"
+                         "/**\n"
+                         " * @defgroup " name "\n"
+                         " * @{\n"
+                         " */\n"))
+       (endgroup (concat "/// @} end of " name " group\n")))
+  (goto-char (point-min))
+  (search-forward "*/\n")
+  (insert defgroup)
+  (goto-char (point-max))
+  (insert endgroup))
+`

@@ -1,0 +1,14 @@
+# name: end-footer-c-style
+# key: end-footer-c-style
+# --
+`
+(let ((rule (make-string 98 ?*))
+     (empty-line " *\n"))
+  (progn
+    (goto-char (point-max))
+    (insert (concat "\n/" rule "*\n"))
+    (insert empty-line)
+    (insert " * End\n")
+    (insert empty-line)
+    (insert (concat " " rule "/\n"))))
+`
