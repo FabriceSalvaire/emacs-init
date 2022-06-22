@@ -85,7 +85,8 @@
 ;; Projectile
 ;;
 
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+; cf. programming.el
+; (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -145,7 +146,7 @@
 (global-set-key [f12] 'custom-indent)
 (global-set-key [f11] 'custom-doxygen)
 
-(global-set-key (kbd "M-n") 'string-inflection-underscore)
+(global-set-key (kbd "M-~") 'string-inflection-underscore)
 
 (global-set-key (kbd "C-$") 'comment-or-uncomment-region)
 
@@ -159,6 +160,11 @@
 
 (global-set-key "\M-&" 'insert-and)
 (global-set-key "\M-|" 'insert-or)
+
+;; (global-set-key (kbd "C-n") company-select-next-or-abort)
+;; (global-set-key (kbd "M-n") company-select-next)
+;; (global-set-key (kbd "C-p") company-select-previous-or-abort)
+;; (global-set-key (kbd "M-p") company-select-previous)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;

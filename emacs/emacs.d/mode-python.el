@@ -22,6 +22,28 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
+;; pyvenv
+;;  https://github.com/jorgenschaefer/pyvenv
+
+;; The main entry points are `pyvenv-activate', which queries the user for a virtual environment
+;; directory to activate, and `pyvenv-workon', which queries for a virtual environment in
+;; $WORKON_HOME (from virtualenvwrapper.sh).
+
+;; If you want your inferior Python processes to be restarted automatically when you switch your
+;; virtual environment, add `pyvenv-restart-python' to `pyvenv-post-activate-hooks'.
+
+(use-package pyvenv
+  :demand t
+  :config
+  ;; Default venv
+  ;; (setq pyvenv-workon "emacs")
+  (setq pyvenv-workon "py310")
+  ;; Automatically use pyvenv-workon via dir-locals
+  ;; (pyvenv-tracking-mode 1)
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;; Company JEDI
 ;;   https://github.com/syohex/emacs-company-jedi
 
@@ -76,11 +98,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; pyvenv
-;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

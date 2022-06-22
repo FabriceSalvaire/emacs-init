@@ -1,9 +1,13 @@
+;; see Doom  modules/checkers/spell
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Aspell
 
 (setq-default ispell-program-name "aspell")
 (ispell-change-dictionary "british" "globally")
+;;
+(add-to-list 'ispell-extra-args "--sug-mode=ultra")
 
 (defun fr ()
   "Use fr_FR dictionary"
@@ -50,15 +54,40 @@
     ;; else - flyspell is off, turn it on
     (flyspell-on-for-buffer-type)))
 
+;; M-$ ispell-word
+
+;; https://github.com/rolandwalker/flyspell-lazy
+;;   Improve Emacs flyspell responsiveness using idle timers.
+(use-package flyspell-lazy
+  :config
+  (setq flyspell-lazy-idle-seconds 2)
+  (flyspell-lazy-mode 1)
+  )
+
+;; https://github.com/d12frosted/flyspell-correct
+;;   Correcting misspelled words with flyspell using favourite interface.
+(use-package flyspell-correct
+  :after flyspell
+  :bind (:map flyspell-mode-map ("C-;" . flyspell-correct-wrapper)))
+(use-package flyspell-correct-ivy
+  :after flyspell-correct)
+
 (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
 (autoload 'flyspell-delay-command "flyspell" "Delay on command." t)
 (autoload 'tex-mode-flyspell-verify "flyspell" "" t)
 
 ;; (add-hook 'find-file-hook 'flyspell-on-for-buffer-type)
 
+;; Flyspell will run a series of predicate functions to determine if a word should be spell checked.
+;; (with-eval-after-load 'flyspell
+;;   (progn
+;;     (set-flyspell-predicate! '(markdown-mode gfm-mode)  #'+markdown-flyspell-word-p)
+;;     ))
+
 (dolist (hook
          '(text-mode-hook
            LaTeX-mode-hook
+           markdown-mode
 	   )
 	 )
   (add-hook hook (lambda () (flyspell-mode 1))))

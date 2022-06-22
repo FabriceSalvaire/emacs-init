@@ -6,9 +6,11 @@
 (use-package treemacs
   :ensure t
   :defer t
+
   :init
   (with-eval-after-load 'winum
     (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+
   :config
   (progn
     (setq treemacs-collapse-dirs                   (if treemacs-python-executable 3 0)
@@ -51,7 +53,7 @@
           treemacs-silent-refresh                  nil
           treemacs-sorting                         'alphabetic-asc
           treemacs-select-when-already-in-treemacs 'move-back
-          treemacs-space-between-root-nodes        t
+          treemacs-space-between-root-nodes        nil
           treemacs-tag-follow-cleanup              t
           treemacs-tag-follow-delay                1.5
           treemacs-text-scale                      nil
@@ -79,6 +81,7 @@
        (treemacs-git-mode 'simple)))
 
     (treemacs-hide-gitignored-files-mode nil))
+
   :bind
   (:map global-map
         ("M-0"       . treemacs-select-window)
@@ -87,7 +90,8 @@
         ("C-x t d"   . treemacs-select-directory)
         ("C-x t B"   . treemacs-bookmark)
         ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag)))
+        ("C-x t M-t" . treemacs-find-tag))
+  )
 
 (use-package treemacs-evil
   :after (treemacs evil)

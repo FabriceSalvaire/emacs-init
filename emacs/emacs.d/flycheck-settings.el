@@ -12,7 +12,7 @@
 
   ;; C, C++ and Objective-C support for Flycheck, using Irony Mode
   ;;   https://github.com/Sarcasm/flycheck-irony/
-  :hook (flycheck-mode . flycheck-irony-setup)
+  ;;! :hook (flycheck-mode . flycheck-irony-setup)
 
   ;; JavaScript
   ;;   cf. supra

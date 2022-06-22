@@ -132,3 +132,10 @@ With argument ARG, do this that many times."
 With argument ARG, do this that many times."
   (interactive "p")
   (kill-region (point) (progn (py-backward-into-nomenclature arg) (point))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun recompile-elpa⁻packages()
+  "Recompile all packages"
+  (interactive)
+  (byte-recompile-directory "~/.emacs.d/elpa" 0 t))

@@ -3,6 +3,11 @@
 ;; Frame settings
 ;;
 
+;; Fullscreen
+(pcase window-system
+  ('w32 (set-frame-parameter nil 'fullscreen 'fullboth))
+  (_ (set-frame-parameter nil 'fullscreen 'maximized)))
+
 ;; Speedbar : buffer to navigate
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Speedbar.html
 ;; https://www.gnu.org/software/emacs/manual/html_node/speedbar/index.html#Top
@@ -10,7 +15,7 @@
 ;; (speedbar t)
 
 ;; Disable the tool bar
-(tool-bar-mode nil)
+(tool-bar-mode -1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -22,5 +27,21 @@
 ;;  last 2022/01
 
 (use-package powerline
+  :disabled
   :init
   (powerline-default-theme))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Doom Modeline
+;;  https://github.com/seagle0128/doom-modeline
+
+;; (use-package doom-modeline
+;;   :ensure t
+;;   :init (doom-modeline-mode 1))
+(use-package doom-modeline
+  :ensure t
+  :hook (after-init . doom-modeline-mode))
+
+(use-package all-the-icons
+  :ensure t)

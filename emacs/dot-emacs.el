@@ -1,50 +1,35 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;                                                                                                   ;
-;                                              GNU-Emacs                                            ;
-;                                                                                                   ;
+;;                                                                                                  ;
+;;                                              GNU-Emacs                                           ;
+;;                                                                                                  ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-; M-x load-file ~./emacs
-;
-; C-x C-f /path/to/... .el RET
-; M-x byte-compile-file RET
+;; M-x load-file ~./emacs
+;;
+;; C-x C-f /path/to/... .el RET
+;; M-x byte-compile-file RET
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Path Settings
+;;
 
-; To disable icicle warning
-; (setq warning-minimum-level :emergency)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Path Settings
-;
-
-; expand-file-name
-
-
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-;; (package-initialize)
-
-;; This is the only absolut path for Emacs files
-(setq local_path_prefix "/home/etc/users/emacs/")
-
-(setq local_emacs_site_lisp_path (concat local_path_prefix "emacs-site-lisp/"))
-(setq local_emacs_d_path (concat local_path_prefix "emacs.d/"))
+(setq local_path_prefix "/home/etc/users/emacs/" ; this is the only absolut path for Emacs files
+      local_emacs_site_lisp_path (concat local_path_prefix "emacs-site-lisp/")
+      local_emacs_d_path (concat local_path_prefix "emacs.d/")
+      )
 
 (add-to-list 'load-path local_emacs_d_path)
 (add-to-list 'load-path local_emacs_site_lisp_path)
 
-; (byte-recompile-directory local_emacs_site_lisp_path 0)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(load "packages.el" t t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Load sub-config files
-;
-
-(load "package-repository.el" t t)
+;;
+;; Load sub-config files
+;;
 
 (load "frame.el" t t)
 (load "font.el" t t)
@@ -71,16 +56,16 @@
 (load "keys.el" t t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Custum Settings
-;
+;;
+;; Custom Settings
+;;
 
-(setq custom-file (concat local_path_prefix "gnu-emacs-custom.el"))
-(load custom-file t t)
+;; (setq custom-file (concat local_path_prefix "gnu-emacs-custom.el"))
+;; (load custom-file t t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Load post-config files
-;
+;;
+;; Load post-config files
+;;
 
 (load "server-settings.el" t t)
