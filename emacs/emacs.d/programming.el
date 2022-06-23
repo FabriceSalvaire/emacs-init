@@ -111,7 +111,6 @@
 ;; Projectile
 ;;   https://github.com/bbatsov/projectile
 ;;   https://docs.projectile.mx/projectile/index.html
-;;   https://github.com/ericdanan/counsel-projectile
 ;;
 ;;  dnf install fd-find the_silver_searcher ripgrep
 ;;    fd — find entries in the filesystem
@@ -125,16 +124,6 @@
 
   :init
   (projectile-mode +1)
-
-  ;; https://docs.projectile.mx/projectile/projects.html
-  (projectile-register-project-type 'CMakeGit
-                                    '("CMakeLists.txt" ".git")
-                                    :project-file "CMakeLists.txt"
-                                    :compile ""
-                                    :test ""
-                                    :run ""
-                                    :test-suffix ""
-                                    )
 
   ;; https://github.com/anshulverma/projectile-speedbar
   ;; versus treemacs-projectile
@@ -151,10 +140,26 @@
    projectile-completion-system 'ivy
    )
 
+  ;; https://docs.projectile.mx/projectile/projects.html
+  (projectile-register-project-type 'CMakeGit
+                                    '("CMakeLists.txt" ".git")
+                                    :project-file "CMakeLists.txt"
+                                    :compile ""
+                                    :test ""
+                                    :run ""
+                                    :test-suffix ""
+                                    )
+
   :bind (:map projectile-mode-map
               ("s-p" . projectile-command-map)
               ("C-c p" . projectile-command-map))
   )
+
+;; https://github.com/ericdanan/counsel-projectile for Ivy integration
+(use-package counsel-projectile
+  :after (counsel projectile)
+  :config
+  (counsel-projectile-mode 1))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;

@@ -3,12 +3,17 @@
 ;; Dired
 ;;
 
+;; (use-package dired
+;;   :config
+;;  )
+
 (add-hook 'dired-load-hook
           (lambda ()
             (load "dired-x")
             ;; Set dired-x global variables here.
             ))
 
+;; Fixme: symbol value as variable is void
 (add-hook 'dired-mode-hook
           (lambda ()
             ;; Set dired-x buffer-local variables here.

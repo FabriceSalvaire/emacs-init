@@ -3,9 +3,12 @@
 ;; Python
 ;;
 
+;; (use-package python-mode
+;;   :config
+
 ;; https://gitlab.com/python-mode-devs
-(setq py-outline-minor-mode-p 'nil)
-(setq py-underscore-word-syntax-p 'nil)
+(setq py-outline-minor-mode-p 'nil
+      py-underscore-word-syntax-p 'nil)
 
 ;; (setq interpreter-mode-alist
 ;;       (cons '("python" . python-mode)
@@ -19,6 +22,12 @@
 ;;
 ;; (global-set-key [M-right] 'py-forward-into-nomenclature)
 ;; (global-set-key [M-left] 'py-backward-into-nomenclature)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Company JEDI
+;;   https://github.com/syohex/emacs-company-jedi
+
+(add-hook 'python-mode-hook (lambda () (add-to-list 'company-backends 'company-jedi)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -44,16 +53,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; Company JEDI
-;;   https://github.com/syohex/emacs-company-jedi
-
-(defun my/python-mode-hook ()
-  (add-to-list 'company-backends 'company-jedi))
-
-(add-hook 'python-mode-hook 'my/python-mode-hook)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
 ;; The Emacs IPython Notebook
 ;;   http://millejoh.github.io/emacs-ipython-notebook/#quick-try
 
@@ -61,20 +60,6 @@
 ;; (use-package ein-loaddefs)
 (use-package ein-notebook)
 ;; (use-package ein-subpackages)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; importmagic.el
-;;   https://github.com/anachronic/importmagic.el
-;;
-;;   The default behavior sets only one key binding: C-c C-l. It
-;;   solves imports for every unresolved symbol in the buffer,
-;;   prompting for one import at a time. If there are no imports found
-;;   for a given symbol, importmagic will let you know at the end of
-;;   the process.
-
-; use to much cpu
-; (add-hook 'python-mode-hook 'importmagic-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -98,6 +83,20 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; importmagic.el
+;;   https://github.com/anachronic/importmagic.el
+;;
+;;   The default behavior sets only one key binding: C-c C-l. It
+;;   solves imports for every unresolved symbol in the buffer,
+;;   prompting for one import at a time. If there are no imports found
+;;   for a given symbol, importmagic will let you know at the end of
+;;   the process.
+
+; use to much cpu
+; (add-hook 'python-mode-hook 'importmagic-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

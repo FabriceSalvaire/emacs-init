@@ -3,19 +3,19 @@
 ;; CSS
 ;;
 
-(autoload 'css-mode "css-mode")
-(add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode))
+(use-package css-mode
+  :mode "\\.css\\'")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; SCSS / SASS
 ;;
 
-(use-package sass-mode)
+(use-package sass-mode
+  :mode "\\.scss\\'"
+  )
 
 ; (setq exec-path (cons (expand-file-name "~/.gem/ruby/1.8/bin") exec-path))
-(autoload 'scss-mode "scss-mode")
-(add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -25,11 +25,12 @@
 ;; http://elpa.gnu.org/packages/js2-mode.html
 ;;
 
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-
-(add-hook 'js2-mode-hook (lambda ()
-                           (setq c-basic-offset 4
-                                 indent-tabs-mode nil)))
+(use-package js2-mode
+  :mode "\\.js\\'"
+  :config
+  (add-hook 'js2-mode-hook (lambda () (setq c-basic-offset 4
+					    indent-tabs-mode nil)))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -41,9 +42,11 @@
 ;; (add-to-list 'auto-mode-alist '("\\.jsx\\'" . rjsx-mode))
 ;; (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
 
-(add-hook 'rjsx-mode-hook (lambda ()
-                            (setq c-basic-offset 4
-                                  indent-tabs-mode nil)))
+(use-package rjsx-mode
+  :config
+  (add-hook 'rjsx-mode-hook (lambda () (setq c-basic-offset 4
+					     indent-tabs-mode nil)))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -51,26 +54,24 @@
 ;;
 ;; http://web-mode.org
 
-(use-package web-mode) ; require django-mode
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-(defun my-web-mode-hook () "Hooks for Web mode."
-  (setq web-mode-enable-engine-detection t)
-  (setq web-mode-markup-indent-offset 4)
-  (setq web-mode-css-indent-offset 4)
-  (setq web-mode-code-indent-offset 4)
+(use-package web-mode
+  ;; require django-mode
+  :mode "\\.html?\\'"
+  :config
+  (add-hook 'web-mode-hook (lambda () (setq web-mode-enable-engine-detection t
+					    web-mode-markup-indent-offset 4
+					    web-mode-css-indent-offset 4
+					    web-mode-code-indent-offset 4)))
   )
-(add-hook 'web-mode-hook 'my-web-mode-hook)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Typoscript
-;;
+;;   https://github.com/ksjogo/typoscript-mode
+;;   https://github.com/emacsmirror/ts-mode
 
-;; https://github.com/ksjogo/typoscript-mode
-;; https://github.com/emacsmirror/ts-mode
-
-(setq auto-mode-alist (cons '("\\.ts$" . typoscript-mode) auto-mode-alist))
-(autoload 'typoscript-mode "typoscript-mode" "TypoScript file editing mode." t)
+(use-package typoscript
+  :mode "\\.ts\\'")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

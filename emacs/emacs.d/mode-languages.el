@@ -6,63 +6,63 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Autoconf
-;
+;;
+;; Autoconf
+;;
 
-(autoload 'autoconf-mode "autoconf-mode"
-  "Major mode for editing autoconf files." t)
-(setq auto-mode-alist
-      (cons '("\\.ac\\'\\|configure\\.in\\'" . autoconf-mode)
-            auto-mode-alist))
+(use-package autoconf-mode
+  :mode ("\\.ac\\'" "configure\\.in\\'"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; CMake
-;
+;;
+;; CMake
+;;
 
 (use-package cmake-mode
   :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Cuda
-;
+;; https://github.com/Lindydancer/cmake-font-lock
+(use-package cmake-font-lock
+  :hook (cmake-mode . cmake-font-lock-activate))
 
-(autoload 'cuda-mode "cuda-mode"
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Cuda
+;;
+
+(use-package cuda-mode
   :mode "\\.cu\\'")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; GLSL
-;
+;;
+;; GLSL
+;;
 
-(autoload 'glsl-mode "glsl-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.vert\\'" . glsl-mode))
-(add-to-list 'auto-mode-alist '("\\.frag\\'" . glsl-mode))
-(add-to-list 'auto-mode-alist '("\\.glsl\\'" . glsl-mode))
+(use-package glsl-mode
+  :mode ("\\.vert\\'" "\\.frag\\'" "\\.glsl\\'"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Go
-;
+;;
+;; Go
+;;
 
-(autoload 'go-mode "go-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
-
-(add-hook 'go-mode-hook
-  (lambda ()
-    (setq-default)
-    (setq tab-width 4)
-    (setq standard-indent 4)
-    (setq indent-tabs-mode nil)))
+(use-package go-mode
+  :mode "\\.go\\'"
+  :config
+  (add-hook 'go-mode-hook
+	    (lambda ()
+	      (setq-default)
+	      (setq tab-width 4)
+	      (setq standard-indent 4)
+	      (setq indent-tabs-mode nil)))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Graphviz Dot
 ;
 
-(load "graphviz-dot-mode.el" t t)
+;;(use-package graphviz-dot-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -76,6 +76,9 @@
 ;;       ))
 ;; (add-hook 'java-mode-hook 'my-java-hook)
 
+;; (use-package java-mode
+;;   :config
+
 (add-hook 'java-mode-hook (lambda ()
                             (setq c-basic-offset 2
                                   indent-tabs-mode nil)))
@@ -85,22 +88,19 @@
 ; Kotlin
 ;
 
-;; (use-package kotlin-mode)
-;; (add-to-list 'auto-mode-alist '("\\.kt\\'" . kotlin-mode))
-
-(autoload 'kotlin-mode "kotlin-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.kt\\'" . kotlin-mode))
+(use-package kotlin-mode
+  :mode "\\.kt\\'")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Modelica
 ;
 
-(add-to-list 'load-path (concat local_emacs_site_lisp_path "modelica/"))
-(add-to-list 'load-path (concat local_emacs_site_lisp_path "modelica-mode"))
+;; (add-to-list 'load-path (concat local_emacs_site_lisp_path "modelica/"))
+;; (add-to-list 'load-path (concat local_emacs_site_lisp_path "modelica-mode"))
 
-(autoload 'modelica-mode "modelica-mode" "Modelica Editing Mode" t)
-(setq auto-mode-alist (cons '("\.mo$" . modelica-mode) auto-mode-alist))
+;; (autoload 'modelica-mode "modelica-mode" "Modelica Editing Mode" t)
+;; (setq auto-mode-alist (cons '("\.mo$" . modelica-mode) auto-mode-alist))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -114,21 +114,24 @@
 ; QML
 ;
 
-(autoload 'qml-mode "qml-mode" "Qml Editing Mode" t)
-(setq auto-mode-alist (cons '("\.qml$" . qml-mode) auto-mode-alist))
-
-(defun my-qml-hook ()
+(use-package qml-mode
+  :mode "\\.qml\\'"
+  :preface
+  (defun my-qml-hook ()
     (progn
       (setq-default js-indent-level 4)
       (setq indent-tabs-mode nil)
       ))
-(add-hook 'qml-mode-hook 'my-qml-hook)
-
+  :config
+  (add-hook 'qml-mode-hook 'my-qml-hook))
+  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; ReST
 ;;
 
+;; (use-package rest-mode
+;;   :config
 (add-hook 'rest-mode-hook (lambda ()
                             (setq indent-tabs-mode nil)))
 
@@ -139,18 +142,21 @@
 
 ; AUC-TeX
 
-(load "auctex.el" nil t t)
-(load "preview-latex.el" nil t t)
+(use-package auctex
+  :mode ("\\.tex\\'" . TeX-latex-mode)
+  :config
+  (setq TeX-auto-save t)
+  (setq TeX-parse-self t)
+  (setq-default TeX-master nil)
 
-(setq TeX-auto-save t)
-(setq TeX-parse-self t)
-(setq-default TeX-master nil)
+  ;; (if window-system
+  ;;     (use-package font-latex))
 
-; (if window-system
-;     (use-package font-latex))
+  (add-hook 'LaTeX-mode-hook 'turn-on-reftex) ; with AUCTeX LaTeX mode
+  (add-hook 'latex-mode-hook 'turn-on-reftex) ; with Emacs latex mode
+  )
 
-(add-hook 'LaTeX-mode-hook 'turn-on-reftex) ; with AUCTeX LaTeX mode
-(add-hook 'latex-mode-hook 'turn-on-reftex) ; with Emacs latex mode
+;; (load "preview-latex.el" nil t t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

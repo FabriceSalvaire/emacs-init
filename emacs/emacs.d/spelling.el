@@ -28,6 +28,8 @@
 ;; FlySpell
 ;;   https://www.emacswiki.org/emacs/FlySpell
 
+(use-package flyspell)
+
 (defun flyspell-on-for-buffer-type ()
   "Enable Flyspell appropriately for the major mode of the current buffer.  Uses `flyspell-prog-mode' for modes derived from `prog-mode', so only strings and comments get checked.  All other buffers get `flyspell-mode' to check all text.  If flyspell is already enabled, does nothing."
   (interactive)
@@ -59,8 +61,10 @@
 ;; https://github.com/rolandwalker/flyspell-lazy
 ;;   Improve Emacs flyspell responsiveness using idle timers.
 (use-package flyspell-lazy
+  :custom
+  (flyspell-lazy-idle-seconds 2)
+
   :config
-  (setq flyspell-lazy-idle-seconds 2)
   (flyspell-lazy-mode 1)
   )
 
@@ -107,12 +111,12 @@
 ;;
 ;; Google Translate
 
-(use-package google-translate)
+(use-package google-translate
+  :custom
+  (google-translate-translation-directions-alist '(("en" . "fr") ("fr" . "en")))
+  )
 ;; (use-package google-translate-default-ui)
 (use-package google-translate-smooth-ui)
-
-(setq google-translate-translation-directions-alist
-      '(("en" . "fr") ("fr" . "en")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -132,8 +136,7 @@
 
 (use-package flycheck-languagetool
   :ensure t
-  :hook (text-mode . (lambda ()
-                       (require 'flycheck-languagetool)))
+  :hook (text-mode . (lambda () (require 'flycheck-languagetool)))
   :init
   (setq flycheck-languagetool-commandline-jar "/usr/local/stow/LanguageTool-5.3/languagetool-commandline.jar"))
 
