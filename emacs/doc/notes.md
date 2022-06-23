@@ -1,3 +1,12 @@
+# To look
+
+* https://github.com/tam17aki/ace-isearch — provides a minor mode that combines isearch, ace-jump-mode or avy and helm-swoop or swiper.
+* https://github.com/winterTTr/ace-jump-mode — Ace jump mode is a minor mode of emacs, which help you to move the cursor within Emacs.
+* https://github.com/abo-abo/avy — Jump to things in Emacs tree-style
+* https://github.com/emacsorphanage/helm-swoop — Efficiently hopping squeezed lines powered by Emacs helm interface
+* https://github.com/abo-abo/swiper — Ivy - a generic completion frontend for Emacs, Swiper - isearch with an overview, and more.
+
+
 # Doom Emacs
 
 Doom is a customised Emacs with a VI like experience.
@@ -9,9 +18,12 @@ Doom is a customised Emacs with a VI like experience.
   This is a package for GNU Emacs that can be used to tie related commands into a family of short bindings with a common prefix - a Hydra.
 * https://github.com/orgs/doomemacs/projects/5
 
+
 # Config Examples
 
+* https://github.com/jwiegley/dot-emacs/blob/master/init.el
 * https://github.com/angrybacon/dotemacs/blob/master/dotemacs.org
+
 
 # use-package — A use-package declaration for simplifying your .emacs
 
@@ -88,7 +100,8 @@ Doom is a customised Emacs with a VI like experience.
   )
 ```
 
-# Ivy / Counsel / Swiper
+
+# Ivy / Counsel / Swiper - Completion Mechanism for Emacs
 
 * **Ivy** is a generic completion mechanism for Emacs.
 * **Counsel** takes this further, providing versions of common Emacs commands that are customised to make the best use of Ivy.
@@ -140,7 +153,8 @@ The key bindings are:
 * **C-n** and **C-p** naturally select the next and the previous candidate.
 * **DEL** move to the parent directory (counsel-find-file)
 
-# Company
+
+# Company - Text completion
 
 * https://company-mode.github.io/manual
 
@@ -156,6 +170,7 @@ To select next or previous of the shown completion candidates, use respectively 
 * `C-h` `<f1>` Display a buffer with the documentation for the selected candidate (company-show-doc-buffer).
 * `C-w` Display a buffer with the definition of the selected candidate (company-show-location).
 
+
 # Treemacs — a tree layout file explorer for Emacs
 
 * https://github.com/Alexander-Miller/treemacs
@@ -163,18 +178,8 @@ To select next or previous of the shown completion candidates, use respectively 
 **commands**
 * treemacs
 
-# LSP
 
-lsp-mode aims to provide IDE-like experience by providing optional integration with the most popular
-Emacs packages like company, flycheck and projectile.
-
-* What's the reason ? LSP :: one.py not in project or it is blacklisted.
-  https://github.com/emacs-lsp/lsp-mode/issues/2392
-
-* https://clangd.llvm.org/config
-  clangd searches for **compile_commands.json** in parents of the source file.
-
-# Projectile
+# Projectile - a project interaction library for Emacs
 
 * https://docs.projectile.mx/projectile/index.html
 
@@ -259,6 +264,21 @@ Usage: open some file in a version-controlled (e.g. git)
 * `lsp-find-definition`
 * `lsp-find-references`
 
+# LSP
+
+lsp-mode aims to provide IDE-like experience by providing optional integration with the most popular
+Emacs packages like company, flycheck and projectile.
+
+* What's the reason ? LSP :: one.py not in project or it is blacklisted.
+  https://github.com/emacs-lsp/lsp-mode/issues/2392
+
+* https://clangd.llvm.org/config
+  clangd searches for **compile_commands.json** in parents of the source file.
+
 # Magit
 
 | C-x g | magit-status |
+
+# Abbrev — to expand abbreviations
+
+* https://www.emacswiki.org/emacs/AbbrevMode
