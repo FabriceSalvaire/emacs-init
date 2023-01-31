@@ -28,7 +28,8 @@
           treemacs-git-command-pipe                ""
           treemacs-goto-tag-strategy               'refetch-index
           treemacs-header-scroll-indicators        '(nil . "^^^^^^")'
-          treemacs-hide-dot-git-directory          t
+	  ; (defcustom treemacs-hide-dot-git-directory t ... :type 'list ???
+          ; treemacs-hide-dot-git-directory          t
           treemacs-indentation                     2
           treemacs-indentation-string              " "
           treemacs-is-never-other-window           nil

@@ -25,6 +25,8 @@
 ;;  This is a proposed version 2.0 of the original Emacs Powerline which is a fork of vim-powerline.
 ;;  NOTE: This project is in maintenance mode and not currently being developed or maintained
 ;;  last 2022/01
+;;
+;;  require dnf install powerline-fonts
 
 (use-package powerline
   :disabled

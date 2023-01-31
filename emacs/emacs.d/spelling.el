@@ -4,10 +4,11 @@
 ;;
 ;; Aspell
 
-(setq-default ispell-program-name "aspell")
+;;(setq-default ispell-program-name "aspell")
+(setq-default ispell-program-name "/usr/bin/hunspell")
 (ispell-change-dictionary "british" "globally")
 ;;
-(add-to-list 'ispell-extra-args "--sug-mode=ultra")
+;; (add-to-list 'ispell-extra-args "--sug-mode=ultra")
 
 (defun fr ()
   "Use fr_FR dictionary"
@@ -20,7 +21,8 @@
   "Use gb dictionary"
   (interactive)
   (progn
-    (ispell-change-dictionary "british")))
+    ;;(ispell-change-dictionary "british")))
+    (ispell-change-dictionary "en_GB")))
     ;(ispell-change-dictionary "en_GB-ise-w_accents")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -1,6 +1,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Completion and Buffer Cycling
+;;  in Emacs UI
+;;  not for the text in a buffer, see company text completion framework
 ;;
 ;;   Fixme: icomplete / icicles / helm
 ;;

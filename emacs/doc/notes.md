@@ -182,6 +182,7 @@ To select next or previous of the shown completion candidates, use respectively 
 # Projectile - a project interaction library for Emacs
 
 * https://docs.projectile.mx/projectile/index.html
+* https://github.com/ericdanan/counsel-projectile
 
 Usage: open some file in a version-controlled (e.g. git)
 

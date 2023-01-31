@@ -30,6 +30,10 @@
   :init
   (global-company-mode)
   ;; (add-hook 'after-init-hook 'global-company-mode)
+  ;; see candidates are automatically lowercased
+  ;;  https://github.com/company-mode/company-mode/issues/14
+  (add-to-list 'company-dabbrev-code-modes 'markdown-mode)
+  (add-to-list 'company-dabbrev-code-modes 'c++-mode)
   )
 
 ;; company-box — A company front-end with icons

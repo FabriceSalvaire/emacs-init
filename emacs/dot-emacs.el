@@ -14,7 +14,7 @@
 ;; Path Settings
 ;;
 
-(setq local_path_prefix "/home/etc/users/emacs/" ; this is the only absolut path for Emacs files
+(setq local_path_prefix "/home/common/emacs/" ; this is the only absolut path for Emacs files
       local_emacs_site_lisp_path (concat local_path_prefix "emacs-site-lisp/")
       local_emacs_d_path (concat local_path_prefix "emacs.d/")
       )
@@ -30,6 +30,8 @@
 ;;
 ;; Load sub-config files
 ;;
+
+(load "variables.el" t t)
 
 (load "frame.el" t t)
 (load "font.el" t t)
