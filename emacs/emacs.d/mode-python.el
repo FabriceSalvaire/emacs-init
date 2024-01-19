@@ -3,12 +3,45 @@
 ;; Python
 ;;
 
-;; (use-package python-mode
-;;   :config
+;; Use C-h m to check which mode is loaded
 
-;; https://gitlab.com/python-mode-devs
-(setq py-outline-minor-mode-p 'nil
-      py-underscore-word-syntax-p 'nil)
+;; https://github.com/tree-sitter/tree-sitter-python
+;; https://gist.github.com/habamax/290cda0e0cdc6118eb9a06121b9bc0d7
+;; [GitHub - joaotavora/eglot: A client for Language Server Protocol servers](https://github.com/joaotavora/eglot)[GitHub - minad/corfu: :desert_island: corfu.el - COmpletion in Region FUnction](https://github.com/minad/corfu)
+
+;; builtin
+;;   https://github.com/fgallina/python.el
+;;   Fabián Ezequiel Gallina
+;;   last Nov 23, 2014
+
+;; python-mode MELPA
+;;   https://gitlab.com/python-mode-devs/python-mode
+
+;; python-mode remap C-<delete> C-<backspace>
+;; (setq python-mode-map
+;;       (let ((map (make-sparse-keymap)))
+;;         (define-key map [(control backspace)] 'py-hungry-delete-backwards)
+;;         (define-key map [(control c) (delete)] 'py-hungry-delete-forward)
+
+;; Fixme: sometimes python-mode is not loaded
+;; check Python menu
+(require 'python-mode)
+
+(setq major-mode-remap-alist
+      '((python-mode . python-ts-mode)))
+
+(use-package python-mode
+  :disabled ; !!!
+  :custom
+  (py-outline-minor-mode-p 'nil)
+  ; don't work ???
+  (py-underscore-word-syntax-p 'nil)
+  ; :config
+  ;(add-hook 'python-mode-hook ...)
+  :bind (:map python-mode-map
+	      ("C-<delete>" . py-kill-word)
+              ("C-<backspace>" . py-backward-kill-word))
+  )
 
 ;; (setq interpreter-mode-alist
 ;;       (cons '("python" . python-mode)
@@ -27,7 +60,12 @@
 ;; Company JEDI
 ;;   https://github.com/syohex/emacs-company-jedi
 
-(add-hook 'python-mode-hook (lambda () (add-to-list 'company-backends 'company-jedi)))
+(add-hook 'python-mode-hook (lambda ()
+			      (add-to-list 'company-backends 'company-jedi)
+			      ;; https://github.com/syl20bnr/spacemacs/issues/15137
+			      ;; don't work ??? see lsp config
+			      ;; (setq flycheck-checker 'python-flake8)
+	  ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -46,7 +84,7 @@
   :config
   ;; Default venv
   ;; (setq pyvenv-workon "emacs")
-  (setq pyvenv-workon "py310")
+  (setq pyvenv-workon "py311")
   ;; Automatically use pyvenv-workon via dir-locals
   ;; (pyvenv-tracking-mode 1)
   )

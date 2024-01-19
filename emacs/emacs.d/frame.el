@@ -37,6 +37,10 @@
 ;;
 ;; Doom Modeline
 ;;  https://github.com/seagle0128/doom-modeline
+;; for icon issues
+;;   https://github.com/seagle0128/doom-modeline/issues/310
+;;   To get font in ~/.local/share/fonts/ :  M-x nerd-icons-install-fonts
+;;     before M-x all-the-icons-install-fonts
 
 ;; (use-package doom-modeline
 ;;   :ensure t

@@ -2,7 +2,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; Aspell
+;; Hunspell
 
 ;;(setq-default ispell-program-name "aspell")
 (setq-default ispell-program-name "/usr/bin/hunspell")
@@ -122,13 +122,27 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; https://github.com/PillFall/Emacs-LanguageTool.el
+;; https://github.com/PillFall/languagetool.el
+;;   https://github.com/PillFall/Emacs-LanguageTool.el
+;;   https://github.com/mhayashi1120/Emacs-langtool
 
-(setq languagetool-language-tool-jar "/usr/local/stow/LanguageTool-5.3/languagetool-commandline.jar")
-;; (setq languagetool-server-language-tool-jar "/usr/local/stow/LanguageTool-5.3/languagetool-server.jar")
-;; (languagetool-server-start)
-(setq languagetool-java-arguments '("-Dfile.encoding=UTF-8"))
-(setq languagetool-default-language "en-GB")
+(use-package languagetool
+  :ensure t
+  :defer t
+  :commands (languagetool-check
+             languagetool-clear-suggestions
+             languagetool-correct-at-point
+             languagetool-correct-buffer
+             languagetool-set-language
+             languagetool-server-mode
+             languagetool-server-start
+             languagetool-server-stop)
+  :config
+  (setq languagetool-java-arguments '("-Dfile.encoding=UTF-8")
+        languagetool-console-command "/usr/local/stow/LanguageTool/languagetool-commandline.jar"
+        languagetool-server-command  "/usr/local/stow/LanguageTool/languagetool-server.jar"
+	languagetool-default-language "en-GB"
+	))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -140,7 +154,7 @@
   :ensure t
   :hook (text-mode . (lambda () (require 'flycheck-languagetool)))
   :init
-  (setq flycheck-languagetool-commandline-jar "/usr/local/stow/LanguageTool-5.3/languagetool-commandline.jar"))
+  (setq flycheck-languagetool-commandline-jar "/usr/local/stow/LanguageTool/languagetool-commandline.jar"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

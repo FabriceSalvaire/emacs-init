@@ -1,5 +1,28 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
+;; treesit
+;;
+
+(use-package treesit
+  :ensure nil
+  :when (treesit-available-p)
+  :init
+  (setq treesit-font-lock-level 3)
+  (setq major-mode-remap-alist
+	'(
+	  (c++-mode . c++-ts-mode)
+	  (c-mode . c-ts-mode)
+	  (c-or-c++-mode . c-or-c++-ts-mode)
+	  (css-mode . css-ts-mode)
+	  (javas-mode . java-ts-mode)
+	  (javascript-mode . javascript-ts-mode)
+	  (js-json-mode . js-json-ts-mode)
+	  (python-mode . python-ts-mode)
+	  (yaml-mode . yaml-ts-mode)
+	  )))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;; show-paren-mode — highlight matching delimiters
 ;;   https://www.emacswiki.org/emacs/ShowParenMode
 
@@ -176,7 +199,35 @@
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "C-c l")
   ;; Project errors on modeline
+  ;;  https://emacs-lsp.github.io/lsp-mode/page/main-features/#project-errors-on-modeline
   (setq lsp-modeline-diagnostics-scope :workspace)
+
+  :config
+  ;; The default configuration sources are pycodestyle and pyflakes.
+  ;;   cf. https://github.com/python-lsp/python-lsp-server
+  ;;   else flake8 config is ignored
+  (setq
+   ;; https://emacs-lsp.github.io/lsp-mode/page/lsp-pylsp/
+   lsp-pylsp-plugins-autopep8-enabled nil
+   lsp-pylsp-plugins-black-enabled nil
+   lsp-pylsp-plugins-flake8-enabled t
+   lsp-pylsp-plugins-mccabe-enabled nil
+   lsp-pylsp-plugins-pycodestyle-enabled nil
+   lsp-pylsp-plugins-pydocstyle-enabled nil
+   lsp-pylsp-plugins-pyflakes-enabled nil
+   lsp-pylsp-plugins-pylint-enabled t
+   ;; lsp-pylsp-configuration-sources ["flake8"]
+   ;;
+   lsp-pyls-plugins-pycodestyle-enabled nil
+   lsp-pyls-plugins-mccabe-enabled nil
+   lsp-pyls-plugins-pyflakes-enabled nil
+   lsp-pyls-plugins-flake8-enabled t
+   lsp-pyls-configuration-sources ["flake8"]
+   )
+  ;; lsp-diagnostics-provider :auto
+
+  ;; https://emacs-lsp.github.io/lsp-mode/page/troubleshooting/
+  ;; (setq lsp-log-io t)
 
   :hook (
          (c-mode . lsp-deferred)

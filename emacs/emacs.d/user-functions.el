@@ -118,7 +118,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; Python Mode Kill Word
+; Python Mode Kill Word up to underscore
 ;
 
 (defun py-kill-word (arg)
@@ -133,9 +133,23 @@ With argument ARG, do this that many times."
   (interactive "p")
   (kill-region (point) (progn (py-backward-into-nomenclature arg) (point))))
 
+;; (defun my-delete-backward ()
+;;   (interactive)
+;;   (delete-region (point) (save-excursion (skip-syntax-backward "_") (point))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun recompile-elpa⁻packages()
+(defun recompile-elpa-packages()
   "Recompile all packages"
   (interactive)
   (byte-recompile-directory "~/.emacs.d/elpa" 0 t))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun remove-newlines-in-region ()
+  "Removes all newlines in the region."
+  (interactive)
+  (save-restriction
+    (narrow-to-region (point) (mark))
+    (goto-char (point-min))
+    (while (search-forward "\n" nil t) (replace-match "" nil t))))

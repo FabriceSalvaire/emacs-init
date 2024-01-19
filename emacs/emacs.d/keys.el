@@ -155,8 +155,8 @@
 
 ;(global-set-key [M-delete] 'kill-word)
 ;(global-set-key [M-backspace] 'backward-kill-word)
-(global-set-key [C-delete] 'py-kill-word)
-(global-set-key [C-backspace] 'py-backward-kill-word)
+;; (global-set-key [C-delete] 'py-kill-word)
+;; (global-set-key [C-backspace] 'py-backward-kill-word)
 
 (global-set-key "\M-&" 'insert-and)
 (global-set-key "\M-|" 'insert-or)
