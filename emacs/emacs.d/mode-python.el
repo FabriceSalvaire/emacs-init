@@ -7,8 +7,7 @@
 
 ;; https://github.com/tree-sitter/tree-sitter-python
 ;; https://gist.github.com/habamax/290cda0e0cdc6118eb9a06121b9bc0d7
-;; [GitHub - joaotavora/eglot: A client for Language Server Protocol servers](https://github.com/joaotavora/eglot)[GitHub - minad/corfu: :desert_island: corfu.el - COmpletion in Region FUnction](https://github.com/minad/corfu)
-
+;
 ;; builtin
 ;;   https://github.com/fgallina/python.el
 ;;   Fabián Ezequiel Gallina
@@ -26,9 +25,6 @@
 ;; Fixme: sometimes python-mode is not loaded
 ;; check Python menu
 (require 'python-mode)
-
-(setq major-mode-remap-alist
-      '((python-mode . python-ts-mode)))
 
 (use-package python-mode
   :disabled ; !!!

@@ -1,25 +1,91 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; treesit
+;; multiple-cursors — Multiple cursors for emacs
+;;   [magnars/multiple-cursors.el](https://github.com/magnars/multiple-cursors.el)
+
+(require 'multiple-cursors)
+;; (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+;; (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+;; (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+;; (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
+;; treesit — parsing library
+;;   [Tree-sitter](https://tree-sitter.github.io/tree-sitter/)
+;;   [How to Get Started with Tree-Sitter](https://www.masteringemacs.org/article/how-to-get-started-tree-sitter)
 
 (use-package treesit
   :ensure nil
   :when (treesit-available-p)
   :init
   (setq treesit-font-lock-level 3)
+  ; see treesit-auto
   (setq major-mode-remap-alist
 	'(
+	  (bash-mode . bash-ts-mode)
 	  (c++-mode . c++-ts-mode)
 	  (c-mode . c-ts-mode)
 	  (c-or-c++-mode . c-or-c++-ts-mode)
+	  (cmake-mode . cmake-ts-mode)
 	  (css-mode . css-ts-mode)
 	  (javas-mode . java-ts-mode)
 	  (javascript-mode . javascript-ts-mode)
 	  (js-json-mode . js-json-ts-mode)
 	  (python-mode . python-ts-mode)
 	  (yaml-mode . yaml-ts-mode)
-	  )))
+	  ))
+  :config
+  ;; [mickeynp/combobulate: Structured Editing and Navigation in Emacs with Tree-Sitter](https://github.com/mickeynp/combobulate)
+  ;; [Combobulate: Structured Movement and Editing with Tree-Sitter](https://www.masteringemacs.org/article/combobulate-structured-movement-editing-treesitter)
+  ;; Do not forget to customize Combobulate to your liking:
+  ;;
+  ;;  M-x customize-group RET combobulate RET
+  ;;
+  (use-package combobulate
+    :preface
+    ;; You can customize Combobulate's key prefix here.
+    ;; Note that you may have to restart Emacs for this to take effect!
+    ; (setq combobulate-key-prefix "C-c o")
+
+    ;; Optional, but recommended.
+    ;;
+    ;; You can manually enable Combobulate with `M-x
+    ;; combobulate-mode'.
+    ; :hook ((python-ts-mode . combobulate-mode)
+    ;        (js-ts-mode . combobulate-mode)
+    ;        (css-ts-mode . combobulate-mode)
+    ;        (yaml-ts-mode . combobulate-mode)
+    ;        (json-ts-mode . combobulate-mode)
+    ;        (typescript-ts-mode . combobulate-mode)
+    ;        (tsx-ts-mode . combobulate-mode))
+    ;; Amend this to the directory where you keep Combobulate's source
+    ;; code.
+    :load-path ("/home/common/emacs/checkout/combobulate"))
+  )
+
+;; [renzmann/treesit-auto: Automatic installation, usage, and fallback for tree-sitter major modes in Emacs 29](https://github.com/renzmann/treesit-auto)
+;; M-x treesit-auto-install-all
+(use-package treesit-auto
+  :config
+  (global-treesit-auto-mode))
+
+;; (setq treesit-language-source-alist
+;;    '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+;;      (cmake "https://github.com/uyha/tree-sitter-cmake")
+;;      (css "https://github.com/tree-sitter/tree-sitter-css")
+;;      (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+;;      (go "https://github.com/tree-sitter/tree-sitter-go")
+;;      (html "https://github.com/tree-sitter/tree-sitter-html")
+;;      (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+;;      (json "https://github.com/tree-sitter/tree-sitter-json")
+;;      (make "https://github.com/alemuller/tree-sitter-make")
+;;      (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+;;      (python "https://github.com/tree-sitter/tree-sitter-python")
+;;      (toml "https://github.com/tree-sitter/tree-sitter-toml")
+;;      (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+;;      (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+;;      (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -40,12 +106,57 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
+;; corfu — COmpletion in Region FUnction
+;; [minad/corfu](https://github.com/minad/corfu)
+
+(use-package corfu
+  ;; Optional customizations
+  ;; :custom
+  ;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+  ;; (corfu-auto t)                 ;; Enable auto completion
+  ;; (corfu-separator ?\s)          ;; Orderless field separator
+  ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
+  ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
+  ;; (corfu-preview-current nil)    ;; Disable current candidate preview
+  ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
+  ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
+  ;; (corfu-scroll-margin 5)        ;; Use scroll margin
+
+  ;; Enable Corfu only for certain modes.
+  ;; :hook ((prog-mode . corfu-mode)
+  ;;        (shell-mode . corfu-mode)
+  ;;        (eshell-mode . corfu-mode))
+
+  ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
+  ;; be used globally (M-/).  See also the customization variable
+  ;; `global-corfu-modes' to exclude certain modes.
+  :init
+  (global-corfu-mode))
+
+;; A few more useful configurations...
+(use-package emacs
+  :init
+  ;; TAB cycle if there are only few candidates
+  (setq completion-cycle-threshold 3)
+
+  ;; Emacs 28: Hide commands in M-x which do not apply to the current mode.
+  ;; Corfu commands are hidden, since they are not supposed to be used via M-x.
+  ;; (setq read-extended-command-predicate
+  ;;       #'command-completion-default-include-p)
+
+  ;; Enable indentation+completion using the TAB key.
+  ;; `completion-at-point' is often bound to M-TAB.
+  (setq tab-always-indent 'complete))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;; company-mode
 ;;   Company is a text completion framework for Emacs
 ;;   https://company-mode.github.io
 ;;   https://company-mode.github.io/manual
 
 (use-package company
+  :disabled ; !!!
   :custom
   (company-idle-delay 0) ; default 0.2
   (company-minimum-prefix-length 1) ; default 3
@@ -188,6 +299,17 @@
   :config
   (counsel-projectile-mode 1))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; eglot — A client for Language Server Protocol servers
+;;  [joaotavora/eglot: A client for Language Server Protocol servers](https://github.com/joaotavora/eglot)
+;;  in Emacs 29
+;;
+
+(use-package eglot
+  :commands eglot
+  )
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; LSP — Language Server Protocol
@@ -195,6 +317,7 @@
 ;;   https://www.mattduck.com/lsp-python-getting-started.html
 
 (use-package lsp-mode
+  :disabled ; !!!
   :init
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "C-c l")
