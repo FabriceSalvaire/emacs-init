@@ -39,6 +39,15 @@
               ("C-<backspace>" . py-backward-kill-word))
   )
 
+(use-package emacs
+  :bind (:map python-mode-map
+	      ("C-<delete>" . py-kill-word)
+              ("C-<backspace>" . py-backward-kill-word)
+	 :map python-ts-mode-map
+	      ("C-<delete>" . py-kill-word)
+              ("C-<backspace>" . py-backward-kill-word))
+  )
+
 ;; (setq interpreter-mode-alist
 ;;       (cons '("python" . python-mode)
 ;;             interpreter-mode-alist))

@@ -13,9 +13,9 @@ a_dict = {
     'c': 3,
 }
 
-def foo(xyz: int) -> None:
+def foo(toto: int) -> None:
     """Foo"""
-    match xyz:
+    match toto:
         case 1:
             print('1')
         case _:
@@ -27,3 +27,5 @@ def bar(
 ) -> None:
     """bar"""
     pass
+
+"...".replace()

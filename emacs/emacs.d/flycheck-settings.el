@@ -4,6 +4,7 @@
 ;;   http://www.flycheck.org/en/latest
 
 (use-package flycheck
+  ;:disabled
   :ensure t
 
   :init

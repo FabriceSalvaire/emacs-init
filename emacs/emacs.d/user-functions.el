@@ -12,6 +12,7 @@
 	(cond ((equal major-mode 'emacs-lisp-mode)
 	       (insert (make-string 100 ?\;)))
 	      ((or (equal major-mode 'python-mode)
+		   (equal major-mode 'python-ts-mode)
 		   (equal major-mode 'django-mode)
                    (equal major-mode 'shell-mode)
                    (equal major-mode 'cmake-mode))
@@ -43,6 +44,7 @@
       (progn
 	(message "mode is [%s]" major-mode)
 	(cond ((or (equal major-mode 'python-mode)
+		   (equal major-mode 'python-ts-mode)
 		   (equal major-mode 'django-mode))
 	       (insert (concat
 			(make-string 4 ? )
@@ -153,3 +155,15 @@ With argument ARG, do this that many times."
     (narrow-to-region (point) (mark))
     (goto-char (point-min))
     (while (search-forward "\n" nil t) (replace-match "" nil t))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun ansi-color-on-buffer ()
+  "..."
+  (interactive)
+  (ansi-color-apply-on-region (point-min) (point-max)))
+
+(define-minor-mode ansi-color-mode
+  "..."
+  nil nil nil
+  (ansi-color-apply-on-region 1 (buffer-size)))

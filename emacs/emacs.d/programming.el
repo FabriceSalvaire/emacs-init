@@ -16,25 +16,47 @@
 ;;   [How to Get Started with Tree-Sitter](https://www.masteringemacs.org/article/how-to-get-started-tree-sitter)
 
 (use-package treesit
+  ; :disabled
   :ensure nil
   :when (treesit-available-p)
   :init
+  ;; (mapc #'treesit-install-language-grammar '(astro css tsx))
+  (setq treesit-language-source-alist
+	'(
+	  (astro "https://github.com/virchau13/tree-sitter-astro")
+	  (bash "https://github.com/tree-sitter/tree-sitter-bash")
+	  (cmake "https://github.com/uyha/tree-sitter-cmake")
+	  (css "https://github.com/tree-sitter/tree-sitter-css")
+	  (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+	  (go "https://github.com/tree-sitter/tree-sitter-go")
+	  (html "https://github.com/tree-sitter/tree-sitter-html")
+	  (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+	  (json "https://github.com/tree-sitter/tree-sitter-json")
+	  (make "https://github.com/alemuller/tree-sitter-make")
+	  (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+	  (python "https://github.com/tree-sitter/tree-sitter-python")
+	  (scss "https://github.com/serenadeai/tree-sitter-scss")
+	  (toml "https://github.com/tree-sitter/tree-sitter-toml")
+	  (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+	  (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+	  (yaml "https://github.com/ikatyang/tree-sitter-yaml")
+	  ))
   (setq treesit-font-lock-level 3)
   ; see treesit-auto
   (setq major-mode-remap-alist
-	'(
-	  (bash-mode . bash-ts-mode)
-	  (c++-mode . c++-ts-mode)
-	  (c-mode . c-ts-mode)
-	  (c-or-c++-mode . c-or-c++-ts-mode)
-	  (cmake-mode . cmake-ts-mode)
-	  (css-mode . css-ts-mode)
-	  (javas-mode . java-ts-mode)
-	  (javascript-mode . javascript-ts-mode)
-	  (js-json-mode . js-json-ts-mode)
-	  (python-mode . python-ts-mode)
-	  (yaml-mode . yaml-ts-mode)
-	  ))
+        '(
+          (bash-mode . bash-ts-mode)
+          (c++-mode . c++-ts-mode)
+          (c-mode . c-ts-mode)
+          (c-or-c++-mode . c-or-c++-ts-mode)
+          (cmake-mode . cmake-ts-mode)
+          (css-mode . css-ts-mode)
+          (javas-mode . java-ts-mode)
+          (javascript-mode . javascript-ts-mode)
+          (js-json-mode . js-json-ts-mode)
+          (python-mode . python-ts-mode)
+          (yaml-mode . yaml-ts-mode)
+          ))
   :config
   ;; [mickeynp/combobulate: Structured Editing and Navigation in Emacs with Tree-Sitter](https://github.com/mickeynp/combobulate)
   ;; [Combobulate: Structured Movement and Editing with Tree-Sitter](https://www.masteringemacs.org/article/combobulate-structured-movement-editing-treesitter)
@@ -67,25 +89,18 @@
 ;; [renzmann/treesit-auto: Automatic installation, usage, and fallback for tree-sitter major modes in Emacs 29](https://github.com/renzmann/treesit-auto)
 ;; M-x treesit-auto-install-all
 (use-package treesit-auto
+  ; :disabled
   :config
-  (global-treesit-auto-mode))
-
-;; (setq treesit-language-source-alist
-;;    '((bash "https://github.com/tree-sitter/tree-sitter-bash")
-;;      (cmake "https://github.com/uyha/tree-sitter-cmake")
-;;      (css "https://github.com/tree-sitter/tree-sitter-css")
-;;      (elisp "https://github.com/Wilfred/tree-sitter-elisp")
-;;      (go "https://github.com/tree-sitter/tree-sitter-go")
-;;      (html "https://github.com/tree-sitter/tree-sitter-html")
-;;      (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-;;      (json "https://github.com/tree-sitter/tree-sitter-json")
-;;      (make "https://github.com/alemuller/tree-sitter-make")
-;;      (markdown "https://github.com/ikatyang/tree-sitter-markdown")
-;;      (python "https://github.com/tree-sitter/tree-sitter-python")
-;;      (toml "https://github.com/tree-sitter/tree-sitter-toml")
-;;      (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-;;      (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-;;      (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+  (global-treesit-auto-mode)
+  ;;
+  ;; (let ((astro-recipe (make-treesit-auto-recipe
+  ;;                      :lang 'astro
+  ;;                      :ts-mode 'astro-ts-mode
+  ;;                      :url "https://github.com/virchau13/tree-sitter-astro"
+  ;;                      :revision "master"
+  ;;                      :source-dir "src")))
+  ;;   (add-to-list 'treesit-auto-recipe-list astro-recipe))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -302,13 +317,64 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; eglot — A client for Language Server Protocol servers
+;;  [Eglot](https://www.gnu.org/software/emacs/manual/html_mono/eglot.html)
 ;;  [joaotavora/eglot: A client for Language Server Protocol servers](https://github.com/joaotavora/eglot)
 ;;  in Emacs 29
+;;  [How to configure eglot to use flycheck?](https://github.com/joaotavora/eglot/issues/42)
+;;  [Migrating from LSP-Mode to Eglot](https://andreyor.st/posts/2023-09-09-migrating-from-lsp-mode-to-eglot/)
 ;;
+;;  eglot-... commands must be available when eglot is enabled
+;;  M-x eglot-show-workspace-configuration
 
 (use-package eglot
+  ; :disabled
+  :ensure t
   :commands eglot
+  :hook ((python-mode python-ts-mode)
+	 . eglot-ensure)
+  :config
+  ;; Astro
+  (add-to-list 'eglot-server-programs
+	       ;; Fixme: path
+               '(astro-ts-mode . ("/home/fabrice/astro-test/homepage/node_modules/.bin/astro-ls" "--stdio"
+				  :initializationOptions
+				  (:typescript (:tsdk "/home/fabrice/astro-test/homepage/node_modules/typescript/lib")))))
+  ;; Fixme: doesn't work ?
+  ;; (setq-default eglot-workspace-configuration
+  ;;               '(:pylsp (:plugins (:jedi_completion (:include_params t :fuzzy t)
+  ;;                                   :pylint (:enabled :json-false)))
+  ;; 			 :gopls (:usePlaceholders t)))
+  :custom
+  (eglot-autoshutdown t)
+  :init
+  ;; auto start eglot for astro-mode
+  (add-hook 'astro-ts-mode-hook 'eglot-ensure)
   )
+
+;; see eglot.el
+;; (defvar eglot-server-programs `(...
+;;                                 ((python-mode python-ts-mode)
+;;                                  . ,(eglot-alternatives
+;;                                      '("pylsp" "pyls"
+;; 				       ("pyright-langserver" "--stdio")
+;; 				       "jedi-language-server" "ruff-lsp")))
+;; (with-eval-after-load 'eglot
+;;   (add-to-list 'eglot-server-programs
+;;                `((python-mode python-ts-mode) .
+;; 		 ,(eglot-alternatives '( "pylsp"
+;; 					 "pyls"
+;; 					 ("poetry" "run" "pyright-langserver" "--stdio")
+;; 					 ("pyright-langserver" "--stdio")
+;; 					 "jedi-language-server")))))
+
+;; [intramurz/flycheck-eglot](https://github.com/intramurz/flycheck-eglot)
+;; Flycheck support for eglot
+(use-package flycheck-eglot
+  ; :disabled
+  :ensure t
+  :after (flycheck eglot)
+  :config
+  (global-flycheck-eglot-mode 1))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -354,9 +420,9 @@
 
   :hook (
          (c-mode . lsp-deferred)
-	 (c++-mode . lsp-deferred)
-	 (java-mode . lsp-deferred)
-	 (python-mode . lsp-deferred)
+         (c++-mode . lsp-deferred)
+         (java-mode . lsp-deferred)
+         (python-mode . lsp-deferred)
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
 
@@ -402,7 +468,7 @@
 ;; (require 'anything-ipython)
 ;; (when (require 'anything-show-completion nil t)
 ;;   (use-anything-show-completion 'anything-ipython-complete
-;; 				'(length initial-pattern)))
+;;                              '(length initial-pattern)))
 
 ;; (require 'anything-config)
 ;; (require 'anything-match-plugin)

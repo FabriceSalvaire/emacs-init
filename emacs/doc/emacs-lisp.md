@@ -13,7 +13,7 @@ program. If you load the source file, rather than compiling it, body is evaluate
 
 ## nil and t
 
-**nil** is 
+**nil** is
 * a symbol with the name ‘nil’
 * the logical truth value false
 * the empty list `nil` === `()`
@@ -78,7 +78,42 @@ Any expression can also be marked to prevent it from being evaluated.
 ```
 (quote foo)
 ;; or
-'foo 
+'foo
+```
+
+## Backquote
+
+[Backquote](https://www.gnu.org/software/emacs/manual/html_node/elisp/Backquote.html)
+
+Backquote constructs allow you to quote a list, but selectively evaluate elements of that list. In
+the simplest case, it is identical to the special form quote.
+
+```
+`(a list of (+ 2 3) elements)
+     ⇒ (a list of (+ 2 3) elements)
+
+'(a list of (+ 2 3) elements)
+     ⇒ (a list of (+ 2 3) elements)
+```
+
+The special marker `,` inside of the argument to backquote indicates a value that isn’t
+constant. The Emacs Lisp evaluator evaluates the argument of `,`, and puts the value in the list
+structure:
+
+```
+`(a list of ,(+ 2 3) elements)
+     ⇒ (a list of 5 elements)
+```
+
+```
+(setq some-list '(2 3))
+     ⇒ (2 3)
+
+(cons 1 (append some-list '(4) some-list))
+     ⇒ (1 2 3 4 2 3)
+
+`(1 ,@some-list 4 ,@some-list)
+     ⇒ (1 2 3 4 2 3)
 ```
 
 ## Function

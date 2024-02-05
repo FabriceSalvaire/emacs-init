@@ -5,6 +5,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; [Calling use-package multiple times on the same package](https://github.com/jwiegley/use-package/issues/662)
+
 (use-package foo
   ;; to diable
   :diabled

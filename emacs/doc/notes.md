@@ -1,10 +1,14 @@
 # To look
 
-* https://github.com/tam17aki/ace-isearch — provides a minor mode that combines isearch, ace-jump-mode or avy and helm-swoop or swiper.
-* https://github.com/winterTTr/ace-jump-mode — Ace jump mode is a minor mode of emacs, which help you to move the cursor within Emacs.
+* https://github.com/tam17aki/ace-isearch — provides a minor mode that combines isearch,
+  ace-jump-mode or avy and helm-swoop or swiper.
+* https://github.com/winterTTr/ace-jump-mode — Ace jump mode is a minor mode of emacs, which help
+  you to move the cursor within Emacs.
 * https://github.com/abo-abo/avy — Jump to things in Emacs tree-style
-* https://github.com/emacsorphanage/helm-swoop — Efficiently hopping squeezed lines powered by Emacs helm interface
-* https://github.com/abo-abo/swiper — Ivy - a generic completion frontend for Emacs, Swiper - isearch with an overview, and more.
+* https://github.com/emacsorphanage/helm-swoop — Efficiently hopping squeezed lines powered by Emacs
+  helm interface
+* https://github.com/abo-abo/swiper — Ivy - a generic completion frontend for Emacs, Swiper -
+  isearch with an overview, and more.
 
 
 # Doom Emacs
@@ -15,7 +19,8 @@ Doom is a customised Emacs with a VI like experience.
 * https://docs.doomemacs.org/latest/#/modules
 
 * https://github.com/abo-abo/hydra
-  This is a package for GNU Emacs that can be used to tie related commands into a family of short bindings with a common prefix - a Hydra.
+  This is a package for GNU Emacs that can be used to tie related commands into a family of short
+  bindings with a common prefix - a Hydra.
 * https://github.com/orgs/doomemacs/projects/5
 
 
@@ -28,7 +33,8 @@ Doom is a customised Emacs with a VI like experience.
 # Ivy / Counsel / Swiper - Completion Mechanism for Emacs
 
 * **Ivy** is a generic completion mechanism for Emacs.
-* **Counsel** takes this further, providing versions of common Emacs commands that are customised to make the best use of Ivy.
+* **Counsel** takes this further, providing versions of common Emacs commands that are customised to
+  make the best use of Ivy.
 * **Swiper** is an alternative to isearch that uses Ivy to show an overview of all matches.
 
 * https://oremacs.com/2015/04/16/ivy-mode
@@ -39,6 +45,7 @@ Doom is a customised Emacs with a VI like experience.
 key bindings work the same as in fundamental-mode.
 
 **Key bindings for navigation**
+|---|---|---|
 | C-n or Up   	  | ivy-next-line           | selects the next candidate       |
 | C-p or Down 	  | ivy-previous-line       | selects the previous candidate   |
 | M-< 			  | ivy-beginning-of-buffer | selects the first candidate	   |
@@ -47,20 +54,22 @@ key bindings work the same as in fundamental-mode.
 | M-v or PageDown | ivy-scroll-down-command | scrolls down by ivy-height lines |
 
 **Key bindings for single selection, action, then exit minibuffer**
-| C-m or RET | ivy-done             | Calls the default action and then exits the minibuffer.
-| M-o 		 | ivy-dispatching-done	| Presents valid actions from which to choose.
-| C-j 		 | ivy-alt-done			| When completing file names, selects the current directory candidate and starts a new completion session there.
-| TAB 		 | ivy-partial-or-done	| Attempts partial completion, extending current input as much as possible.
+|---|---|---|
+| C-m or RET | ivy-done             | Calls the default action and then exits the minibuffer. |
+| M-o 		 | ivy-dispatching-done	| Presents valid actions from which to choose. |
+| C-j 		 | ivy-alt-done			| When completing file names, selects the current directory candidate and starts a new completion session there. |
+| TAB 		 | ivy-partial-or-done	| Attempts partial completion, extending current input as much as possible. |
 | C-M-j      | ivy-immediate-done	| Exits with the current input instead of the current candidate (like other commands).
-| C-'        | ivy-avy              | Uses avy to select one of the candidates on the current candidate page.
+| C-'        | ivy-avy              | Uses avy to select one of the candidates on the current candidate page. |
 
 **Key bindings that alter the minibuffer input**
-| M-n   | ivy-next-history-element
-| M-p   | ivy-previous-history-element
-| M-i   | ivy-insert-current
-| M-j   | ivy-yank-word
-| S-SPC | ivy-restrict-to-matches
-| C-r   | ivy-reverse-i-search
+|---|---|
+| M-n   | ivy-next-history-element |
+| M-p   | ivy-previous-history-element |
+| M-i   | ivy-insert-current |
+| M-j   | ivy-yank-word |
+| S-SPC | ivy-restrict-to-matches |
+| C-r   | ivy-reverse-i-search|
 
 ## File name completion
 
@@ -70,9 +79,10 @@ other cases, since it's done in stages, just like ido-find-file does it.
 The key bindings are:
 
 * **RET** will select the current candidate and finish.
-* **C-j** will try to continue the completion, i.e. if the current candidate is a directory, move to that directory.
-    But if the current candidate is a file or ./, then finish.
-* **/** will switch to completing the sub-directories of /, but if the candidate is a perfect match, it will act like C-j.
+* **C-j** will try to continue the completion, i.e. if the current candidate is a directory, move to
+    that directory.  But if the current candidate is a file or ./, then finish.
+* **/** will switch to completing the sub-directories of /, but if the candidate is a perfect match,
+  it will act like C-j.
 * **~** will switch to completing the sub-directories of ~/.
 * **C-n** and **C-p** naturally select the next and the previous candidate.
 * **DEL** move to the parent directory (counsel-find-file)
@@ -89,7 +99,7 @@ To select next or previous of the shown completion candidates, use respectively 
 
 * Hit `RET` to choose a selected candidate for completion.
 * Hit `TAB` to complete with the common part: characters present at the beginning of all the candidates.
-* Hit `C-g` (or `<ESC ESC ESC>`) to stop activity of Company `company-abord` . 
+* Hit `C-g` (or `<ESC ESC ESC>`) to stop activity of Company `company-abord` .
 
 * `C-h` `<f1>` Display a buffer with the documentation for the selected candidate (company-show-doc-buffer).
 * `C-w` Display a buffer with the definition of the selected candidate (company-show-location).
@@ -110,6 +120,7 @@ To select next or previous of the shown completion candidates, use respectively 
 
 Usage: open some file in a version-controlled (e.g. git)
 
+|---|---|
 | s-p C-h     | Projectile’s keybindings |
 
 | s-p p   	  | Switch project |
@@ -189,7 +200,11 @@ Usage: open some file in a version-controlled (e.g. git)
 * `lsp-find-definition`
 * `lsp-find-references`
 
-# LSP
+# Eglot
+
+# LSP - Emacs client/library for the Language Server Protocol
+
+See also eglot, an alternative minimal LSP implementation.
 
 lsp-mode aims to provide IDE-like experience by providing optional integration with the most popular
 Emacs packages like company, flycheck and projectile.
@@ -202,8 +217,13 @@ Emacs packages like company, flycheck and projectile.
 
 # Magit
 
+|---|---|
 | C-x g | magit-status |
 
 # Abbrev — to expand abbreviations
 
 * https://www.emacswiki.org/emacs/AbbrevMode
+
+# Markdown
+
+Preview ne marche pas bien, c'est moche, les tables ne sont pas misent en forme.

@@ -1,5 +1,28 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
+;; Astro
+;;   https://github.com/Sorixelle/astro-ts-mode
+;;   https://github.com/virchau13/tree-sitter-astro
+
+(use-package astro-ts-mode
+  :config
+  (setq astro-ts-mode-indent-offset 4)
+  :init
+  (add-hook 'astro-ts-mode-hook (lambda () (setq indent-tabs-mode nil)))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Typescript
+;;
+
+;; (use-package typescript
+(use-package typescript-ts-mode
+  :mode "\\.ts\\'"
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;; CSS
 ;;
 
@@ -27,7 +50,8 @@
 
 (use-package js2-mode
   :mode "\\.js\\'"
-  :config
+  ;; :hook (prog-mode text-mode)
+  :init
   (add-hook 'js2-mode-hook (lambda () (setq c-basic-offset 4
 					    indent-tabs-mode nil)))
   )
@@ -43,7 +67,7 @@
 ;; (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
 
 (use-package rjsx-mode
-  :config
+  :init
   (add-hook 'rjsx-mode-hook (lambda () (setq c-basic-offset 4
 					     indent-tabs-mode nil)))
   )
@@ -55,14 +79,21 @@
 ;; http://web-mode.org
 
 (use-package web-mode
+  ;; :ensure t
   ;; require django-mode
   :mode "\\.html?\\'"
-  :config
+  :init
   (add-hook 'web-mode-hook (lambda () (setq web-mode-enable-engine-detection t
 					    web-mode-markup-indent-offset 4
 					    web-mode-css-indent-offset 4
 					    web-mode-code-indent-offset 4)))
   )
+
+;; ASTRO
+;; (define-derived-mode astro-mode web-mode "astro")
+;; (setq auto-mode-alist
+;;       (append '((".*\\.astro\\'" . astro-mode))
+;;               auto-mode-alist))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -71,6 +102,7 @@
 ;;   https://github.com/emacsmirror/ts-mode
 
 (use-package typoscript
+  :disabled
   :mode "\\.ts\\'")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -1,3 +1,38 @@
+Look at [EmacsWiki : Python Programming In Emacs](https://www.emacswiki.org/emacs/PythonProgrammingInEmacs)
+
+---
+
+[Frustrating python lsp experience : r/emacs](https://www.reddit.com/r/emacs/comments/17uyy08/frustrating_python_lsp_experience/)
+-> [Dynamically-calculated eglot-workspace-configuration for python poetry venv's, what am I doing wrong?](https://github.com/joaotavora/eglot/discussions/967#discussioncomment-6500223)
+```
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               `((python-mode python-ts-mode) .
+		 ,(eglot-alternatives '("pylsp" "pyls" ("poetry" "run" "pyright-langserver" "--stdio")  ("pyright-langserver" "--stdio") "jedi-language-server")))))
+```
+
+[Poetry - Python dependency management and packaging made easy](https://python-poetry.org/)
+[GitHub - microsoft/pyright: Static Type Checker for Python](https://github.com/microsoft/pyright)
+
+[pycodestyle](https://pycodestyle.pycqa.org/en/latest/)
+formerly pep8
+
+[GitHub - emacs-lsp/emacs: Mirror of GNU Emacs](https://github.com/emacs-lsp/emacs)
+A Emacs fork implementing non-blocking and async JSONRPC support
+
+---
+
+**Attention, il y a deux `python-mode` celui d'Emacs et le package externe !**
+
+---
+
+[jorgenschaefer/elpy: Emacs Python Development Environment](https://github.com/jorgenschaefer/elpy)
+looking for maintainer
+
+[davidhalter/jedi: Awesome autocompletion, static analysis and refactoring library for python](https://github.com/davidhalter/jedi)
+
+---
+
 M-x python-shift-right (C-c >)
 M-x python-shift-left  (C-c <)
 
