@@ -9,6 +9,13 @@
   ;; Font
   (set-foreground-color "black")
   (set-background-color "white")
+  ;
+  ;; (set-foreground-color "#282c34")
+  ;; (set-background-color "#f5f5f5")
+  ;; https://github.com/doomemacs/themes/blob/master/themes/doom-one-theme.el
+  ;; (set-foreground-color "#bbc2cf") ; "black"
+  ;; (set-background-color "#282c34") ; "#bfbfbf" "brightwhite"
+
   (custom-set-faces '(default ((t (:family "Noto Sans Mono" :foundry "GOOG" :slant normal :weight normal :height 143 :width normal)))))
   ;; Set the line spacing
   (setq-default line-spacing 3) ; px
@@ -29,6 +36,25 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
+;; Doom Modeline
+;;  https://github.com/seagle0128/doom-modeline
+;; for icon issues
+;;   https://github.com/seagle0128/doom-modeline/issues/310
+;;   To get font in ~/.local/share/fonts/ :  M-x nerd-icons-install-fonts
+;;     before M-x all-the-icons-install-fonts
+
+(use-package doom-modeline
+  :ensure t
+  :hook (after-init . doom-modeline-mode)
+  ;; :init (doom-modeline-mode 1)
+  )
+
+(use-package all-the-icons
+  :ensure t
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;; Powerline
 ;;  Enhance the powerline (information line below the buffer)
 ;;  https://github.com/milkypostman/powerline
@@ -41,23 +67,5 @@
 (use-package powerline
   :disabled
   :init
-  (powerline-default-theme))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Doom Modeline
-;;  https://github.com/seagle0128/doom-modeline
-;; for icon issues
-;;   https://github.com/seagle0128/doom-modeline/issues/310
-;;   To get font in ~/.local/share/fonts/ :  M-x nerd-icons-install-fonts
-;;     before M-x all-the-icons-install-fonts
-
-;; (use-package doom-modeline
-;;   :ensure t
-;;   :init (doom-modeline-mode 1))
-(use-package doom-modeline
-  :ensure t
-  :hook (after-init . doom-modeline-mode))
-
-(use-package all-the-icons
-  :ensure t)
+  (powerline-default-theme)
+  )

@@ -7,25 +7,23 @@
   :config
 
   ;; https://www.emacswiki.org/emacs/DiredExtra#Dired_X
-  (add-hook 'dired-load-hook
-            (lambda ()
-              (load "dired-x")
-              ;; Set dired-x global variables here.
-              ))
+  :hook (dired-load . (lambda ()
+			(load "dired-x")
+			;; Set dired-x global variables here.
+			))
 
   ;; https://www.gnu.org/software/emacs/manual/html_node/dired-x/Omitting-Files-in-Dired.html
   ;; Fixme: symbol value as variable is void
-  (add-hook 'dired-mode-hook
-            (lambda ()
-              ;; Set dired-x buffer-local variables here.
-              ;; dired-omit-toggle M-o
-              ;; (setq dired-omit-files-p t)
-              (setq dired-omit-files
-                    ;; do not wish to see `dot' files (files starting with a `.')
-		    ;;  '(dired-omit-files "^\\.$")
-                    (concat dired-omit-files "\\|^\\..+$"))
-              ))
-)
+  :hook '(dired-mode . (lambda ()
+			 ;; Set dired-x buffer-local variables here.
+			 ;; dired-omit-toggle M-o
+			 ;; (setq dired-omit-files-p t)
+			 (setq dired-omit-files
+			       ;; do not wish to see `dot' files (files starting with a `.')
+			       ;;  '(dired-omit-files "^\\.$")
+			       (concat dired-omit-files "\\|^\\..+$"))
+			 ))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -34,6 +32,16 @@
 
 (use-package treemacs
   :ensure t
+
+  :bind
+  (:map global-map
+        ("M-0"       . treemacs-select-window)
+        ("C-x t 1"   . treemacs-delete-other-windows)
+        ("C-x t t"   . treemacs)
+        ("C-x t d"   . treemacs-select-directory)
+        ("C-x t B"   . treemacs-bookmark)
+        ("C-x t C-t" . treemacs-find-file)
+        ("C-x t M-t" . treemacs-find-tag))
 
   :init
   (with-eval-after-load 'winum
@@ -109,16 +117,6 @@
        (treemacs-git-mode 'simple)))
 
     (treemacs-hide-gitignored-files-mode nil))
-
-  :bind
-  (:map global-map
-        ("M-0"       . treemacs-select-window)
-        ("C-x t 1"   . treemacs-delete-other-windows)
-        ("C-x t t"   . treemacs)
-        ("C-x t d"   . treemacs-select-directory)
-        ("C-x t B"   . treemacs-bookmark)
-        ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag))
   )
 
 (use-package treemacs-evil

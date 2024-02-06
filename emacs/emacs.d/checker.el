@@ -159,6 +159,8 @@
 
 (use-package lsp-mode
   :disabled ; !!!
+  :ensure t
+
   :init
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "C-c l")
@@ -211,19 +213,33 @@
   )
 
 (use-package lsp-ui
+  :ensure t
   :commands lsp-ui-mode
   )
 ;; if you are helm user
 ;;   (use-package helm-lsp :commands helm-lsp-workspace-symbol)
 ;; if you are ivy user
 (use-package lsp-ivy
+  :ensure t
   :commands lsp-ivy-workspace-symbol
   )
 (use-package lsp-treemacs
+  :ensure t
   :commands lsp-treemacs-errors-list
   )
 
-;; debugger
-;; https://github.com/emacs-lsp/dap-mode
-(use-package dap-mode)
-(use-package dap-cpptools)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Debugger
+;;   https://github.com/emacs-lsp/dap-mode
+;;
+;;   Emacs client/library for Debug Adapter Protocol is a wire protocol for communication between
+;;   client and Debug Server. It’s similar to the LSP but provides integration with debug server.
+
+(use-package dap-mode
+  :ensure t
+  :defer t
+  )
+(use-package dap-cpptools
+  :defer t
+  )

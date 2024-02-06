@@ -7,9 +7,9 @@
   ; (setq-default ispell-program-name "/usr/bin/nuspell")
   (setq-default ispell-program-name "/usr/bin/hunspell")
   (setq ispell-hunspell-dict-paths-alist
-	'(("en_GB" "/usr/share/hunspell/en_GB.aff")
-	  ("fr_FR" "/usr/share/hunspell/fr_FR.aff")
-	  ))
+        '(("en_GB" "/usr/share/hunspell/en_GB.aff")
+          ("fr_FR" "/usr/share/hunspell/fr_FR.aff")
+          ))
   (ispell-change-dictionary "en_GB" "globally")
 )
 
@@ -30,77 +30,88 @@
 ;;
 ;; FlySpell
 ;;   https://www.emacswiki.org/emacs/FlySpell
+;;
+;; M-$ ispell-word
 
 (use-package flyspell
   :config
   (dolist (hook
            '(
-	     text-mode-hook
+             text-mode-hook
              LaTeX-mode-hook
              markdown-mode
-	     )
-	   )
+             )
+           )
     (add-hook hook (lambda () (flyspell-mode 1))))
   (dolist (hook
            '(
-	     c-mode-hook
-	     java-mode-hook
-	     javascript-mode-hook
-	     python-mode-hook
-	     qml-mode-hook
+             c-mode-hook
+             java-mode-hook
+             javascript-mode-hook
+             python-mode-hook
+             qml-mode-hook
              c++-mode-hook
-	     )
-	   )
+             )
+           )
     (add-hook hook (lambda () (flyspell-prog-mode))))
   )
+
 
 (defun flyspell-on-for-buffer-type ()
   "Enable Flyspell appropriately for the major mode of the current buffer.  Uses `flyspell-prog-mode' for modes derived from `prog-mode', so only strings and comments get checked.  All other buffers get `flyspell-mode' to check all text.  If flyspell is already enabled, does nothing."
   (interactive)
   (if (not (symbol-value flyspell-mode)) ; if not already on
       (progn
-	(if (derived-mode-p 'prog-mode)
-	    (progn
-	      (message "Flyspell on (code)")
-	      (flyspell-prog-mode))
-	  ;; else
-	  (progn
-	    (message "Flyspell on (text)")
-	    (flyspell-mode 1)))
-	;; I tried putting (flyspell-buffer) here but it didn't seem to work
-	)))
+        (if (derived-mode-p 'prog-mode)
+            (progn
+              (message "Flyspell on (code)")
+              (flyspell-prog-mode))
+          ;; else
+          (progn
+            (message "Flyspell on (text)")
+            (flyspell-mode 1)))
+        ;; I tried putting (flyspell-buffer) here but it didn't seem to work
+        )))
+
 
 (defun flyspell-toggle ()
   "Turn Flyspell on if it is off, or off if it is on.  When turning on, it uses `flyspell-on-for-buffer-type' so code-vs-text is handled appropriately."
   (interactive)
   (if (symbol-value flyspell-mode)
       (progn ; flyspell is on, turn it off
-	(message "Flyspell off")
-	(flyspell-mode -1))
+        (message "Flyspell off")
+        (flyspell-mode -1))
     ;; else - flyspell is off, turn it on
     (flyspell-on-for-buffer-type)))
 
-;; M-$ ispell-word
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;; https://github.com/rolandwalker/flyspell-lazy
 ;;   Improve Emacs flyspell responsiveness using idle timers.
+
 (use-package flyspell-lazy
   :ensure t
+  :after flyspell
   :custom
   (flyspell-lazy-idle-seconds 2)
-
   :config
   (flyspell-lazy-mode 1)
   )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;; https://github.com/d12frosted/flyspell-correct
 ;;   Correcting misspelled words with flyspell using favourite interface.
+
 (use-package flyspell-correct
   :ensure t
   :after flyspell
-  :bind (:map flyspell-mode-map ("C-;" . flyspell-correct-wrapper)))
+  :bind (:map flyspell-mode-map ("C-;" . flyspell-correct-wrapper))
+  )
+
 (use-package flyspell-correct-ivy
-  :after flyspell-correct)
+  :after flyspell-correct
+  )
 
 ;; Fixme: ???
 ;; (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
@@ -123,7 +134,6 @@
 
 (use-package languagetool
   :ensure t
-  :defer t
   :commands (languagetool-check
              languagetool-clear-suggestions
              languagetool-correct-at-point
@@ -136,8 +146,8 @@
   (setq languagetool-java-arguments '("-Dfile.encoding=UTF-8")
         languagetool-console-command "/usr/local/stow/LanguageTool/languagetool-commandline.jar"
         languagetool-server-command  "/usr/local/stow/LanguageTool/languagetool-server.jar"
-	languagetool-default-language "en-GB"
-	))
+        languagetool-default-language "en-GB"
+        ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -162,7 +172,5 @@
   (google-translate-translation-directions-alist '(("en" . "fr") ("fr" . "en")))
   :config
   ;; (use-package google-translate-default-ui)
-  (use-package google-translate-smooth-ui
-    )
+  (use-package google-translate-smooth-ui)
   )
-

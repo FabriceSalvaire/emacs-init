@@ -61,16 +61,16 @@
 ;;   python-mode.el-6.0.4/tools/column-marker.el
 
 (use-package column-marker
-  :config
   ;; Highlight column 100 in python mode.
-  (add-hook 'python-mode-hook '(lambda () (interactive) (column-marker-1 100)))
+  :hook (python-mode . (lambda () (interactive) (column-marker-1 100)))
+
+  :config
   ;; (add-hook 'sass-mode-hook '(lambda ()
   ;;                            (interactive)
   ;;                            (column-marker-1 4)
   ;;                            (column-marker-2 8)
   ;;                            (column-marker-3 12)
   ;;                            ))
-  ;; :hook (python-mode . (...)))
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -118,7 +118,7 @@
   (show-paren-when-point-in-periphery t)
 
   :init
-  ;; global
+  ;; Fixme: global ???
   (show-paren-mode 1)
   )
 

@@ -135,3 +135,30 @@ See https://www.gnu.org/software/emacs/manual/html_node/elisp/Anonymous-Function
 
 (defun foo (a b c d) (+ a b c d))
 ```
+
+## Dash — A modern list API for Emacs
+
+[magnars/dash.el: A modern list library for Emacs](https://github.com/magnars/dash.el)
+
+See also
+- [Common Lisp Extensions](https://www.gnu.org/software/emacs/manual/html_node/cl/)
+- [EmacsWiki : Common Lisp For Emacs](https://www.emacswiki.org/emacs/CommonLispForEmacs)
+
+## Keyword Arguments
+
+[EmacsWiki : Keyword Arguments](https://www.emacswiki.org/emacs/KeywordArguments)
+
+Keyword parameters may be emulated (assuming you have no `&rest` args) by treating the `&rest` arguments
+as a property list:
+
+```
+(defun foobar-plist (&rest args)
+  "`foobar-plist' takes keyword arguments of :foo and :bar like this:
+\(foobar-plist :foo 23)
+\(foobar-plist :bar 42)"
+  (format "foo is %S and bar is %S" (plist-get args :foo) (plist-get args :bar)))
+```
+
+`(plist-get PLIST PROP &optional PREDICATE)`
+Extract a value from a property list.
+PLIST is a property list, which is a list of the form (PROP1 VALUE1 PROP2 VALUE2...)

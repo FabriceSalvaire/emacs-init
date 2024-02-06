@@ -139,6 +139,7 @@
   (require 'use-package))
 ;;(require 'diminish)
 
+;; Information about package loads in the *Messages* buffer
 (setq use-package-verbose t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
