@@ -1,45 +1,141 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (use-package emacs
   :config
 
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Indent Tabs Mode
-  ;; (setq-default 'indent-tabs-mode nil)
+  (setq-default indent-tabs-mode nil)
+  (dolist (_
+           '(
+             c-mode-hook
+             cmake-mode-hook
+             emacs-lisp-mode-hook
+             )
+           )
+    (add-hook _ '(lambda () (setq indent-tabs-mode nil)))
+    )
 
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; Line & Column
+  (setq column-number-mode t)
+  ;; (setq line-number-mode t)
+  ;; (global-hl-line-mode)
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; Fill-column & Auto fill mode
+  ;;
+  ;; SET AS CUSTOM ELSE NOT SET !!!
+  ;; (setq fill-column 100)
+  (dolist (_
+           '(
+             TeX-mode-hook
+             c-mode-hook
+             cmake-mode-hook
+             django-mode-hook
+             emacs-lisp-mode-hook
+             glsl-mode-hook
+             outline-mode-hook
+             python-mode-hook
+             rst-mode-hook
+             sass-mode-hook
+             text-mode-hook
+             web-mode-hook
+             yaml-mode-hook
+             )
+           )
+    (add-hook _ '(lambda () (setq fill-column 100)))
+    )
+
+  ;; (add-hook 'text-mode-hook 'turn-on-auto-fill)
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Whitespace
+;;   https://www.emacswiki.org/emacs/WhiteSpace
+;;   https://github.com/VernonGrant/discovering-emacs/blob/main/show-notes/4-using-whitespace-mode.md
+
+(use-package whitespace
+  :hook (prog-mode . whitespace-mode)
+
+  :config
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Trailing Whitespace
   ;;   https://stackoverflow.com/questions/34531831/highlighting-trailing-whitespace-in-emacs-without-changing-character
-  (setq-default show-trailing-whitespace t)
-  (set-face-attribute 'trailing-whitespace nil :background "gray") ; was red1
+  ;; (setq-default show-trailing-whitespace t)
+  ;; (set-face-attribute 'trailing-whitespace nil :background "gray") ; was red1
 
   ;; Empty Line
   ;; https://www.emacswiki.org/emacs/HighlightEndOfBuffer
-  (setq-default indicate-empty-lines t)
+  ;; (setq-default indicate-empty-lines t)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;
-  ;; Fill-column & Auto fill mode
-  ;;
-  (setq column-number-mode t)
-  (dolist (_
-	   '(
-	     TeX-mode-hook
-	     c-mode-hook
-	     cmake-mode-hook
-	     django-mode-hook
-	     emacs-lisp-mode-hook
-	     glsl-mode-hook
-	     outline-mode-hook
-	     python-mode-hook
-	     rst-mode-hook
-	     sass-mode-hook
-	     text-mode-hook
-	     web-mode-hook
-	     yaml-mode-hook
-	     )
-	   )
-    (add-hook _ '(lambda () (setq fill-column 100)))
-    )
-  ;; (add-hook 'text-mode-hook 'turn-on-auto-fill)
-  ;; SET AS CUSTOM ELSE NOT SET !!!
-  ;; (setq fill-column 100)
+  (setq-default whitespace-style
+                '(
+                  face ; visualize by using faces
+                  trailing ; visualize trailing blanks via faces
+                  tabs ; visualize TABs via faces.
+                  ;; spaces ; visualize SPACEs and HARD SPACEs via faces.
+                  ;; lines ; highlight lines which have columns beyond ‘whitespace-line-column’ via faces
+                  ;; lines-tail ; tail variant
+                  ;; lines-char ; char variant
+                  ;; newline ; visualize NEWLINEs via faces
+                  ;; missing-newline-at-eof ; visualize missing newline at the end of the file via faces
+                  empty ; visualize empty lines at beginning and/or end of buffer via faces.
+                  ;; indentation::tab ; visualize ‘tab-width’ or more SPACEs at beginning of line via faces
+                  ;; indentation::space ; visualize TABs at beginning of line via faces.
+                  ;; indentation ; visualize ‘tab-width’ or more SPACEs at beginning of line, if
+                                 ; ‘indent-tabs-mode’ (which see) is non-nil; otherwise, visualize TABs
+                                 ; at beginning of line via faces.
+                  ;; big-indent ; visualize big indentations via faces.
+                  ;; space-after-tab::tab ; visualize ‘tab-width’ or more SPACEs after a TAB via faces.
+                  ;; space-after-tab::space ; visualize TABs when ‘tab-width’
+                                           ; or more SPACEs occur after a TAB, via faces.
+                  ;;space-after-tab ; visualize ‘tab-width’ or more SPACEs after a TAB, if
+                                    ; ‘indent-tabs-mode’ (which see) is non-nil; otherwise,visualize
+                                    ; the TABs via faces.
+                  ;; space-before-tab::tab ; visualize SPACEs before TAB via faces.
+                  ;; space-before-tab::space ; visualize TABs when SPACEs occur before TAB, via faces.
+                  ;; space-before-tab ; visualize SPACEs before TAB, if ‘indent-tabs-mode’ (which see)
+                                      ; is non-nil; otherwise, visualize TABs via faces.
+
+                  ; space-mark ; visualize SPACEs and HARD SPACEs via display table.
+                  ; tab-mark ; visualize TABs via display table.
+                  ; newline-mark ; visualize NEWLINEs via display table.
+                  ))
+
+  (require 'color)
+  (let* ((fg "#ee0000")
+         (bg (color-darken-name "#ffffff" 40))
+         )
+    (custom-set-faces
+     `(whitespace-trailing               ((t (:background ,bg :foreground ,fg))))
+     `(whitespace-tab                    ((t (:background ,bg :foreground ,fg))))
+     `(whitespace-empty                  ((t (:background ,bg :foreground ,fg))))
+     ;; `(whitespace-newline                ((t (:background ,bg :foreground ,fg))))
+     ;; `(whitespace-missing-newline-at-eof ((t (:background ,bg :foreground ,fg))))
+     ;; `(whitespace-space                  ((t (:background ,bg :foreground ,fg))))
+     ;; `(whitespace-space-after-tab        ((t (:background ,bg :foreground ,fg))))
+     ;; `(whitespace-space-before-tab       ((t (:background ,bg :foreground ,fg))))
+    ))
+
+  ;; (KIND CHAR VECTOR...)
+  ;; The first vector that can be displayed by the terminal is used
+  (setq-default whitespace-display-mappings
+                '((tab-mark     ?\t [?› ?\t])
+                  (newline-mark ?\n [?¬ ?\n])
+                  (space-mark   ?\  [?·] [?.])))
+
+  ;; Don't enable whitespace for.
+  ;; (setq-default whitespace-global-modes
+  ;;               '(not shell-mode
+  ;;                     help-mode
+  ;;                     magit-mode
+  ;;                     magit-diff-mode
+  ;;                     ibuffer-mode
+  ;;                     dired-mode
+  ;;                     occur-mode))
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -142,13 +238,3 @@
   :disabled
   :hook
   (prog-mode . clean-aindent-mode))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Line Number
-
-(use-package linum
-  :disabled
-  :init
-  (global-linum-mode 1)
-  )

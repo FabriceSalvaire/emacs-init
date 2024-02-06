@@ -1,102 +1,40 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; treesit — parsing library
-;;   [Tree-sitter](https://tree-sitter.github.io/tree-sitter/)
-;;   [How to Get Started with Tree-Sitter](https://www.masteringemacs.org/article/how-to-get-started-tree-sitter)
+;; Combobulate: Structured Editing and Navigation in Emacs with Tree-Sitter
+;;   https://github.com/mickeynp/combobulate
+;; [Combobulate: Structured Movement and Editing with Tree-Sitter](https://www.masteringemacs.org/article/combobulate-structured-movement-editing-treesitter)
+;; Do not forget to customize Combobulate to your liking:
+;;
+;;  M-x customize-group RET combobulate RET
 
-(use-package treesit
-  ; :disabled
-  :ensure nil
-  :when (treesit-available-p)
-  :init
-  ;; (mapc #'treesit-install-language-grammar '(astro css tsx))
-  (setq treesit-language-source-alist
-	'(
-	  (astro "https://github.com/virchau13/tree-sitter-astro")
-	  (bash "https://github.com/tree-sitter/tree-sitter-bash")
-	  (cmake "https://github.com/uyha/tree-sitter-cmake")
-	  (css "https://github.com/tree-sitter/tree-sitter-css")
-	  (elisp "https://github.com/Wilfred/tree-sitter-elisp")
-	  (go "https://github.com/tree-sitter/tree-sitter-go")
-	  (html "https://github.com/tree-sitter/tree-sitter-html")
-	  (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-	  (json "https://github.com/tree-sitter/tree-sitter-json")
-	  (make "https://github.com/alemuller/tree-sitter-make")
-	  (markdown "https://github.com/ikatyang/tree-sitter-markdown")
-	  (python "https://github.com/tree-sitter/tree-sitter-python")
-	  (scss "https://github.com/serenadeai/tree-sitter-scss")
-	  (toml "https://github.com/tree-sitter/tree-sitter-toml")
-	  (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-	  (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-	  (yaml "https://github.com/ikatyang/tree-sitter-yaml")
-	  ))
-  (setq treesit-font-lock-level 3)
-  ; see treesit-auto
-  (setq major-mode-remap-alist
-        '(
-          (bash-mode . bash-ts-mode)
-          (c++-mode . c++-ts-mode)
-          (c-mode . c-ts-mode)
-          (c-or-c++-mode . c-or-c++-ts-mode)
-          (cmake-mode . cmake-ts-mode)
-          (css-mode . css-ts-mode)
-          (javas-mode . java-ts-mode)
-          (javascript-mode . javascript-ts-mode)
-          (js-json-mode . js-json-ts-mode)
-          (python-mode . python-ts-mode)
-          (yaml-mode . yaml-ts-mode)
-          ))
-  :config
-  ;; [mickeynp/combobulate: Structured Editing and Navigation in Emacs with Tree-Sitter](https://github.com/mickeynp/combobulate)
-  ;; [Combobulate: Structured Movement and Editing with Tree-Sitter](https://www.masteringemacs.org/article/combobulate-structured-movement-editing-treesitter)
-  ;; Do not forget to customize Combobulate to your liking:
-  ;;
-  ;;  M-x customize-group RET combobulate RET
-  ;;
-  (use-package combobulate
-    :preface
-    ;; You can customize Combobulate's key prefix here.
-    ;; Note that you may have to restart Emacs for this to take effect!
-    ; (setq combobulate-key-prefix "C-c o")
+(use-package combobulate
+  :load-path ("/home/common/emacs/checkout/combobulate")
 
-    ;; Optional, but recommended.
-    ;;
-    ;; You can manually enable Combobulate with `M-x
-    ;; combobulate-mode'.
-    ; :hook ((python-ts-mode . combobulate-mode)
-    ;        (js-ts-mode . combobulate-mode)
-    ;        (css-ts-mode . combobulate-mode)
-    ;        (yaml-ts-mode . combobulate-mode)
-    ;        (json-ts-mode . combobulate-mode)
-    ;        (typescript-ts-mode . combobulate-mode)
-    ;        (tsx-ts-mode . combobulate-mode))
-    ;; Amend this to the directory where you keep Combobulate's source
-    ;; code.
-    :load-path ("/home/common/emacs/checkout/combobulate"))
-  )
+  :preface
+  ;; You can customize Combobulate's key prefix here.
+  ;; Note that you may have to restart Emacs for this to take effect!
+  ;; (setq combobulate-key-prefix "C-c o")
 
-;; [renzmann/treesit-auto: Automatic installation, usage, and fallback for tree-sitter major modes in Emacs 29](https://github.com/renzmann/treesit-auto)
-;; M-x treesit-auto-install-all
-(use-package treesit-auto
-  ; :disabled
-  :config
-  (global-treesit-auto-mode)
+  ;; Optional, but recommended.
   ;;
-  ;; (let ((astro-recipe (make-treesit-auto-recipe
-  ;;                      :lang 'astro
-  ;;                      :ts-mode 'astro-ts-mode
-  ;;                      :url "https://github.com/virchau13/tree-sitter-astro"
-  ;;                      :revision "master"
-  ;;                      :source-dir "src")))
-  ;;   (add-to-list 'treesit-auto-recipe-list astro-recipe))
+  ;; You can manually enable Combobulate with `M-x combobulate-mode'.
+					; :hook ((python-ts-mode . combobulate-mode)
+					;        (js-ts-mode . combobulate-mode)
+					;        (css-ts-mode . combobulate-mode)
+					;        (yaml-ts-mode . combobulate-mode)
+					;        (json-ts-mode . combobulate-mode)
+					;        (typescript-ts-mode . combobulate-mode)
+					;        (tsx-ts-mode . combobulate-mode))
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; corfu — COmpletion in Region FUnction
-;; [minad/corfu](https://github.com/minad/corfu)
+;;   [minad/corfu](https://github.com/minad/corfu)
 
 (use-package corfu
+  :ensure t
+
   ;; Optional customizations
   ;; :custom
   ;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
@@ -114,11 +52,12 @@
   ;;        (shell-mode . corfu-mode)
   ;;        (eshell-mode . corfu-mode))
 
-  ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
-  ;; be used globally (M-/).  See also the customization variable
+  ;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can be used globally (M-/).
+  ;; See also the customization variable
   ;; `global-corfu-modes' to exclude certain modes.
   :init
-  (global-corfu-mode))
+  (global-corfu-mode)
+  )
 
 ;; A few more useful configurations...
 (use-package emacs
@@ -133,7 +72,8 @@
 
   ;; Enable indentation+completion using the TAB key.
   ;; `completion-at-point' is often bound to M-TAB.
-  (setq tab-always-indent 'complete))
+(setq tab-always-indent 'complete)
+)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -144,6 +84,7 @@
 
 (use-package company
   :disabled
+
   :custom
   (company-idle-delay 0) ; default 0.2
   (company-minimum-prefix-length 1) ; default 3
@@ -177,6 +118,7 @@
 ;;   https://github.com/Sarcasm/flycheck-irony
 ;;
 
+;; Fixme:
 (if nil
     (progn
       (use-package company-irony-c-headers)
@@ -209,6 +151,8 @@
 ;; /home/fabrice/.emacs.d/snippets ->
 
 (use-package yasnippet
+  :ensure t
+
   :config
   (yas/global-mode 1)
 
