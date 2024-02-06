@@ -10,6 +10,7 @@
 * https://github.com/abo-abo/swiper — Ivy - a generic completion frontend for Emacs, Swiper -
   isearch with an overview, and more.
 
+*  https://github.com/alphapapa/burly.el — Save and restore frames and windows with their buffers in Emacs
 
 # Doom Emacs
 

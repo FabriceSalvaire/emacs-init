@@ -19,7 +19,7 @@
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 
 ;; Prefer GNU over MELPA
-(setq package-archive-priorities '(("gnu" . 20)("melpa" . 10)))
+(setq package-archive-priorities '(("gnu" . 20) ("melpa" . 10)))
 
 ;; required if package-enable-at-startup is set to nil
 ;; (package-initialize)
@@ -140,3 +140,8 @@
 ;;(require 'diminish)
 
 (setq use-package-verbose t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Take too much time !
+;; (package-refresh-contents)

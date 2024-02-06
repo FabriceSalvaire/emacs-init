@@ -1,36 +1,58 @@
 ;; see Doom  modules/checkers/spell
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Hunspell
+(use-package emacs
+  :config
 
-;;(setq-default ispell-program-name "aspell")
-(setq-default ispell-program-name "/usr/bin/hunspell")
-(ispell-change-dictionary "british" "globally")
-;;
-;; (add-to-list 'ispell-extra-args "--sug-mode=ultra")
+  ;; https://nuspell.github.io
+  ; (setq-default ispell-program-name "/usr/bin/nuspell")
+  (setq-default ispell-program-name "/usr/bin/hunspell")
+  (setq ispell-hunspell-dict-paths-alist
+	'(("en_GB" "/usr/share/hunspell/en_GB.aff")
+	  ("fr_FR" "/usr/share/hunspell/fr_FR.aff")
+	  ))
+  (ispell-change-dictionary "en_GB" "globally")
+)
 
 (defun fr ()
   "Use fr_FR dictionary"
   (interactive)
   (progn
-    (ispell-change-dictionary "francais")))
-    ;(ispell-change-dictionary "fr_FR")))
+    ;; (setq ispell-local-dictionary "")
+    (ispell-change-dictionary "fr_FR")))
 
 (defun gb ()
   "Use gb dictionary"
   (interactive)
   (progn
-    ;;(ispell-change-dictionary "british")))
     (ispell-change-dictionary "en_GB")))
-    ;(ispell-change-dictionary "en_GB-ise-w_accents")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; FlySpell
 ;;   https://www.emacswiki.org/emacs/FlySpell
 
-(use-package flyspell)
+(use-package flyspell
+  :config
+  (dolist (hook
+           '(
+	     text-mode-hook
+             LaTeX-mode-hook
+             markdown-mode
+	     )
+	   )
+    (add-hook hook (lambda () (flyspell-mode 1))))
+  (dolist (hook
+           '(
+	     c-mode-hook
+	     java-mode-hook
+	     javascript-mode-hook
+	     python-mode-hook
+	     qml-mode-hook
+             c++-mode-hook
+	     )
+	   )
+    (add-hook hook (lambda () (flyspell-prog-mode))))
+  )
 
 (defun flyspell-on-for-buffer-type ()
   "Enable Flyspell appropriately for the major mode of the current buffer.  Uses `flyspell-prog-mode' for modes derived from `prog-mode', so only strings and comments get checked.  All other buffers get `flyspell-mode' to check all text.  If flyspell is already enabled, does nothing."
@@ -63,6 +85,7 @@
 ;; https://github.com/rolandwalker/flyspell-lazy
 ;;   Improve Emacs flyspell responsiveness using idle timers.
 (use-package flyspell-lazy
+  :ensure t
   :custom
   (flyspell-lazy-idle-seconds 2)
 
@@ -73,14 +96,16 @@
 ;; https://github.com/d12frosted/flyspell-correct
 ;;   Correcting misspelled words with flyspell using favourite interface.
 (use-package flyspell-correct
+  :ensure t
   :after flyspell
   :bind (:map flyspell-mode-map ("C-;" . flyspell-correct-wrapper)))
 (use-package flyspell-correct-ivy
   :after flyspell-correct)
 
-(autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
-(autoload 'flyspell-delay-command "flyspell" "Delay on command." t)
-(autoload 'tex-mode-flyspell-verify "flyspell" "" t)
+;; Fixme: ???
+;; (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
+;; (autoload 'flyspell-delay-command "flyspell" "Delay on command." t)
+;; (autoload 'tex-mode-flyspell-verify "flyspell" "" t)
 
 ;; (add-hook 'find-file-hook 'flyspell-on-for-buffer-type)
 
@@ -89,36 +114,6 @@
 ;;   (progn
 ;;     (set-flyspell-predicate! '(markdown-mode gfm-mode)  #'+markdown-flyspell-word-p)
 ;;     ))
-
-(dolist (hook
-         '(text-mode-hook
-           LaTeX-mode-hook
-           markdown-mode
-	   )
-	 )
-  (add-hook hook (lambda () (flyspell-mode 1))))
-
-(dolist (hook
-         '(c-mode-hook
-           c++-mode-hook
-	   java-mode-hook
-	   javascript-mode-hook
-	   qml-mode-hook
-	   python-mode-hook
-	   )
-	 )
-  (add-hook hook (lambda () (flyspell-prog-mode))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Google Translate
-
-(use-package google-translate
-  :custom
-  (google-translate-translation-directions-alist '(("en" . "fr") ("fr" . "en")))
-  )
-;; (use-package google-translate-default-ui)
-(use-package google-translate-smooth-ui)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -157,58 +152,17 @@
   (setq flycheck-languagetool-commandline-jar "/usr/local/stow/LanguageTool/languagetool-commandline.jar"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Google Translate
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; hunspell
+(use-package google-translate
+  :ensure t
+  :defer t
+  :custom
+  (google-translate-translation-directions-alist '(("en" . "fr") ("fr" . "en")))
+  :config
+  ;; (use-package google-translate-default-ui)
+  (use-package google-translate-smooth-ui
+    )
+  )
 
-;; (setq-default ispell-program-name "hunspell")
-;; (ispell-change-dictionary "fr_FR")
-;; (setq ispell-extra-args '("-a" "-i" "utf-8"))
-
-;; (require 'ispell)
-;; (eval-after-load "ispell"
-;;   ;; so that following modifications won't be lost when ispell is loaded
-;;   '(progn
-;;
-;;      ;; default dictionary to use (if `ispell-local-dictionary' is nil)
-;;      ; (setq ispell-dictionary "fr_FR")
-;;
-;;      ;; save the personal dictionary without confirmation
-;;      ; (setq ispell-silently-savep t)
-;;
-;;      ;; extra switches to pass to the `ispell' program
-;;      ;; TODO Check they are right!
-;;      ; /usr/bin/hunspell -a  -B -i iso-8859-1
-;;      (setq ispell-extra-args '("-a" "-i" "utf-8"))
-;;
-;;      ;; redefine the list of installed dictionaries
-;;      ;; ??? FIXME This variable is reset once latter in this .emacs file!!!
-;;      (setq ispell-dictionary-alist
-;;      	   ;; those not here will be "undefined dictionary"
-;;      	   '(
-;;      	     ;; default
-;;      	     (nil
-;;      	      "[A-Za-z]" "[^A-Za-z]"
-;;      	      "[']" nil ("-B") nil iso-8859-1)
-;;
-;;      	     ;; US English
-;;      	     ("en_US"
-;;      	      "[A-Za-z]" "[^A-Za-z]"
-;;      	      "[']" nil ("-B") nil utf-8)
-;;
-;;      	     ;; standard French
-;;      	     ("fr_FR"
-;;      	      "[a-zàâäéèêëîïôöùûüçA-ZÀÂÄÉÈÊËÎÏÔÖÙÛÜÇ]" "[^a-zàâäéèêëîïôöùûüçA-ZÀÂÄÉÈÊËÎÏÔÖÙÛÜÇ]"
-;;      	      "[-']" t nil "~list" utf-8)
-;;      	     ))
-;;
-;;      ;; `aspell' extensions should *not* be used
-;;      (setq ispell-really-aspell nil)
-;;
-;;      ;; `hunspell' extensions should be used
-;;      (setq ispell-really-hunspell t)
-;;      )
-;; )

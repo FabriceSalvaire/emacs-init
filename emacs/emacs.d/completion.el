@@ -4,9 +4,7 @@
 ;;  in Emacs UI
 ;;  not for the text in a buffer, see company text completion framework
 ;;
-;;   Fixme: icomplete / icicles / helm
-;;
-;;  https://github.com/alphapapa/burly.el — Save and restore frames and windows with their buffers in Emacs
+;;  Fixme: icomplete / icicles / helm
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -26,6 +24,7 @@
   (magit-completing-read-function 'ivy-completing-read)
 
   :config
+  ;; M-x ivy-mode
   ;; Enable Ivy completion everywhere
   (ivy-mode 1)
 )
@@ -60,10 +59,13 @@
 ;;
 ;; which-key — displays available keybindings in popup
 ;;  htpps://github.com/justbur/emacs-which-key
+;;  which-key is a minor mode for Emacs that displays the key bindings following your currently
+;;  entered incomplete command (a prefix) in a popup.
 
 (use-package which-key
-    :config
-    (which-key-mode))
+  :config
+  (which-key-mode)
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

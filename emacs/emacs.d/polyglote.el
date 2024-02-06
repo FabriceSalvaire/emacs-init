@@ -17,7 +17,7 @@
 ;; [Markdown Mode for Emacs](https://jblevins.org/projects/markdown-mode/)
 
 (use-package polymode
-  :diabled
+  :disabled
   :ensure t
   ;; :mode ("\.py$" . poly-python-sql-mode)
   ;; :mode ("\.py$" . poly-python-md-mode)

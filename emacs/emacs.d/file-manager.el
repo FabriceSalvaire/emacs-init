@@ -1,11 +1,39 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
+;; Dired
+;;
+
+(use-package emacs
+  :config
+
+  ;; https://www.emacswiki.org/emacs/DiredExtra#Dired_X
+  (add-hook 'dired-load-hook
+            (lambda ()
+              (load "dired-x")
+              ;; Set dired-x global variables here.
+              ))
+
+  ;; https://www.gnu.org/software/emacs/manual/html_node/dired-x/Omitting-Files-in-Dired.html
+  ;; Fixme: symbol value as variable is void
+  (add-hook 'dired-mode-hook
+            (lambda ()
+              ;; Set dired-x buffer-local variables here.
+              ;; dired-omit-toggle M-o
+              ;; (setq dired-omit-files-p t)
+              (setq dired-omit-files
+                    ;; do not wish to see `dot' files (files starting with a `.')
+		    ;;  '(dired-omit-files "^\\.$")
+                    (concat dired-omit-files "\\|^\\..+$"))
+              ))
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;; Treemacs - a tree layout file explorer for Emacs
 ;;   https://github.com/Alexander-Miller/treemacs#quick-start
 
 (use-package treemacs
   :ensure t
-  :defer t
 
   :init
   (with-eval-after-load 'winum
@@ -94,25 +122,31 @@
   )
 
 (use-package treemacs-evil
+  :ensure t
   :after (treemacs evil)
-  :ensure t)
+  )
 
 (use-package treemacs-projectile
+  :ensure t
   :after (treemacs projectile)
-  :ensure t)
+  )
 
 (use-package treemacs-icons-dired
+  :ensure t
+  ;; Fixme: after ?
   :hook (dired-mode . treemacs-icons-dired-enable-once)
-  :ensure t)
+  )
 
 (use-package treemacs-magit
+  :ensure t
   :after (treemacs magit)
-  :ensure t)
+  )
 
 (use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
-  :after (treemacs persp-mode) ;;or perspective vs. persp-mode
   :ensure t
-  :config (treemacs-set-scope-type 'Perspectives))
+  :after (treemacs persp-mode) ;;or perspective vs. persp-mode
+  :config (treemacs-set-scope-type 'Perspectives)
+  )
 
 ;; https://www.emacswiki.org/emacs/TabBarMode
 ;; (use-package treemacs-tab-bar ;;treemacs-tab-bar if you use tab-bar-mode

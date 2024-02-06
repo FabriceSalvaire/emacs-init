@@ -1,21 +1,31 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Frame settings
-;;
+(use-package emacs
+  :config
 
-;; Fullscreen
-(pcase window-system
-  ('w32 (set-frame-parameter nil 'fullscreen 'fullboth))
-  (_ (set-frame-parameter nil 'fullscreen 'maximized)))
+  ;; Fullscreen
+  (pcase window-system
+    ('w32 (set-frame-parameter nil 'fullscreen 'fullboth))
+    (_ (set-frame-parameter nil 'fullscreen 'maximized)))
 
-;; Speedbar : buffer to navigate
-;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Speedbar.html
-;; https://www.gnu.org/software/emacs/manual/html_node/speedbar/index.html#Top
-;; M-x speedbar
-;; (speedbar t)
+  ;; Font
+  (set-foreground-color "black")
+  (set-background-color "white")
+  (custom-set-faces '(default ((t (:family "Noto Sans Mono" :foundry "GOOG" :slant normal :weight normal :height 143 :width normal)))))
+  ;; Set the line spacing
+  (setq-default line-spacing 3) ; px
+  ;; Toggle Font-Lock mode in all buffers.
+  (global-font-lock-mode t)
+  ;; Use the maximum decoration available.
+  (setq font-lock-maximum-decoration t)
 
-;; Disable the tool bar
-(tool-bar-mode -1)
+  ;; Speedbar : buffer to navigate
+  ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Speedbar.html
+  ;; https://www.gnu.org/software/emacs/manual/html_node/speedbar/index.html#Top
+  ;; M-x speedbar
+  ;; (speedbar t)
+
+  ;; Disable the tool bar
+  (tool-bar-mode -1)
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;

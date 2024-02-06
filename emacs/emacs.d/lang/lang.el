@@ -67,21 +67,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Java
-;
-
-;; (defun my-java-hook ()
-;;     (progn
-;;       (setq-default c-basic-offset 4
-;; 		    indent-tabs-mode nil)
-;;       ))
-;; (add-hook 'java-mode-hook 'my-java-hook)
-
-;; (use-package java-mode
-;;   :config
-
-(add-hook 'java-mode-hook (lambda ()
-                            (setq c-basic-offset 2
-                                  indent-tabs-mode nil)))
+;   -> C
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -90,17 +76,6 @@
 
 (use-package kotlin-mode
   :mode "\\.kt\\'")
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; Modelica
-;
-
-;; (add-to-list 'load-path (concat local_emacs_site_lisp_path "modelica/"))
-;; (add-to-list 'load-path (concat local_emacs_site_lisp_path "modelica-mode"))
-
-;; (autoload 'modelica-mode "modelica-mode" "Modelica Editing Mode" t)
-;; (setq auto-mode-alist (cons '("\.mo$" . modelica-mode) auto-mode-alist))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -124,26 +99,29 @@
       ))
   :config
   (add-hook 'qml-mode-hook 'my-qml-hook))
-  
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; ReST
 ;;
 
-;; (use-package rest-mode
-;;   :config
-(add-hook 'rest-mode-hook (lambda ()
-                            (setq indent-tabs-mode nil)))
+(use-package rst
+  :mode "\\.rst\\'"
+  :config
+  (add-hook 'rest-mode-hook (lambda ()
+                              (setq indent-tabs-mode nil)))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; TeX / LaTeX
-;;
-
-; AUC-TeX
+;;   AUC-TeX
 
 (use-package auctex
   :mode ("\\.tex\\'" . TeX-latex-mode)
+  :hook (LaTeX-mode turn-on-reftex) ; with AUCTeX LaTeX mode
+  :hook (latex-mode turn-on-reftex) ; with Emacs latex mode
+
   :config
   (setq TeX-auto-save t)
   (setq TeX-parse-self t)
@@ -151,9 +129,6 @@
 
   ;; (if window-system
   ;;     (use-package font-latex))
-
-  (add-hook 'LaTeX-mode-hook 'turn-on-reftex) ; with AUCTeX LaTeX mode
-  (add-hook 'latex-mode-hook 'turn-on-reftex) ; with Emacs latex mode
   )
 
 ;; (load "preview-latex.el" nil t t)
@@ -177,6 +152,17 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Modelica
+;
+
+;; (add-to-list 'load-path (concat local_emacs_site_lisp_path "modelica/"))
+;; (add-to-list 'load-path (concat local_emacs_site_lisp_path "modelica-mode"))
+
+;; (autoload 'modelica-mode "modelica-mode" "Modelica Editing Mode" t)
+;; (setq auto-mode-alist (cons '("\.mo$" . modelica-mode) auto-mode-alist))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

@@ -1,5 +1,5 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                                                                                  
+;;
 ;; Top Emacs Configuration
 ;;
 
@@ -21,43 +21,57 @@
 (add-to-list 'load-path local_emacs_site_lisp_path)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun efs/display-startup-time ()
+  (message "Emacs loaded in %s with %d garbage collections."
+           (format "%.2f seconds"
+                   (float-time
+                   (time-subtract after-init-time before-init-time)))
+           gcs-done))
+
+(add-hook 'emacs-startup-hook #'efs/display-startup-time)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Increase GC
+;;   The default is 800 kilobytes.
+;;   reseted at the end
+;;   see also lsp config !
+(setq gc-cons-threshold (* 100 1024 1024) ;; 100 MB
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Load sub-config files
 ;;
 
-;; (load FILE &optional NOERROR NOMESSAGE NOSUFFIX MUST-SUFFIX)
-(mapcar (lambda (_) (load (concat _ ".el") t t))
-	'(
-	  "packages"
+(dolist (_
+	 '(
+	   "packages"
+	   "frame"
+	   "core"
 
-	  "variables"
-	  "user-functions"
+	   "user-functions"
 
-	  "frame"
-	  "font"
-	  "behaviour"
-	  "encoding"
-	  "treemacs-settings"
-	  "completion" ; buffer switch
-	  "edition-settings"
+	   "file-manager"
+	   "completion" ; buffer switch
+	   "edition"
+	   "speller"
 
-	  "modes"
-	  "sysadmin"
+	   "sysadmin"
 
-	  "programming"
-	  "mode-languages"
-	  "mode-c"
-	  "mode-python"
-	  "mode-web"
+	   "code-completion"
+	   "lang/lang"
+	   "lang/c-java"
+	   "lang/python"
+	   "lang/web"
+	   "checker"
 
-	  "spelling"
-	  "flycheck-settings"
-
-	  ;; must be after
-	  "keys"
-
-	  "server-settings"
-	  ))
+	   ;; must be after
+	   "keys"
+	   )
+	 )
+  ;; (load FILE &optional NOERROR NOMESSAGE NOSUFFIX MUST-SUFFIX)
+  (load (concat _ ".el") t t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -66,3 +80,16 @@
 
 ;; (setq custom-file (concat local_path_prefix "gnu-emacs-custom.el"))
 ;; (load custom-file t t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Server
+;;
+
+;; Starts server for (among others) emacsclient
+(server-start)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Make gc pauses faster by decreasing the threshold.
+(setq gc-cons-threshold (* 2 1024 1024))
