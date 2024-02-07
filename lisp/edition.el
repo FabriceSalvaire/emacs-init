@@ -182,15 +182,26 @@
 ;; Highlight Indentation
 ;;   https://github.com/DarthFennec/highlight-indent-guides
 
+;; Fixme: only with character/bitmap
+;;   issue when we comment or copy several lines
+;;   e.g. we got "; | ..."
+;;   for example, it happens when the first line is not indented
+
 (use-package highlight-indent-guides
+  ;; :disabled
   :ensure nil
   :load-path (lambda () (concat local_checkout_path "highlight-indent-guides"))
   :hook (prog-mode . highlight-indent-guides-mode)
 
   :custom
+  (highlight-indent-guides-auto-odd-face-perc 20)
+  (highlight-indent-guides-auto-even-face-perc 30)
   (highlight-indent-guides-auto-character-face-perc 80)
   (highlight-indent-guides-auto-enabled t)
-  (highlight-indent-guides-method 'character)
+  ;; (highlight-indent-guides-method 'fill)
+  (highlight-indent-guides-method 'column)
+  ;; (highlight-indent-guides-method 'character)
+  ;; (highlight-indent-guides-method 'bitmap)
   ;; See theme
   ;; (highlight-indent-guides-character-face ((t (:foreground "gainsboro"))))
   ;; (highlight-indent-guides-stack-character-face ((t (:inherit (highlight-indent-guides-character-face)))))

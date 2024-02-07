@@ -24,46 +24,48 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun _load-files (&rest args)
+(defun _load-files (args)
   "Helper to load lisp files"
   (dolist (_ args)
     ;; (load FILE &optional NOERROR NOMESSAGE NOSUFFIX MUST-SUFFIX)
-    (load (concat _ ".el") t t)))
+    (let ((path (concat (symbol-name _) ".el")))
+      (load path t t))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(_load-files
- "doom-lib/doom-lib"
- "startup"
+(_load-files '(
+               doom-lib/doom-lib
+               startup
 
- "packages"
- "frame"
- "core"
+               packages
+               ;; packages-straight
+               frame
+               core
 
- "user-functions"
+               user-functions
 
- "completion" ; buffer switch
- "edition"
- "undo"
- "speller"
+               completion ; buffer switch
+               edition
+               undo
+               speller
 
- "file-manager"
- "sysadmin"
+               file-manager
+               sysadmin
 
- "tree-sitter"
- "code-completion"
- "lang/lang"
- "lang/c-java"
- "lang/python"
- "lang/web"
- "checker"
- "git"
+               tree-sitter
+               code-completion
+               lang/lang
+               lang/c-java
+               lang/python
+               lang/web
+               checker
+               git
 
- ;; must be after
- "keys"
+               ;; must be after
+               keys
 
- "server"
- )
+               server
+               ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
