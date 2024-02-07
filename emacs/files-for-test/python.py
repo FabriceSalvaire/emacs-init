@@ -3,6 +3,8 @@ Python test file
 
 """
 
+# A comment
+
 import math
 
 a_long_word = "..."
@@ -29,3 +31,12 @@ def bar(
     pass
 
 "...".replace()
+
+class Foo():
+
+    def __init__(self, x: int) -> None:
+        pass
+
+    @property
+    def foox(self) -> int:
+        return self.x

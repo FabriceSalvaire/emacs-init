@@ -24,6 +24,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Show Startup time
 (defun efs/display-startup-time ()
   (message "Emacs loaded in %s with %d garbage collections."
            (format "%.2f seconds"
@@ -54,11 +55,12 @@
 
            "user-functions"
 
-           "file-manager"
            "completion" ; buffer switch
            "edition"
+           "undo"
            "speller"
 
+           "file-manager"
            "sysadmin"
 
            "tree-sitter"
@@ -68,6 +70,7 @@
            "lang/python"
            "lang/web"
            "checker"
+           "git"
 
            ;; must be after
            "keys"

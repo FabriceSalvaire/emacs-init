@@ -1,5 +1,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; https://www.emacswiki.org/emacs/ShowWhiteSpace
+;; https://github.com/Lindydancer/char-font-lock
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (use-package emacs
   :config
 
@@ -105,6 +110,7 @@
                   ; newline-mark ; visualize NEWLINEs via display table.
                   ))
 
+  ;; Fixme: see theme
   (require 'color)
   (let* ((fg "#ee0000")
          (bg (color-darken-name "#ffffff" 40))
@@ -172,17 +178,32 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Highlight Indentation
+;;   https://github.com/DarthFennec/highlight-indent-guides
 
-;; python-mode.el-6.0.4/highlight-indentation.el
+(use-package highlight-indent-guides
+  :ensure nil
+  :load-path (lambda () (concat local_checkout_path "highlight-indent-guides"))
+  :hook (prog-mode . highlight-indent-guides-mode)
+
+  :custom
+  (highlight-indent-guides-auto-character-face-perc 80)
+  (highlight-indent-guides-auto-enabled t)
+  (highlight-indent-guides-method 'character)
+  ;; See theme
+  ;; (highlight-indent-guides-character-face ((t (:foreground "gainsboro"))))
+  ;; (highlight-indent-guides-stack-character-face ((t (:inherit (highlight-indent-guides-character-face)))))
+  ;; (highlight-indent-guides-top-character-face ((t (:inherit (highlight-indent-guides-character-face)))))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Highlight Indentation
+;;  https://github.com/antonj/Highlight-Indentation-for-Emacs
+;;  python-mode.el-6.0.4/highlight-indentation.el
+
 (use-package highlight-indentation
   :disabled
   )
-
-;; https://www.emacswiki.org/emacs/ShowWhiteSpace
-;; https://github.com/Lindydancer/char-font-lock
-
-;; https://www.emacswiki.org/emacs/WhiteSpace
-;; (require 'whitespace)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -197,9 +218,6 @@
   ;; (setq indent-guide-recursive t)
   ;; (setq indent-guide-char ":")
   )
-
-;; Fixme: !!!
-;; https://github.com/DarthFennec/highlight-indent-guides
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;

@@ -1,12 +1,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; Theme
+;; Theme -> ./themes
 ;;   https://www.gnu.org/software/emacs/manual/html_node/emacs/Creating-Custom-Themes.html#Creating-Custom-Themes
 ;;   M-x list-faces-display
 ;;   M-x customize-create-theme
+;;   M-x describe-face
 
 (defun theme-light ()
-  "Set theme"
+  "Set basic light theme"
   (interactive)
   (progn
     (set-foreground-color "black")
@@ -14,16 +15,6 @@
 
     ;; (set-foreground-color "#282c34")
     ;; (set-background-color "#f5f5f5")
-    ))
-
-(defun theme-dark ()
-  "Set theme"
-  (interactive)
-  (progn
-    ;; https://github.com/doomemacs/themes/blob/master/themes/doom-one-theme.el
-    (set-foreground-color "#bbc2cf") ;  hsv(219, 25, 207) "#bfbfbf" "brightwhite"
-    (set-background-color "#282c34") ;  hsv(220, 59,  52)  "black"
-    ;; fix doom mode-line
     ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -38,9 +29,6 @@
 
   ;; Theme
   (load-theme 'fabrice-dark t)
-  ;; (theme-light)
-  ;; (theme-dark)
-  ;; (custom-set-faces '(default ((t (:family "Noto Sans Mono" :foundry "GOOG" :slant normal :weight normal :height 143 :width normal)))))
 
   ;; Set the line spacing
   (setq-default line-spacing 3) ; px

@@ -8,7 +8,7 @@
 ;;  M-x customize-group RET combobulate RET
 
 (use-package combobulate
-  :load-path ("/home/common/emacs/checkout/combobulate")
+  :load-path (lambda () (concat local_checkout_path "combobulate"))
 
   :preface
   ;; You can customize Combobulate's key prefix here.
@@ -18,13 +18,13 @@
   ;; Optional, but recommended.
   ;;
   ;; You can manually enable Combobulate with `M-x combobulate-mode'.
-					; :hook ((python-ts-mode . combobulate-mode)
-					;        (js-ts-mode . combobulate-mode)
-					;        (css-ts-mode . combobulate-mode)
-					;        (yaml-ts-mode . combobulate-mode)
-					;        (json-ts-mode . combobulate-mode)
-					;        (typescript-ts-mode . combobulate-mode)
-					;        (tsx-ts-mode . combobulate-mode))
+                                        ; :hook ((python-ts-mode . combobulate-mode)
+                                        ;        (js-ts-mode . combobulate-mode)
+                                        ;        (css-ts-mode . combobulate-mode)
+                                        ;        (yaml-ts-mode . combobulate-mode)
+                                        ;        (json-ts-mode . combobulate-mode)
+                                        ;        (typescript-ts-mode . combobulate-mode)
+                                        ;        (tsx-ts-mode . combobulate-mode))
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
