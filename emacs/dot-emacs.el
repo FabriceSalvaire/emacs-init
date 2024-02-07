@@ -16,7 +16,8 @@
 (defconst local_path_prefix "/home/common/emacs/") ; this is the only absolut path for Emacs files
 (defconst local_emacs_site_lisp_path (concat local_path_prefix "emacs-site-lisp/"))
 (defconst local_emacs_d_path (concat local_path_prefix "emacs.d/"))
-(defconst local_theme_path (concat local_emacs_d_path "themes/"))
+(defconst local_theme_path (concat local_path_prefix "themes/"))
+(defconst local_checkout_path (concat local_path_prefix "checkout/"))
 
 (add-to-list 'load-path local_emacs_d_path)
 (add-to-list 'load-path local_emacs_site_lisp_path)

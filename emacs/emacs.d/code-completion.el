@@ -156,7 +156,7 @@
   :config
   (yas/global-mode 1)
 
-  ;; (setq yas/snippet-dirs (concat local_emacs_d_path "snippets"))
+  (setq yas-snippet-dirs (concat local_path_prefix "snippets"))
   ;; (load "snippet-bundel.el" t t)
 
   ;; http://sethlakowske.com/why-i-use-emacs/fix-yasnippet-and-autocomplete-tab-key-collision/
