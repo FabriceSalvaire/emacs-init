@@ -1,5 +1,14 @@
 # Emacs Lisp
 
+## Summary
+
+```
+`foo  -> (quote foo)
+#`foo -> (function foo) see quote
+```
+
+## References
+
 * https://www.gnu.org/software/emacs/manual/html_node/elisp/index.html
 * https://en.wikipedia.org/wiki/Lisp_(programming_language)
 
@@ -80,6 +89,9 @@ Any expression can also be marked to prevent it from being evaluated.
 ;; or
 'foo
 ```
+
+[elisp - When should sharp quotes be used? - Emacs Stack Exchange](https://emacs.stackexchange.com/questions/35988/when-should-sharp-quotes-be-used)
+
 
 ## Backquote
 

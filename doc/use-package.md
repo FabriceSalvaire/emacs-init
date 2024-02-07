@@ -1,3 +1,13 @@
+# Note for use-package
+
+[jwiegley/use-package: A use-package declaration for simplifying your .emacs](https://github.com/jwiegley/use-package?tab=readme-ov-file#magic-handlers)
+
+# Hook
+
+- We cannot call `describe-variable` on a hook if we use `:hook (...)`.
+
+# How to Defer Things
+
 use-package gives a few different ways to defer package loading:
 - :hook - Package will be loaded the first time one of the hooks is invoked
 - :bind - Package will be loaded the first time one of the key bindings is used
