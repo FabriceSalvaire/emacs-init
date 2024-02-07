@@ -1,3 +1,5 @@
+;;; .el --- ... -*- lexical-binding: t; -*-
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; [polymode/polymode: Framework for Multiple Major Modes in Emacs](https://github.com/polymode/polymode)

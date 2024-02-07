@@ -1,3 +1,5 @@
+;;; .el --- ... -*- lexical-binding: t; -*-
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Insert Long Rule
@@ -8,29 +10,29 @@
   (save-excursion
     (let ((file (file-name-nondirectory buffer-file-name)))
       (progn
-	(message "mode is [%s]" major-mode)
-	(cond ((equal major-mode 'emacs-lisp-mode)
-	       (insert (make-string 100 ?\;)))
-	      ((or (equal major-mode 'python-mode)
-		   (equal major-mode 'python-ts-mode)
-		   (equal major-mode 'django-mode)
+        (message "mode is [%s]" major-mode)
+        (cond ((equal major-mode 'emacs-lisp-mode)
+               (insert (make-string 100 ?\;)))
+              ((or (equal major-mode 'python-mode)
+                   (equal major-mode 'python-ts-mode)
+                   (equal major-mode 'django-mode)
                    (equal major-mode 'shell-mode)
                    (equal major-mode 'cmake-mode))
-	       (insert (make-string 100 ?#)))
-	      ((or (equal major-mode 'c-mode)
+               (insert (make-string 100 ?#)))
+              ((or (equal major-mode 'c-mode)
                    (equal major-mode 'c++-mode)
-		   (equal major-mode 'js-mode)
-		   (equal major-mode 'js2-mode)
-		   (equal major-mode 'rjsx-mode)
-		   (equal major-mode 'scss-mode)
-		   )
-	       (insert (concat "/" (make-string 98 ?*) "/")))
-	      ((string-match "\\.\\(sass\\|css\\)\\'" file)
-	       (insert (concat "//" (make-string 98 ?*))))
-	      ;; ((string-match "\\.\\(h\\|c\\|hpp\\|cpp\\|cc\\|sass\\|css\\)\\'" file)
-	      ;;  (insert (concat "/" (make-string 98 ?*) "/")))
-	      )
-	))))
+                   (equal major-mode 'js-mode)
+                   (equal major-mode 'js2-mode)
+                   (equal major-mode 'rjsx-mode)
+                   (equal major-mode 'scss-mode)
+                   )
+               (insert (concat "/" (make-string 98 ?*) "/")))
+              ((string-match "\\.\\(sass\\|css\\)\\'" file)
+               (insert (concat "//" (make-string 98 ?*))))
+              ;; ((string-match "\\.\\(h\\|c\\|hpp\\|cpp\\|cc\\|sass\\|css\\)\\'" file)
+              ;;  (insert (concat "/" (make-string 98 ?*) "/")))
+              )
+        ))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -42,17 +44,17 @@
   (save-excursion
     (let ((file (file-name-nondirectory buffer-file-name)))
       (progn
-	(message "mode is [%s]" major-mode)
-	(cond ((or (equal major-mode 'python-mode)
-		   (equal major-mode 'python-ts-mode)
-		   (equal major-mode 'django-mode))
-	       (insert (concat
-			(make-string 4 ? )
-			(make-string 46 ?#))))
-	      ((or (equal major-mode 'qml-mode))
-	       (insert (concat "    /" (make-string 54 ?*) "/")))
-	      )
-	))))
+        (message "mode is [%s]" major-mode)
+        (cond ((or (equal major-mode 'python-mode)
+                   (equal major-mode 'python-ts-mode)
+                   (equal major-mode 'django-mode))
+               (insert (concat
+                        (make-string 4 ? )
+                        (make-string 46 ?#))))
+              ((or (equal major-mode 'qml-mode))
+               (insert (concat "    /" (make-string 54 ?*) "/")))
+              )
+        ))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -63,21 +65,21 @@
   (interactive)
   (save-excursion
     (let ((from_to_list (list
-			 '(" +//" "   //")
-			 ;; '("else +//" "else   //")
-			 ;; '("; +//" ";   //")
-			 ;; '(", +//" ",   //")
-			 ;; '(": +//" ":   //")
-			 ;; '("{ +//" "{   //")
-			 ;; '("} +//" "}   //")
-			 )))
+                         '(" +//" "   //")
+                         ;; '("else +//" "else   //")
+                         ;; '("; +//" ";   //")
+                         ;; '(", +//" ",   //")
+                         ;; '(": +//" ":   //")
+                         ;; '("{ +//" "{   //")
+                         ;; '("} +//" "}   //")
+                         )))
       (progn
-	(untabify (point-min) (point-max))
-	(dolist (from_to from_to_list)
-	  (replace-regexp (car from_to) (cdr from_to) nil (point-min) (point-max))
-	  )
-	(indent-region (point-min) (point-max))
-	))))
+        (untabify (point-min) (point-max))
+        (dolist (from_to from_to_list)
+          (replace-regexp (car from_to) (cdr from_to) nil (point-min) (point-max))
+          )
+        (indent-region (point-min) (point-max))
+        ))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -85,15 +87,15 @@
   (interactive)
   (save-excursion
     (let ((from_to_list (list
-			 '("^\\( +\\)// " "\\1/// ")
-			 '(";\\( +\\)// " ";\\1///< ")
-			 '(",\\( +\\)// " ",\\1///< ")
-			 )))
+                         '("^\\( +\\)// " "\\1/// ")
+                         '(";\\( +\\)// " ";\\1///< ")
+                         '(",\\( +\\)// " ",\\1///< ")
+                         )))
       (progn
-	(dolist (from_to from_to_list)
-	  (replace-regexp (car from_to) (cdr from_to) nil (point-min) (point-max))
-	  )
-	))))
+        (dolist (from_to from_to_list)
+          (replace-regexp (car from_to) (cdr from_to) nil (point-min) (point-max))
+          )
+        ))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

@@ -1,3 +1,5 @@
+;;; .el --- ... -*- lexical-binding: t; -*-
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Combobulate: Structured Editing and Navigation in Emacs with Tree-Sitter
