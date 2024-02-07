@@ -70,12 +70,13 @@
  '(fringe ((t (:foreground "#3f444a" :inherit (default)))))
  '(header-line ((t (:inherit (mode-line)))))
  '(tooltip ((t (:foreground "#bbc2cf" :background "#21242b"))))
+ '(success ((t (:foreground "yellow green" :weight bold))))
 
- '(mode-line ((t (:box nil :foreground "#bbc2cf" :background "#1d2026"))))
+ '(mode-line ((t (:box nil :foreground "#bbc2cf" :background "#262a32")))) ; #1d2026
  '(mode-line-buffer-id ((t (:weight bold))))
  '(mode-line-emphasis ((t (:foreground "#51afef"))))
  '(mode-line-highlight ((t (:inherit (highlight)))))
- '(mode-line-inactive ((t (:box nil :foreground "#5B6268" :background "#21242b")))) ; gris
+ '(mode-line-inactive ((t (:box nil :foreground "#5B6268" :background "#21242b")))) ; gris 
 
  '(isearch ((t (:weight bold :inherit (lazy-highlight)))))
  '(isearch-fail ((t (:weight bold :foreground "#1B2229" :background "#ff6c6b"))))
@@ -85,6 +86,17 @@
  '(next-error ((t (:inherit (region)))))
  '(query-replace ((t (:inherit (isearch)))))
 
+ '(diredfl-dir-heading ((t (:foreground "orange red"))))
+ '(diredfl-dir-name ((t (:foreground "#7474FFFFFFFF"))))
+ '(diredfl-dir-priv ((t (:foreground "deep sky blue"))))
+ '(diredfl-exec-priv ((t (:foreground "spring green"))))
+ '(diredfl-link-priv ((t (:foreground "orchid"))))
+ '(diredfl-no-priv ((t (:foreground "dim gray"))))
+ '(diredfl-other-priv ((t (:foreground "royal blue"))))
+ '(diredfl-rare-priv ((t (:foreground "chocolate"))))
+ '(diredfl-read-priv ((t (:foreground "light goldenrod"))))
+ '(diredfl-write-priv ((t (:foreground "orange red"))))
+ 
  '(whitespace-empty ((t (:background "#808080" :foreground "#ee0000"))))
  '(whitespace-tab ((t (:inherit (whitespace-empty)))))
  '(whitespace-trailing ((t (:inherit (whitespace-empty)))))

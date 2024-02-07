@@ -160,8 +160,8 @@
 ; Modelica
 ;
 
-;; (add-to-list 'load-path (concat local_emacs_site_lisp_path "modelica/"))
-;; (add-to-list 'load-path (concat local_emacs_site_lisp_path "modelica-mode"))
+;; (add-to-list 'load-path (file-name-concat local_emacs_site_lisp_path "modelica"))
+;; (add-to-list 'load-path (file-name-concat local_emacs_site_lisp_path "modelica-mode"))
 
 ;; (autoload 'modelica-mode "modelica-mode" "Modelica Editing Mode" t)
 ;; (setq auto-mode-alist (cons '("\.mo$" . modelica-mode) auto-mode-alist))

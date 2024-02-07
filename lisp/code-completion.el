@@ -10,7 +10,7 @@
 ;;  M-x customize-group RET combobulate RET
 
 (use-package combobulate
-  :load-path (lambda () (concat local_checkout_path "combobulate"))
+  :load-path (lambda () (file-name-concat local_checkout_path "combobulate"))
 
   :preface
   ;; You can customize Combobulate's key prefix here.
@@ -158,7 +158,7 @@
   :config
   (yas/global-mode 1)
 
-  (setq yas-snippet-dirs (concat local_path_prefix "snippets"))
+  (setq yas-snippet-dirs (file-name-concat local_path_prefix "snippets"))
   ;; (load "snippet-bundel.el" t t)
 
   ;; http://sethlakowske.com/why-i-use-emacs/fix-yasnippet-and-autocomplete-tab-key-collision/

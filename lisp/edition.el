@@ -5,57 +5,58 @@
 ;; https://www.emacswiki.org/emacs/ShowWhiteSpace
 ;; https://github.com/Lindydancer/char-font-lock
 
+;; See Doom doom-editor.el
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Indent Tabs Mode
 
-(use-package emacs
-  :config
-
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; Indent Tabs Mode
-  (setq-default indent-tabs-mode nil)
-  (dolist (_
-           '(
-             c-mode-hook
-             cmake-mode-hook
-             emacs-lisp-mode-hook
-             )
+(setq-default indent-tabs-mode nil)
+(dolist (_
+         '(
+           c-mode-hook
+           cmake-mode-hook
+           emacs-lisp-mode-hook
            )
-    (add-hook _ '(lambda () (setq indent-tabs-mode nil)))
-    )
-
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; Line & Column
-  (setq column-number-mode t)
-  ;; (setq line-number-mode t)
-  ;; (global-hl-line-mode)
-
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; Fill-column & Auto fill mode
-  ;;
-  ;; SET AS CUSTOM ELSE NOT SET !!!
-  ;; (setq fill-column 100)
-  (dolist (_
-           '(
-             TeX-mode-hook
-             c-mode-hook
-             cmake-mode-hook
-             django-mode-hook
-             emacs-lisp-mode-hook
-             glsl-mode-hook
-             outline-mode-hook
-             python-mode-hook
-             rst-mode-hook
-             sass-mode-hook
-             text-mode-hook
-             web-mode-hook
-             yaml-mode-hook
-             )
-           )
-    (add-hook _ '(lambda () (setq fill-column 100)))
-    )
-
-  ;; (add-hook 'text-mode-hook 'turn-on-auto-fill)
+         )
+  (add-hook _ '(lambda () (setq indent-tabs-mode nil)))
   )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Line & Column
+
+(setq column-number-mode t)
+;; (setq line-number-mode t)
+;; (global-hl-line-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Fill-column & Auto fill mode
+
+;; SET AS CUSTOM ELSE NOT SET !!!
+;; (setq fill-column 100)
+(dolist (_
+         '(
+           TeX-mode-hook
+           c-mode-hook
+           cmake-mode-hook
+           django-mode-hook
+           emacs-lisp-mode-hook
+           glsl-mode-hook
+           outline-mode-hook
+           python-mode-hook
+           rst-mode-hook
+           sass-mode-hook
+           text-mode-hook
+           web-mode-hook
+           yaml-mode-hook
+           )
+         )
+  (add-hook _ '(lambda () (setq fill-column 100)))
+  )
+
+;; (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -190,7 +191,7 @@
 (use-package highlight-indent-guides
   ;; :disabled
   :ensure nil
-  :load-path (lambda () (concat local_checkout_path "highlight-indent-guides"))
+  :load-path (lambda () (file-name-concat local_checkout_path "highlight-indent-guides"))
   :hook (prog-mode . highlight-indent-guides-mode)
 
   :custom
@@ -238,15 +239,12 @@
 ;;   https://www.emacswiki.org/emacs/ShowParenMode
 
 (use-package paren
+  :hook (doom-first-buffer . show-paren-mode)
   :custom
   (show-paren-delay 0.1)
   (show-paren-highlight-openparen t)
   (show-paren-when-point-inside-paren t)
   (show-paren-when-point-in-periphery t)
-
-  :init
-  ;; Fixme: global ???
-  (show-paren-mode 1)
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -1,15 +1,28 @@
 - command summary on first page
 - ask to quit y/n
+- comment-region ?
+- disable evil
 
 # Shortcuts
 
 ## Dired
 
-- ^ dired-up-directory
+- `^` dired-up-directory
 
 # Lib
 
+- `~/.config/doom` config
+- `~/.config/doom-emacs` codes
+
 - `use-package!` `modules/config/use-package` patch use-package
+
+- `early-init.el` PERF...
+- `doom-lib.el` functions
+- `doom.el` PERF...
+- `doom-editor.el`
+- `doom-start.el`
+- `doom-ui.el`
+- `doom-projects.el` projectile
 
 # Modes
 

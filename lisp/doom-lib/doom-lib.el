@@ -27,14 +27,16 @@
            (propertize (concat "* %.06f:%s" (if (not absolute?) ":") text)
                        'face 'font-lock-doc-face)
            (float-time (time-subtract (current-time) before-init-time))
-           (mapconcat
-            (lambda (x) (format "%s" x))
-            (unless absolute?
-              (append (cons '* (remq t (reverse doom-context)))
-                      (if (bound-and-true-p doom-module-context)
-                          (let ((key (doom-module-context-key)))
-                            (delq nil (list (car key) (cdr key)))))))
-            ":")
+           ""
+           ;; disable doom context
+           ;; (mapconcat
+           ;;  (lambda (x) (format "%s" x))
+           ;;  (unless absolute?
+           ;;    (append (cons '* (remq t (reverse doom-1context)))
+           ;;            (if (bound-and-true-p doom-module-context)
+           ;;                (let ((key (doom-module-context-key)))
+           ;;                  (delq nil (list (car key) (cdr key)))))))
+           ;;  ":")
            args)))
 
 (defmacro doom-log (message &rest args)

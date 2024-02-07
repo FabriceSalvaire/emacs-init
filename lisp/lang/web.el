@@ -14,9 +14,9 @@
   :mode "\\.html?\\'"
   :init
   (add-hook 'web-mode-hook (lambda () (setq web-mode-enable-engine-detection t
-					    web-mode-markup-indent-offset 4
-					    web-mode-css-indent-offset 4
-					    web-mode-code-indent-offset 4)))
+                                            web-mode-markup-indent-offset 4
+                                            web-mode-css-indent-offset 4
+                                            web-mode-code-indent-offset 4)))
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -52,7 +52,7 @@
   ;; :hook (prog-mode text-mode)
   :init
   (add-hook 'js2-mode-hook (lambda () (setq c-basic-offset 4
-					    indent-tabs-mode nil)))
+                                            indent-tabs-mode nil)))
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -80,7 +80,7 @@
   :ensure t
   :init
   (add-hook 'rjsx-mode-hook (lambda () (setq c-basic-offset 4
-					     indent-tabs-mode nil)))
+                                             indent-tabs-mode nil)))
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -112,10 +112,10 @@
 ;; django-mode
 ;;   https://github.com/myfreeweb/django-mode
 
-;; (add-to-list 'load-path (concat local_emacs_site_lisp_path "django-mode/"))
+;; (add-to-list 'load-path (file-name-concat local_emacs_site_lisp_path "django-mode"))
 ;; (use-package django-html-mode)
 ;; (use-package django-mode)
-;; (yas/load-directory (concat local_emacs_site_lisp_path "django-mode/snippets/"))
+;; (yas/load-directory (file-name-concat local_emacs_site_lisp_path "django-mode/snippets"))
 ;; (add-to-list 'auto-mode-alist '("\\.djhtml$" . django-html-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
