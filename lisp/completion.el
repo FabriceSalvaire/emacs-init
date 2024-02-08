@@ -17,6 +17,8 @@
 ;;  https://github.com/abo-abo/swiper
 ;;  Manual https://oremacs.com/swiper
 
+;; https://github.com/CSRaghunandan/.emacs.d/blob/master/setup-files/setup-ivy.el
+
 (use-package counsel
   )
 
