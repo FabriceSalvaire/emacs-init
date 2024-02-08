@@ -10,3 +10,11 @@ elpa/
 straight/
 
 tree-sitter/
+
+# ????
+
+doc/vscode-colors.jsonc
+examples/
+files-for-test/.dir-locals.el
+files-for-test/space.el
+files-for-test/test
