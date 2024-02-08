@@ -6,7 +6,7 @@
   (progn
     (c-set-style "gnu")
       (setq-default c-basic-offset 2
-		    indent-tabs-mode nil)
+                    indent-tabs-mode nil)
       ))
 
 (defun c-set-indent-fabrice ()
@@ -52,9 +52,9 @@
    (add-to-list 'auto-mode-alist '("\\.txx\\'" . c-mode))
 
    (c-add-style "qt-gnu"
-		'("gnu"
-		  (c-access-key . "\\<\\(signals\\|public\\|protected\\|private\\|public slots\\|protected slots\\|private slots\\):")
-		  (c-basic-offset . 4)))
+                '("gnu"
+                  (c-access-key . "\\<\\(signals\\|public\\|protected\\|private\\|public slots\\|protected slots\\|private slots\\):")
+                  (c-basic-offset . 4)))
    )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

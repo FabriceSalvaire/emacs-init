@@ -19,7 +19,7 @@
            emacs-lisp-mode-hook
            )
          )
-  (add-hook _ '(lambda () (setq indent-tabs-mode nil)))
+  (add-hook _ #'(lambda () (setq indent-tabs-mode nil)))
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -53,7 +53,7 @@
            yaml-mode-hook
            )
          )
-  (add-hook _ '(lambda () (setq fill-column 100)))
+  (add-hook _ #'(lambda () (setq fill-column 100)))
   )
 
 ;; (add-hook 'text-mode-hook 'turn-on-auto-fill)
@@ -191,8 +191,9 @@
 
 (use-package highlight-indent-guides
   ;; :disabled
-  :ensure nil
-  :load-path (lambda () (file-name-concat local_checkout_path "highlight-indent-guides"))
+  ;; :ensure nil
+  ;; :load-path (lambda () (file-name-concat local_checkout_path "highlight-indent-guides"))
+  :straight (highlight-indent-guides :type git :host github :repo "DarthFennec/highlight-indent-guides")
   :hook (prog-mode . highlight-indent-guides-mode)
 
   :custom

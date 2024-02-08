@@ -47,8 +47,8 @@
                doom-lib/ui
                startup
 
-               packages
-               ;; packages-straight
+               ;; packages
+               packages-straight
                frame
                core
 

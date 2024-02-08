@@ -7,6 +7,11 @@
 ;; straight
 ;;   https://github.com/radian-software/straight.el
 
+;; To configure an alternate way for straight.el to check for modifications made to package source
+;; code, rather than the default (which is 100% reliable, but has a minor cost to startup time).
+(setq straight-check-for-modifications nil)
+
+(doom--log "before straight bootstrap")
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name
@@ -15,13 +20,16 @@
             user-emacs-directory)))
       (bootstrap-version 7))
   (unless (file-exists-p bootstrap-file)
+    (doom--log "get straight.el")
     (with-current-buffer
         (url-retrieve-synchronously
          "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
          'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
+  (doom--log "load straight.el")
   (load bootstrap-file nil 'nomessage))
+(doom--log "after straight bootstrap")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -127,9 +135,12 @@
     which-key
     ))
 
-;; Fixme: snippets issue ?
-(dolist (_ _used_packages)
-  (straight-use-package _))
+;; Fixme: useless ?
+;;        snippets issue ?
+;; (doom--log "before straight-use-package")
+;; (dolist (_ _used_packages)
+;;   (straight-use-package _))
+;; (doom--log "after straight-use-package")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -144,3 +155,24 @@
 
 ;; Information about package loads in the *Messages* buffer
 (setq use-package-verbose t)
+
+;; Configure use-package to use straight.el by default
+;; instead of `straight t`
+(use-package straight
+  :custom
+  (straight-use-package-by-default t))
+
+(doom--log "package-straight done")
+(provide 'package-straight)
+
+;; Fixme
+
+(use-package magit
+  )
+
+(use-package counsel
+  )
+
+(use-package gcmh
+  ;; :straight (gcmh :type git :host github :repo "emacsmirror/gcmh")
+  )

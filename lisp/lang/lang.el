@@ -12,8 +12,9 @@
 ;; Autoconf
 ;;
 
-(use-package autoconf-mode
-  :mode ("\\.ac\\'" "configure\\.in\\'"))
+;; Fixme: package source ?
+;; (use-package autoconf-mode
+;;   :mode ("\\.ac\\'" "configure\\.in\\'"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -84,7 +85,8 @@
 ; QMake
 ;
 
-(use-package qmake-mode)
+;; Fixme: package source ?
+;; (use-package qmake-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

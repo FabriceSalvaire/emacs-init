@@ -9,6 +9,7 @@
 (use-package treesit
   ; :disabled
   :ensure nil
+  :straight nil
 
   :when (treesit-available-p)
 

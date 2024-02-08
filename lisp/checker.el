@@ -37,8 +37,6 @@
 
   :init
   (global-flycheck-mode)
-  ;; A minor mode to show Flycheck error messages in a popup.
-  (flycheck-pos-tip-mode)
 
   ;; C, C++ and Objective-C support for Flycheck, using Irony Mode
   ;;   https://github.com/Sarcasm/flycheck-irony/
@@ -50,11 +48,11 @@
   ;;   disable json-jsonlist checking for json files
   ;;   disable jshint since we prefer eslint checking
   (setq-default flycheck-disabled-checkers
-		(append flycheck-disabled-checkers
-			'(
-			  json-jsonlist
-			  javascript-jshint
-			  )))
+                (append flycheck-disabled-checkers
+                        '(
+                          json-jsonlist
+                          javascript-jshint
+                          )))
   ;; use eslint with web-mode for jsx files
   (flycheck-add-mode 'javascript-eslint 'js2-mode)
   (flycheck-add-mode 'javascript-eslint 'rjsx-mode)
@@ -67,6 +65,13 @@
 (use-package flycheck-color-mode-line
   :after (flycheck)
   :hook (flycheck-mode . flycheck-color-mode-line-mode)
+  )
+
+;; A minor mode to show Flycheck error messages in a popup.
+;; https://github.com/flycheck/flycheck-pos-tip
+(use-package flycheck-pos-tip
+  :after (flycheck)
+  :hook (flycheck-mode . flycheck-pos-tip-mode)
   )
 
 ;; customize flycheck temp file prefix
@@ -109,15 +114,15 @@
   :config
   ;; Astro
   (add-to-list 'eglot-server-programs
-	       ;; Fixme: path
+               ;; Fixme: path
                '(astro-ts-mode . ("/home/fabrice/astro-test/homepage/node_modules/.bin/astro-ls" "--stdio"
-				  :initializationOptions
-				  (:typescript (:tsdk "/home/fabrice/astro-test/homepage/node_modules/typescript/lib")))))
+                                  :initializationOptions
+                                  (:typescript (:tsdk "/home/fabrice/astro-test/homepage/node_modules/typescript/lib")))))
   ;; Fixme: doesn't work ?
   ;; (setq-default eglot-workspace-configuration
   ;;               '(:pylsp (:plugins (:jedi_completion (:include_params t :fuzzy t)
   ;;                                   :pylint (:enabled :json-false)))
-  ;; 			 :gopls (:usePlaceholders t)))
+  ;;                     :gopls (:usePlaceholders t)))
 
   :custom
   (eglot-autoshutdown t)
@@ -132,16 +137,16 @@
 ;;                                 ((python-mode python-ts-mode)
 ;;                                  . ,(eglot-alternatives
 ;;                                      '("pylsp" "pyls"
-;; 				       ("pyright-langserver" "--stdio")
-;; 				       "jedi-language-server" "ruff-lsp")))
+;;                                     ("pyright-langserver" "--stdio")
+;;                                     "jedi-language-server" "ruff-lsp")))
 ;; (with-eval-after-load 'eglot
 ;;   (add-to-list 'eglot-server-programs
 ;;                `((python-mode python-ts-mode) .
-;; 		 ,(eglot-alternatives '( "pylsp"
-;; 					 "pyls"
-;; 					 ("poetry" "run" "pyright-langserver" "--stdio")
-;; 					 ("pyright-langserver" "--stdio")
-;; 					 "jedi-language-server")))))
+;;               ,(eglot-alternatives '( "pylsp"
+;;                                       "pyls"
+;;                                       ("poetry" "run" "pyright-langserver" "--stdio")
+;;                                       ("pyright-langserver" "--stdio")
+;;                                       "jedi-language-server")))))
 
 ;; [intramurz/flycheck-eglot](https://github.com/intramurz/flycheck-eglot)
 ;; Flycheck support for eglot
@@ -173,9 +178,9 @@
   :config
   ;; cf. M-x lsp-doctor
   (setq gc-cons-threshold (* 100 1024 1024) ;; 100 MB
-	read-process-output-max (* 1024 1024) ;; 1 MB
-	lsp-idle-delay 0.1 ;; clangd is fast
-	)
+        read-process-output-max (* 1024 1024) ;; 1 MB
+        lsp-idle-delay 0.1 ;; clangd is fast
+        )
 
   ;; The default configuration sources are pycodestyle and pyflakes.
   ;;   cf. https://github.com/python-lsp/python-lsp-server
@@ -242,6 +247,7 @@
   ;;s;; :ensure t
   :defer t
   )
-(use-package dap-cpptools
-  :defer t
-  )
+;; Fixme: package source ?
+;; (use-package dap-cpptools
+;;   :defer t
+;;   )

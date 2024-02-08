@@ -19,4 +19,7 @@
   (setq init-file-debug t
         debug-on-error t))
 
+;; Disable package.el in favor of straight.el
+(setq package-enable-at-startup nil)
+
 ;; See doom / early-init.el

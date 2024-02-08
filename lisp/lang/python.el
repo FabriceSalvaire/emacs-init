@@ -112,9 +112,10 @@
   :defer t
   )
 ;; (use-package ein-loaddefs)
-(use-package ein-notebook
-  :defer t
-  )
+;; Fixme: package source ?
+;; (use-package ein-notebook
+;;   :defer t
+;;   )
 ;; (use-package ein-subpackages)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

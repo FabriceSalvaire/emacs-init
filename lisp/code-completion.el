@@ -10,7 +10,8 @@
 ;;  M-x customize-group RET combobulate RET
 
 (use-package combobulate
-  :load-path (lambda () (file-name-concat local_checkout_path "combobulate"))
+  ;; :load-path (lambda () (file-name-concat local_checkout_path "combobulate"))
+  :straight (combobulate :type git :host github :repo "mickeynp/combobulate")
 
   :preface
   ;; You can customize Combobulate's key prefix here.
