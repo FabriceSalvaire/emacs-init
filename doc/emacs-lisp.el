@@ -3,6 +3,8 @@
 ;; [GNU Emacs Lisp Reference Manual](https://www.gnu.org/software/emacs/manual/html_node/elisp/index.html)
 ;; [Elisp Reference Sheet - CheatSheet.pdf](http://alhassy.com/ElispCheatSheet/CheatSheet.pdf)
 
+;; [File Names](https://www.gnu.org/software/emacs/manual/html_node/elisp/File-Names.html)
+
 ;; Lisp... 
 (+ 1 (+ 2 3))
 
@@ -35,7 +37,7 @@ foo+
 (setq foo 1
       bar 2)
 
-;; foo -> (a b c)
+;; foo ⇒ (a b c)
 ;; ` or (quote ...)  means don't evaluate
 (setq foo '(a b c))
 
@@ -45,6 +47,12 @@ foo+
 ;; Constant
 (defconst foo 1) ; informative and not enforced in Emacs !
 
+;; setf macro
+;; [Setting Generalized Variables](https://www.gnu.org/software/emacs/manual/html_node/elisp/Setting-Generalized-Variables.html)
+(setq a (list "hello" "world"))
+(setf (substring (cadr a) 2 4) "o")
+(cadr a) ; ⇒ "wood"
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; String
@@ -53,8 +61,8 @@ foo+
 (setq foo "...")
 (concat foo "...")
 (substring "The quick brown fox jumped." 16 19)
-(string ?a) ; -> "a"
-(make-string 3 ?x) ; -> "xxx"
+(string ?a) ; ⇒ "a"
+(make-string 3 ?x) ; ⇒ "xxx"
 
 ;; Message
 (message "This message appears in the echo area!")
@@ -66,17 +74,17 @@ foo+
 ;; list car crd cons...
 ;;
 
-(car '(a b c)) ; -> a
-(cdr '(a b c)) ; -> (b c)
-(cons 'a '(b c)) ; -> (a b c)
-(nthcdr 2 '(a b c d)) ; -> (c d)
-(nth 2 '(a b c d)) ; -> c
+(car '(a b c)) ; ⇒ a
+(cdr '(a b c)) ; ⇒ (b c)
+(cons 'a '(b c)) ; ⇒ (a b c)
+(nthcdr 2 '(a b c d)) ; ⇒ (c d)
+(nth 2 '(a b c d)) ; ⇒ c
 
 (setq alist '(a b c))
-(setcar alist 'aa) ; -> aa and now alist = (aa b c)
-(setcdr alist 'bb) ; -> bb and now alist = (aa . bb)
+(setcar alist 'aa) ; ⇒ aa and now alist = (aa b c)
+(setcdr alist 'bb) ; ⇒ bb and now alist = (aa . bb)
 
-(list 'a 'b 'c) ; -> (a b c)
+(list 'a 'b 'c) ; ⇒ (a b c)
 (reverse alist)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -99,36 +107,14 @@ foo+
 ;;
 ;; helper functions
 
-(1+ 1) ; -> 2
+(1+ 1) ; ⇒ 2
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; Function
-;; [Functions (GNU Emacs Lisp Reference Manual)](https://www.gnu.org/software/emacs/manual/html_node/elisp/Functions.html)
+;; Control Structures
 
-(defun multiply-by-seven (number)
-  "Multiply NUMBER by seven."
-  (* 7 number))
-(multiply-by-seven 3)
-
-;; Interactive version.
-;; [Using Interactive (GNU Emacs Lisp Reference Manual)](https://www.gnu.org/software/emacs/manual/html_node/elisp/Using-Interactive.html)
-(defun multiply-by-seven (number)
-  "Multiply NUMBER by seven."
-  (interactive "p")
-  (message "The result is %d" (* 7 number)))
-
-;; let
-;; [Lexical & Dynamic Binding Differences (Programming in Emacs Lisp)](https://www.gnu.org/software/emacs/manual/html_node/eintr/Lexical-_0026-Dynamic-Binding-Differences.html)
-(let ((zebra "stripes")
-      (tiger "fierce")
-      (unitialised) ; -> nil
-      )
-  (message "One kind of animal has %s and another is %s."
-           zebra tiger))
-
-;; block of codes
 ;; [Sequencing](https://www.gnu.org/software/emacs/manual/html_node/elisp/Sequencing.html)
+;; block of codes
 (progn
   ()
   ()
@@ -225,7 +211,7 @@ foo+
 ;; reverse a list
 (let (value) ; make sure list starts empty
   (while list
-    (setq value (cons (car list) value)) ; -> (a . nil) -> (b . nil) -> (c . (b a))
+    (setq value (cons (car list) value)) ; ⇒ (a . nil) ⇒ (b . nil) ⇒ (c . (b a))
     (setq list (cdr list)))
   value))
 
@@ -238,34 +224,79 @@ foo+
   (dotimes (number 3)
     (setq value (cons number value)))
   value)
-; -> (2 1 0)
+; ⇒ (2 1 0)
+
+;; generators
+;; [Generators](https://www.gnu.org/software/emacs/manual/html_node/elisp/Generators.html)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; lambda
-(lambda (a b c) (+ a b c))
-(funcall (lambda (a b c) (+ a b c))
-         1 2 3)
+;; let
+;; [Lexical & Dynamic Binding Differences](https://www.gnu.org/software/emacs/manual/html_node/eintr/Lexical-_0026-Dynamic-Binding-Differences.html)
+
+(let ((zebra "stripes")
+      (tiger "fierce")
+      (unitialised) ; ⇒ nil
+      )
+  (message "One kind of animal has %s and another is %s."
+           zebra tiger))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
+;; Function
+;; [Functions](https://www.gnu.org/software/emacs/manual/html_node/elisp/Functions.html)
+
+(defun multiply-by-seven (number)
+  "Multiply NUMBER by seven."
+  (* 7 number))
+(multiply-by-seven 3)
+
+;; Interactive version.
+;; [Using Interactive](https://www.gnu.org/software/emacs/manual/html_node/elisp/Using-Interactive.html)
+(defun multiply-by-seven (number)
+  "Multiply NUMBER by seven."
+  (interactive "p")
+  (message "The result is %d" (* 7 number)))
+
 ;; &optional &rest
 ;; [Argument List](https://www.gnu.org/software/emacs/manual/html_node/elisp/Argument-List.html)
 (defun foo (a b &optional c d &rest e)
   (message "%s %s [%s %s] * %s"  a b c d e))
 (foo 1 2)
-;; -> "1 2 [nil nil] * nil"
+;; ⇒ "1 2 [nil nil] * nil"
 (foo 1 2 3)
-;; -> "1 2 [3 nil] * nil"
+;; ⇒ "1 2 [3 nil] * nil"
 (foo 1 2 3 4)
-;; -> "1 2 [3 4] * nil"
+;; ⇒ "1 2 [3 4] * nil"
 ;(foo 1 2 2 3 4 5 6)
-;; -> "1 2 [2 3] * (4 5 6)"
+;; ⇒ "1 2 [2 3] * (4 5 6)"
+
+;; Keyword Arguments
+;; [EmacsWiki : Keyword Arguments](https://www.emacswiki.org/emacs/KeywordArguments)
+
+(cl-defun foobar (&key foo bar)
+  "`foobar' takes keyword arguments of :foo and :bar like this:
+\(foobar :foo 23)
+\(foobar :bar 42)"
+  (format "foo is %S and bar is %S" foo bar))
+
+;; or emulated using plist-get
+;;  (plist-get PLIST PROP &optional PREDICATE)
+;;    Extract a value from a property list.
+;;    PLIST is a property list, which is a list of the form (PROP1 VALUE1 PROP2 VALUE2...)
+(defun foobar-plist (&rest args)
+  "`foobar-plist' takes keyword arguments of :foo and :bar like this:
+\(foobar-plist :foo 23)
+\(foobar-plist :bar 42)"
+  (format "foo is %S and bar is %S" (plist-get args :foo) (plist-get args :bar)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; generators
-;; [Generators](https://www.gnu.org/software/emacs/manual/html_node/elisp/Generators.html)
+;; lambda
+
+(lambda (a b c) (+ a b c))
+(funcall (lambda (a b c) (+ a b c))
+         1 2 3)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

@@ -1,3 +1,6 @@
+- M-x history
+- Alt-Space just-one-space
+- flyspell _ not readable
 - buffer h split no so visible
 - checker rule hide _ 
 - [X] bug; on peut copier indent char ou bien quand on commente la ligne
