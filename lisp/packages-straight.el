@@ -135,11 +135,16 @@
     which-key
     ))
 
+(defconst _packages_to_load
+  '(
+    gcmh
+    ))
+
 ;; Fixme: useless ?
 ;;        snippets issue ?
 ;; (doom--log "before straight-use-package")
-;; (dolist (_ _used_packages)
-;;   (straight-use-package _))
+(dolist (_ _packages_to_load)
+  (straight-use-package _))
 ;; (doom--log "after straight-use-package")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -164,15 +169,3 @@
 
 (doom--log "package-straight done")
 (provide 'package-straight)
-
-;; Fixme
-
-(use-package magit
-  )
-
-(use-package counsel
-  )
-
-(use-package gcmh
-  ;; :straight (gcmh :type git :host github :repo "emacsmirror/gcmh")
-  )

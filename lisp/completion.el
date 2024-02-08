@@ -17,6 +17,9 @@
 ;;  https://github.com/abo-abo/swiper
 ;;  Manual https://oremacs.com/swiper
 
+(use-package counsel
+  )
+
 (use-package ivy
   ;;s;; :ensure t
 

@@ -64,6 +64,7 @@
 
                tree-sitter
                code-completion
+               magit
                lang/lang
                lang/c-java
                lang/python
