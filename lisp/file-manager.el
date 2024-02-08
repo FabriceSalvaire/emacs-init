@@ -31,7 +31,7 @@
 ;; https://github.com/purcell/diredfl
 
 (use-package diredfl
-  :ensure t
+  ;;s;; :ensure t
   :hook (dired-mode . diredfl-mode)
   )
 
@@ -41,7 +41,7 @@
 ;;   https://github.com/Alexander-Miller/treemacs#quick-start
 
 (use-package treemacs
-  :ensure t
+  ;;s;; :ensure t
 
   :bind
   (:map global-map
@@ -130,28 +130,28 @@
   )
 
 (use-package treemacs-evil
-  :ensure t
+  ;;s;; :ensure t
   :after (treemacs evil)
   )
 
 (use-package treemacs-projectile
-  :ensure t
+  ;;s;; :ensure t
   :after (treemacs projectile)
   )
 
 (use-package treemacs-icons-dired
-  :ensure t
+  ;;s;; :ensure t
   ;; Fixme: after ?
   :hook (dired-mode . treemacs-icons-dired-enable-once)
   )
 
 (use-package treemacs-magit
-  :ensure t
+  ;;s;; :ensure t
   :after (treemacs magit)
   )
 
 (use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
-  :ensure t
+  ;;s;; :ensure t
   :after (treemacs persp-mode) ;;or perspective vs. persp-mode
   :config (treemacs-set-scope-type 'Perspectives)
   )

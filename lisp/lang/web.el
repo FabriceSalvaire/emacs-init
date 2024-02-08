@@ -9,7 +9,7 @@
 ;;      php, jsp, gsp (grails), asp / asp.net ajax (atlas), django / twig / jinja(2) / erlydtl (zotonic) / selmer, erb, ejs, freemarker, velocity, cheetah, smarty, ctemplate / mustache / hapax / handlebars / meteor / blaze / ember.js / velvet, blade (laravel), knockoutjs, go template (revel), razor/play, dust, closure (soy), underscore.js, template-toolkit, liquid (jekyll), angular.js, web2py, mako (pylons), reactjs (jsx), mojolicious, elixir (erlang), thymeleaf, cl-emb, heist, archibus, xoops, hero, spip, svelte, elixir
 
 (use-package web-mode
-  :ensure t
+  ;;s;; :ensure t
   ;; require django-mode
   :mode "\\.html?\\'"
   :init
@@ -25,7 +25,7 @@
 ;;
 
 (use-package css-mode
-  :ensure t
+  ;;s;; :ensure t
   :mode "\\.css\\'")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -34,7 +34,7 @@
 ;;
 
 (use-package sass-mode
-  :ensure t
+  ;;s;; :ensure t
   :mode "\\.scss\\'"
   ;; (setq exec-path (cons (expand-file-name "~/.gem/ruby/1.8/bin") exec-path))
   )
@@ -47,7 +47,7 @@
 ;;
 
 (use-package js2-mode
-  :ensure t
+  ;;s;; :ensure t
   :mode "\\.js\\'"
   ;; :hook (prog-mode text-mode)
   :init
@@ -62,7 +62,7 @@
 
 ;; (use-package typescript
 (use-package typescript-ts-mode
-  :ensure t
+  ;;s;; :ensure t
   :mode "\\.ts\\'"
   )
 
@@ -77,7 +77,7 @@
 ;; (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
 
 (use-package rjsx-mode
-  :ensure t
+  ;;s;; :ensure t
   :init
   (add-hook 'rjsx-mode-hook (lambda () (setq c-basic-offset 4
                                              indent-tabs-mode nil)))
@@ -90,7 +90,7 @@
 ;;   https://github.com/virchau13/tree-sitter-astro
 
 (use-package astro-ts-mode
-  :ensure t
+  ;;s;; :ensure t
   :config
   (setq astro-ts-mode-indent-offset 4)
   :init

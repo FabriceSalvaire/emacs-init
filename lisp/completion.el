@@ -18,7 +18,7 @@
 ;;  Manual https://oremacs.com/swiper
 
 (use-package ivy
-  :ensure t
+  ;;s;; :ensure t
 
   :custom
   (ivy-use-virtual-buffers t)
@@ -67,7 +67,7 @@
 ;;  entered incomplete command (a prefix) in a popup.
 
 (use-package which-key
-  :ensure t
+  ;;s;; :ensure t
   :config
   (which-key-mode)
   )

@@ -94,7 +94,7 @@
 ;;   Improve Emacs flyspell responsiveness using idle timers.
 
 (use-package flyspell-lazy
-  :ensure t
+  ;;s;; :ensure t
   :after flyspell
   :custom
   (flyspell-lazy-idle-seconds 2)
@@ -108,7 +108,7 @@
 ;;   Correcting misspelled words with flyspell using favourite interface.
 
 (use-package flyspell-correct
-  :ensure t
+  ;;s;; :ensure t
   :after flyspell
   :bind (:map flyspell-mode-map ("C-;" . flyspell-correct-wrapper))
   )
@@ -137,7 +137,7 @@
 ;;   https://github.com/mhayashi1120/Emacs-langtool
 
 (use-package languagetool
-  :ensure t
+  ;;s;; :ensure t
   :commands (languagetool-check
              languagetool-clear-suggestions
              languagetool-correct-at-point
@@ -160,7 +160,7 @@
 ;;   https://dev.languagetool.org/http-server
 
 (use-package flycheck-languagetool
-  :ensure t
+  ;;s;; :ensure t
   :hook (text-mode . (lambda () (require 'flycheck-languagetool)))
   :init
   (setq flycheck-languagetool-commandline-jar "/usr/local/stow/LanguageTool/languagetool-commandline.jar"))
@@ -170,7 +170,7 @@
 ;; Google Translate
 
 (use-package google-translate
-  :ensure t
+  ;;s;; :ensure t
   :defer t
   :custom
   (google-translate-translation-directions-alist '(("en" . "fr") ("fr" . "en")))

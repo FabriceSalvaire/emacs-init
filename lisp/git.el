@@ -8,7 +8,7 @@
 ;; see ~/.config/doom-emacs/modules/ui/vc-gutter/config.el
 
 (use-package git-gutter
-  :ensure t
+  ;;s;; :ensure t
   ;; :hook (prog-mode . git-gutter-mode)
 
   :config

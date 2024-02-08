@@ -59,13 +59,13 @@
 ;;     before M-x all-the-icons-install-fonts
 
 (use-package doom-modeline
-  :ensure t
+  ;;s;; :ensure t
   :hook (after-init . doom-modeline-mode)
   ;; :init (doom-modeline-mode 1)
   )
 
 (use-package all-the-icons
-  :ensure t
+  ;;s;; :ensure t
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

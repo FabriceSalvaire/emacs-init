@@ -20,7 +20,7 @@
 
 (use-package polymode
   :disabled
-  :ensure t
+  ;;s;; :ensure t
   ;; :mode ("\.py$" . poly-python-sql-mode)
   ;; :mode ("\.py$" . poly-python-md-mode)
   :config

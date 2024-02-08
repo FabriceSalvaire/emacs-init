@@ -35,7 +35,7 @@
 ;;   [minad/corfu](https://github.com/minad/corfu)
 
 (use-package corfu
-  :ensure t
+  ;;s;; :ensure t
 
   ;; Optional customizations
   ;; :custom
@@ -153,7 +153,7 @@
 ;; /home/fabrice/.emacs.d/snippets ->
 
 (use-package yasnippet
-  :ensure t
+  ;;s;; :ensure t
 
   :config
   (yas/global-mode 1)

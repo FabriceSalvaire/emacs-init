@@ -6,7 +6,7 @@
 ;;   https://github.com/emacsmirror/undo-fu-session
 
 (use-package undo-fu-session
-  :ensure t
+  ;;s;; :ensure t
   ;; hook: (-mode . undo-fu-session-mode)
 
   :config
@@ -15,7 +15,7 @@
   )
 
 (use-package undo-fu
-  :ensure t
+  ;;s;; :ensure t
 
   :config
   (global-unset-key (kbd "C-z"))

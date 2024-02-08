@@ -33,7 +33,7 @@
 
 (use-package flycheck
   ;:disabled
-  :ensure t
+  ;;s;; :ensure t
 
   :init
   (global-flycheck-mode)
@@ -101,7 +101,7 @@
 
 (use-package eglot
   ; :disabled
-  :ensure t
+  ;;s;; :ensure t
 
   :commands eglot
   :hook ((python-mode python-ts-mode) . eglot-ensure)
@@ -147,7 +147,7 @@
 ;; Flycheck support for eglot
 (use-package flycheck-eglot
   ; :disabled
-  :ensure t
+  ;;s;; :ensure t
   :after (flycheck eglot)
   :config
   (global-flycheck-eglot-mode 1)
@@ -161,7 +161,7 @@
 
 (use-package lsp-mode
   :disabled ; !!!
-  :ensure t
+  ;;s;; :ensure t
 
   :init
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
@@ -215,18 +215,18 @@
   )
 
 (use-package lsp-ui
-  :ensure t
+  ;;s;; :ensure t
   :commands lsp-ui-mode
   )
 ;; if you are helm user
 ;;   (use-package helm-lsp :commands helm-lsp-workspace-symbol)
 ;; if you are ivy user
 (use-package lsp-ivy
-  :ensure t
+  ;;s;; :ensure t
   :commands lsp-ivy-workspace-symbol
   )
 (use-package lsp-treemacs
-  :ensure t
+  ;;s;; :ensure t
   :commands lsp-treemacs-errors-list
   )
 
@@ -239,7 +239,7 @@
 ;;   client and Debug Server. It’s similar to the LSP but provides integration with debug server.
 
 (use-package dap-mode
-  :ensure t
+  ;;s;; :ensure t
   :defer t
   )
 (use-package dap-cpptools

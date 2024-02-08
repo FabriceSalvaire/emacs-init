@@ -63,7 +63,7 @@
 
 (use-package treesit-auto
   ; :disabled
-  :ensure t
+  ;;s;; :ensure t
 
   :when (treesit-available-p)
 
