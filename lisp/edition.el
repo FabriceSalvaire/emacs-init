@@ -187,6 +187,7 @@
 ;;   issue when we comment or copy several lines
 ;;   e.g. we got "; | ..."
 ;;   for example, it happens when the first line is not indented
+;;   https://github.com/DarthFennec/highlight-indent-guides/issues/77
 
 (use-package highlight-indent-guides
   ;; :disabled

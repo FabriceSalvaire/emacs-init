@@ -288,6 +288,8 @@ possible."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Backup / Lockfile / Autosave
+;;
+;;   https://www.gnu.org/software/emacs/manual/html_node/emacs/Auto-Save-Files.html
 
 ;; Don't generate backups or lockfiles. While auto-save maintains a copy so long as a buffer is
 ;; unsaved, backups create copies once, when the file is first written, and never again until it is
@@ -295,6 +297,7 @@ possible."
 ;; copies of potentially sensitive material floating around our filesystem.
 (setq create-lockfiles nil
       make-backup-files nil
+
       ;; But in case the user does enable it, some sensible defaults:
       version-control t     ; number each backup file
       backup-by-copying t   ; instead of renaming current file (clobbers links)
@@ -314,15 +317,18 @@ possible."
       ;; the purpose of a failsafe. This adds the risk of losing the data we
       ;; just deleted, but I believe that's VCS's jurisdiction, not ours.
       auto-save-include-big-deletions t
+
       ;; Keep it out of `doom-emacs-dir' or the local directory.
       ;;   "$HOME/.config/emacs-legacy/auto-save-list/.saves-"
       ;; auto-save-list-file-prefix (concat doom-cache-dir "autosave/")
       ;; tramp-auto-save-directory  (concat doom-cache-dir "tramp-autosave/")
-      auto-save-file-name-transforms
-      (list (list "\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'"
-                  ;; Prefix tramp autosaves to prevent conflicts with local ones
-                  (concat auto-save-list-file-prefix "tramp-\\2") t)
-            (list ".*" auto-save-list-file-prefix t)))
+
+      ;; auto-save-file-name-transforms
+      ;; (list (list "\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'"
+      ;;             ;; Prefix tramp autosaves to prevent conflicts with local ones
+      ;;             (concat auto-save-list-file-prefix "tramp-\\2") t)
+      ;;       (list ".*" auto-save-list-file-prefix t))
+      )
 
 ;; (defadvice! doom--shut-up-autosave-a (fn &rest args)
 ;;   "If a file has autosaved data, `after-find-file' will pause for 1 second to
@@ -332,6 +338,8 @@ possible."
 ;;     (apply fn args)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Guess Mode for New File
 
 (add-hook! 'after-save-hook
   (defun doom-guess-mode-h ()
