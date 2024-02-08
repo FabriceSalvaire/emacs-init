@@ -1,36 +1,37 @@
 ;;; .el --- ... -*- lexical-binding: t; -*-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+;;
+;; Edition
+;;   See Doom doom-editor.el
+;;   - line / column mode
+;,   - fill-colum / column marker
+;;   - indentation / whitespace
+;;   - parenthese
+;;   - multiple cursor
+;;   - string inflection
+;;
 ;; https://www.emacswiki.org/emacs/ShowWhiteSpace
 ;; https://github.com/Lindydancer/char-font-lock
-
-;; See Doom doom-editor.el
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; Indent Tabs Mode
-
-(setq-default indent-tabs-mode nil)
-(dolist (_
-         '(
-           c-mode-hook
-           cmake-mode-hook
-           emacs-lisp-mode-hook
-           )
-         )
-  (add-hook _ #'(lambda () (setq indent-tabs-mode nil)))
-  )
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Line & Column
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Line & Column Mode
+
+;; Show line/column in the modeline
 (setq column-number-mode t)
 ;; (setq line-number-mode t)
-;; (global-hl-line-mode)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Show a horizontal line at the cursor
+(global-hl-line-mode 1)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Fill-column & Auto fill mode
 
@@ -58,7 +59,49 @@
 
 ;; (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Column Marker
+;;   https://www.emacswiki.org/emacs/ColumnMarker
+;;   python-mode.el-6.0.4/tools/column-marker.el
+
+(use-package column-marker
+  ;; Highlight column 100 in python mode.
+  :hook
+  ((prog-mode) . (lambda () (interactive) (column-marker-1 100)))
+  ;; :hook ((python-mode python-ts-mode) . (lambda () (interactive) (column-marker-1 100)))
+
+  :config
+  ;; (add-hook 'sass-mode-hook '(lambda ()
+  ;;                            (interactive)x
+  ;;                            (column-marker-1 4)
+  ;;                            (column-marker-2 8)
+  ;;                            (column-marker-3 12)
+  ;;                            ))
+  )
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Indentation / Whitespace
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Disable/Enable Indent Tabs Mode
+
+(setq-default indent-tabs-mode nil)
+(dolist (_
+         '(
+           c-mode-hook
+           cmake-mode-hook
+           emacs-lisp-mode-hook
+           )
+         )
+  (add-hook _ #'(lambda () (setq indent-tabs-mode nil)))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Whitespace
 ;;   https://www.emacswiki.org/emacs/WhiteSpace
@@ -68,7 +111,6 @@
   :hook (prog-mode . whitespace-mode)
 
   :config
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Trailing Whitespace
   ;;   https://stackoverflow.com/questions/34531831/highlighting-trailing-whitespace-in-emacs-without-changing-character
   ;; (setq-default show-trailing-whitespace t)
@@ -78,7 +120,6 @@
   ;; https://www.emacswiki.org/emacs/HighlightEndOfBuffer
   ;; (setq-default indicate-empty-lines t)
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (setq-default whitespace-style
                 '(
                   face ; visualize by using faces
@@ -147,38 +188,18 @@
   ;;                     occur-mode))
   )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; Multiple cursors
-;;   https://github.com/magnars/multiple-cursors.el
+;; Clean Indentation Mode
+;;  Emacs extension for clean auto-indent and backspace unindent
+;;  https://github.com/pmarinov/clean-aindent-mode last 2015
 
-(use-package multiple-cursors
-  ;;s;; :ensure t
-  ;; (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-  ;; (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-  ;; (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-  ;; (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-  )
+;; (use-package clean-aindent-mode
+;;   :disabled
+;;   :hook
+;;   (prog-mode . clean-aindent-mode))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Column Marker
-;;   python-mode.el-6.0.4/tools/column-marker.el
-
-(use-package column-marker
-  ;; Highlight column 100 in python mode.
-  :hook (python-mode . (lambda () (interactive) (column-marker-1 100)))
-
-  :config
-  ;; (add-hook 'sass-mode-hook '(lambda ()
-  ;;                            (interactive)
-  ;;                            (column-marker-1 4)
-  ;;                            (column-marker-2 8)
-  ;;                            (column-marker-3 12)
-  ;;                            ))
-  )
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Highlight Indentation
 ;;   https://github.com/DarthFennec/highlight-indent-guides
@@ -211,29 +232,29 @@
   ;; (highlight-indent-guides-top-character-face ((t (:inherit (highlight-indent-guides-character-face)))))
   )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Highlight Indentation
 ;;  https://github.com/antonj/Highlight-Indentation-for-Emacs
 ;;  python-mode.el-6.0.4/highlight-indentation.el
 
-(use-package highlight-indentation
-  :disabled
-  )
+;; (use-package highlight-indentation
+;;   :disabled
+;;   )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Indent Guide
 ;;   https://github.com/zk-phi/indent-guide
 
-(use-package indent-guide
-  :disabled
-  ;; (indent-guide-global-mode)
-  ;; (set-face-background 'indent-guide-face "dimgray")
-  ;; (setq indent-guide-delay 0.1)
-  ;; (setq indent-guide-recursive t)
-  ;; (setq indent-guide-char ":")
-  )
+;; (use-package indent-guide
+;;   :disabled
+;;   ;; (indent-guide-global-mode)
+;;   ;; (set-face-background 'indent-guide-face "dimgray")
+;;   ;; (setq indent-guide-delay 0.1)
+;;   ;; (setq indent-guide-recursive t)
+;;   ;; (setq indent-guide-char ":")
+;;   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -249,6 +270,21 @@
   (show-paren-when-point-in-periphery t)
   )
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Multiple cursors
+;;   https://github.com/magnars/multiple-cursors.el
+
+(use-package multiple-cursors
+  ;;s;; :ensure t
+  ;; (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+  ;; (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  ;; (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  ;; (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+  )
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; String Inflection
@@ -258,14 +294,3 @@
 (use-package string-inflection
   :defer t
   )
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Clean Indentation Mode
-;;  Emacs extension for clean auto-indent and backspace unindent
-;;  https://github.com/pmarinov/clean-aindent-mode last 2015
-
-(use-package clean-aindent-mode
-  :disabled
-  :hook
-  (prog-mode . clean-aindent-mode))
