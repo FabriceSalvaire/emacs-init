@@ -33,21 +33,21 @@
 
 (use-package emacs
   :bind (:map python-mode-map
-	      ("C-<delete>" . py-kill-word)
+              ("C-<delete>" . py-kill-word)
               ("C-<backspace>" . py-backward-kill-word)
-	 :map python-ts-mode-map
-	      ("C-<delete>" . py-kill-word)
+         :map python-ts-mode-map
+              ("C-<delete>" . py-kill-word)
               ("C-<backspace>" . py-backward-kill-word))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Company JEDI
   ;;   https://github.com/syohex/emacs-company-jedi
   :hook (python-mode . (lambda ()
-			 (add-to-list 'company-backends 'company-jedi)
-			 ;; https://github.com/syl20bnr/spacemacs/issues/15137
-			 ;; don't work ??? see lsp config
-			 ;; (setq flycheck-checker 'python-flake8)
-			 ))
+                         (add-to-list 'company-backends 'company-jedi)
+                         ;; https://github.com/syl20bnr/spacemacs/issues/15137
+                         ;; don't work ??? see lsp config
+                         ;; (setq flycheck-checker 'python-flake8)
+                         ))
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -64,7 +64,7 @@
   ; :config
   ;(add-hook 'python-mode-hook ...)
   :bind (:map python-mode-map
-	      ("C-<delete>" . py-kill-word)
+              ("C-<delete>" . py-kill-word)
               ("C-<backspace>" . py-backward-kill-word))
   )
 
