@@ -109,7 +109,7 @@
  '(mode-line-buffer-id ((t (:weight bold))))
  '(mode-line-emphasis ((t (:foreground "#51afef"))))
  '(mode-line-highlight ((t (:inherit (highlight)))))
- '(mode-line-inactive ((t (:box nil :foreground "#5B6268" :background "#21242b")))) ; gris 
+ '(mode-line-inactive ((t (:box nil :foreground "#5B6268" :background "#21242b")))) ; gris
 
  '(isearch ((t (:weight bold :inherit (lazy-highlight)))))
  '(isearch-fail ((t (:weight bold :foreground "#1B2229" :background "#ff6c6b"))))
@@ -119,12 +119,24 @@
  '(next-error ((t (:inherit (region)))))
  '(query-replace ((t (:inherit (isearch)))))
 
+ '(flycheck-error ((t (:underline (:color "Red1" :style line :position t)))))
+ '(flycheck-info ((t (:underline (:color "ForestGreen" :style line :position t)))))
+ '(flycheck-warning ((t (:underline (:color "DarkOrange" :style line :position t)))))
+
+ '(diredfl-compressed-file-name ((t (:foreground "tomato"))))
+ '(diredfl-compressed-file-suffix ((t (:foreground "light salmon"))))
+ '(diredfl-date-time ((t (:foreground "cornflower blue"))))
+ '(diredfl-deletion ((t (:background "tomato" :foreground "black"))))
+ '(diredfl-deletion-file-name ((t (:foreground "orange red"))))
  '(diredfl-dir-heading ((t (:foreground "orange red"))))
- '(diredfl-dir-name ((t (:foreground "#7474FFFFFFFF"))))
+ '(diredfl-dir-name ((t (:background "gray20" :foreground "white smoke" :weight semi-bold))))
  '(diredfl-dir-priv ((t (:foreground "deep sky blue"))))
  '(diredfl-exec-priv ((t (:foreground "spring green"))))
+ '(diredfl-file-name ((t (:foreground "gainsboro"))))
+ '(diredfl-file-suffix ((t (:foreground "peru"))))
  '(diredfl-link-priv ((t (:foreground "orchid"))))
  '(diredfl-no-priv ((t (:foreground "dim gray"))))
+ '(diredfl-number ((t (:foreground "pale goldenrod"))))
  '(diredfl-other-priv ((t (:foreground "royal blue"))))
  '(diredfl-rare-priv ((t (:foreground "chocolate"))))
  '(diredfl-read-priv ((t (:foreground "light goldenrod"))))
