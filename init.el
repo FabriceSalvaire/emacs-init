@@ -49,14 +49,14 @@
 
                ;; packages
                packages-straight
-               frame
+               ui
                core
 
                user-functions
 
                completion ; buffer switch
                edition
-               undo
+               ;; undo
                speller
 
                file-manager
