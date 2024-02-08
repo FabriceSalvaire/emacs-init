@@ -1,6 +1,27 @@
 (deftheme fabrice-dark
   "Created 2024-02-06.")
 
+;; Gray Scale
+;; for i in range(1, 17):
+;;     _ = 256 // i
+;;     print(f"/{i:2} | {round(100/i):3} % | {_:3} | {hex(_)} ")
+;;
+;; / 2 |  50 % | 128 | 0x80
+;; / 3 |  33 % |  85 | 0x55
+;; / 4 |  25 % |  64 | 0x40
+;; / 5 |  20 % |  51 | 0x33
+;; / 6 |  17 % |  42 | 0x2a
+;; / 7 |  14 % |  36 | 0x24
+;; / 8 |  12 % |  32 | 0x20
+;; / 9 |  11 % |  28 | 0x1c
+;; /10 |  10 % |  25 | 0x19
+;; /11 |   9 % |  23 | 0x17
+;; /12 |   8 % |  21 | 0x15
+;; /13 |   8 % |  19 | 0x13
+;; /14 |   7 % |  18 | 0x12
+;; /15 |   7 % |  17 | 0x11
+;; /16 |   6 % |  16 | 0x10
+
 ;; (custom-set-faces '(default ((t (:family "Noto Sans Mono" :foundry "GOOG" :slant normal :weight normal :height 143 :width normal)))))
 
 ;; https://github.com/doomemacs/themes/blob/master/themes/doom-one-theme.el
@@ -10,23 +31,35 @@
 ;; (require 'color)
 ;; (color-darken-name "#ffffff" 40)
 
-;; height 113
-;; fg "#cccccc" ; "#bbc2cf"
-;; bg "#1f1f1f" ; "#282c34"
-
 (custom-theme-set-faces
  'fabrice-dark
 
  ;; '(default ((t (:family "Source Code Pro" :foundry "ADBO" :width normal :height 113 :weight regular :slant normal :underline nil :overline nil :extend nil :strike-through nil :box nil :inverse-video nil :foreground "#bbc2cf" :background "#282c34" :stipple nil :inherit nil))))
 
- '(default ((t (:family "Source Code Pro" :foundry "ADBO" :slant normal :weight medium :height 120 :width normal))))
-
- 
- '(default ((t (:family "Source Code Pro" :foundry "ADBO" :slant normal :weight medium :height 120 :width normal :foreground "#cccccc" :background "#1f1f1f" :underline nil :overline nil :extend nil :strike-through nil :box nil :inverse-video nil :stipple nil :inherit nil))))
+ '(default ((t (:family "Source Code Pro"
+                :foundry "ADBO"
+                :weight medium
+                :slant normal
+                :width normal
+                :height 120 ; 113
+                :foreground "#cccccc" ; #bbc2cf
+                :background "#232627" ; #1f1f1f  #282c34
+                ;; :underline nil
+                ;; :overline nil
+                ;; :extend nil
+                ;; :strike-through nil
+                ;; :box nil
+                ;; :inverse-video nil
+                ;; :stipple nil
+                ;; :inherit nil
+                ))))
  '(fixed-pitch ((t (:family "Monospace"))))
  '(variable-pitch ((((type w32)) (:foundry "outline" :family "Arial")) (t (:family "Sans Serif"))))
 
  '(cursor ((t (:background "#51afef"))))
+ '(hl-line ((t (:background "#101010"))))
+ '(column-marker-1 ((t (:weight bold :background "gray0")))) ; tomato3
+ 
  '(escape-glyph ((t (:foreground "#46D9FF"))))
  '(homoglyph ((((background dark)) (:foreground "cyan")) (((type pc)) (:foreground "magenta")) (t (:foreground "brown"))))
  '(minibuffer-prompt ((t (:foreground "#51afef"))))
@@ -101,7 +134,7 @@
  '(whitespace-tab ((t (:inherit (whitespace-empty)))))
  '(whitespace-trailing ((t (:inherit (whitespace-empty)))))
 
- ;; '(highlight-indent-guides-character-face ((t (:foreground "gainsboro"))))
+;; '(highlight-indent-guides-character-face ((t (:foreground "gainsboro"))))
  ;; '(highlight-indent-guides-stack-character-face ((t (:inherit (highlight-indent-guides-character-face)))))
  ;; '(highlight-indent-guides-top-character-face ((t (:inherit (highlight-indent-guides-character-face)))))
  )
