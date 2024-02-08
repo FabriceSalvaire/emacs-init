@@ -7,4 +7,5 @@ checkout/
 doom
 doom-emacs
 elpa/
+straight/
 tree-sitter/
