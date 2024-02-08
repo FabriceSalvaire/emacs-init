@@ -3,11 +3,23 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Core Settings
+;;   loaded after startup.el
+;;   - UI
+;;   - Session: recent, bakup file etc.
+;;   - ...
+;;
+;; See Doom doom-ui.el
+;;          doom-editor.py
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; See Doom doom-ui.el
-;;          doom-editor.py
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; UI...
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -17,34 +29,10 @@
 ;; are real buffers open.
 ;; Fixme: works ???
 (setq confirm-kill-emacs #'doom-quit-p)
+
 ;; Prompt for confirmation when deleting a non-empty frame; a last line of
 ;; defense against accidental loss of work.
 (global-set-key [remap delete-frame] #'doom/delete-frame-with-prompt)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Recent — minor mode that builds a list of recently opened files
-;;   https://www.emacswiki.org/emacs/RecentFiles
-
-;; Enable menu for recently opened files
-(recentf-mode t)
-;; (setq recentf-max-menu-items 25)
-;; (setq recentf-max-saved-items 25)
-;; Periodically saving the list of files
-;; (run-at-time nil (* 5 60) 'recentf-save-list)
-;; (global-set-key "\C-x\ \C-r" 'recentf-open-files)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Buffer Name
-
-;; Uniquify — overrides Emacs default mechanism for making buffer names unique
-;;  https://www.emacswiki.org/emacs/uniquify
-(setq uniquify-buffer-name-style 'reverse
-      uniquify-separator "/"
-      uniquify-after-kill-buffer-p t ; rename after killing uniquified
-      uniquify-ignore-buffers-re "^\\*" ; don't muck with special buffers (or Gnus mail buffers)
-      )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -52,6 +40,56 @@
 
 ;; middle-click paste at point, not at click
 (setq mouse-yank-at-point t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Cursor
+
+;; The blinking cursor is distracting, but also interferes with cursor settings in some minor modes
+;; that try to change it buffer-locally (like treemacs) and can cause freezing for folks (esp on
+;; macOS) with customized & color cursors.
+(blink-cursor-mode -1)
+
+;; Don't blink the paren matching the one at point, it's too distracting.
+(setq blink-matching-paren nil)
+
+;; Don't stretch the cursor to fit wide characters, it is disorienting, especially for tabs.
+(setq x-stretch-cursor nil)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Windows/frames
+
+;; A simple frame title
+;; (setq frame-title-format '("%b – Doom Emacs")
+;;       icon-title-format frame-title-format)
+
+;; Don't resize the frames in steps; it looks weird, especially in tiling window managers, where it
+;; can leave unseemly gaps.
+(setq frame-resize-pixelwise t)
+
+;; But do not resize windows pixelwise, this can cause crashes in some cases when resizing too many
+;; windows at once or rapidly.
+(setq window-resize-pixelwise nil)
+
+;; UX: GUIs are inconsistent across systems, desktop environments, and themes, and don't match the
+;;   look of Emacs. They also impose inconsistent shortcut key paradigms. I'd rather Emacs be
+;;   responsible for prompting.
+(setq use-dialog-box nil)
+(when (bound-and-true-p tooltip-mode)
+  (tooltip-mode -1))
+
+;; FIX: The native border "consumes" a pixel of the fringe on righter-most splits, `window-divider'
+;;   does not. Available since Emacs 25.1.
+(setq window-divider-default-places t
+      window-divider-default-bottom-width 1
+      window-divider-default-right-width 1)
+(add-hook 'doom-init-ui-hook #'window-divider-mode)
+
+;; UX: Favor vertical splits over horizontal ones. Monitors are trending toward wide, rather than
+;;   tall.
+(setq split-width-threshold 160
+      split-height-threshold nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -75,18 +113,131 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; Cursor
+;; Fringes
 
-;; The blinking cursor is distracting, but also interferes with cursor settings in some minor modes
-;; that try to change it buffer-locally (like treemacs) and can cause freezing for folks (esp on
-;; macOS) with customized & color cursors.
-(blink-cursor-mode -1)
+;; Reduce the clutter in the fringes; we'd like to reserve that space for more
+;; useful information, like git-gutter and flycheck.
+(setq indicate-buffer-boundaries nil
+      indicate-empty-lines nil)
 
-;; Don't blink the paren matching the one at point, it's too distracting.
-(setq blink-matching-paren nil)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Minibuffer
 
-;; Don't stretch the cursor to fit wide characters, it is disorienting, especially for tabs.
-(setq x-stretch-cursor nil)
+;; Allow for minibuffer-ception. Sometimes we need another minibuffer command while we're in the
+;; minibuffer.
+(setq enable-recursive-minibuffers t)
+
+;; Show current key-sequence in minibuffer ala 'set showcmd' in vim. Any feedback after typing is
+;; better UX than no feedback at all.
+(setq echo-keystrokes 0.02)
+
+;; Expand the minibuffer to fit multi-line text displayed in the echo-area. This
+;; doesn't look too great with direnv, however...
+(setq resize-mini-windows 'grow-only)
+
+;; Typing yes/no is obnoxious when y/n will do
+(if (boundp 'use-short-answers)
+    (setq use-short-answers t)
+  ;; DEPRECATED: Remove when we drop 27.x support
+  ;; (advice-add #'yes-or-no-p :override #'y-or-n-p)
+  )
+
+;; Try to keep the cursor out of the read-only portions of the minibuffer.
+(setq minibuffer-prompt-properties '(read-only t intangible t cursor-intangible t face minibuffer-prompt))
+(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Session...
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Recent — minor mode that builds a list of recently opened files
+;;   https://www.emacswiki.org/emacs/RecentFiles
+
+;; Enable menu for recently opened files
+(recentf-mode t)
+;; (setq recentf-max-menu-items 25)
+;; (setq recentf-max-saved-items 25)
+;; Periodically saving the list of files
+;; (run-at-time nil (* 5 60) 'recentf-save-list)
+;; (global-set-key "\C-x\ \C-r" 'recentf-open-files)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Backup / Lockfile / Autosave
+;;
+;;   https://www.gnu.org/software/emacs/manual/html_node/emacs/Auto-Save-Files.html
+
+;; Don't generate backups or lockfiles. While auto-save maintains a copy so long as a buffer is
+;; unsaved, backups create copies once, when the file is first written, and never again until it is
+;; killed and reopened. This is better suited to version control, and I don't want world-readable
+;; copies of potentially sensitive material floating around our filesystem.
+(setq create-lockfiles nil
+      make-backup-files nil
+
+      ;; But in case the user does enable it, some sensible defaults:
+      version-control t     ; number each backup file
+      backup-by-copying t   ; instead of renaming current file (clobbers links)
+      delete-old-versions t ; clean up after itself
+      kept-old-versions 5
+      kept-new-versions 5
+      ;; Fixme: for filename clash read doc...
+      ;; backup-directory-alist (list (cons "." (concat doom-cache-dir "backup/")))
+      ;; tramp-backup-directory-alist backup-directory-alist
+      )
+
+
+;; But turn on auto-save, so we have a fallback in case of crashes or lost data.
+;; Use `recover-file' or `recover-session' to recover them.
+(setq auto-save-default t
+      ;; Don't auto-disable auto-save after deleting big chunks. This defeats
+      ;; the purpose of a failsafe. This adds the risk of losing the data we
+      ;; just deleted, but I believe that's VCS's jurisdiction, not ours.
+      auto-save-include-big-deletions t
+
+      ;; Keep it out of `doom-emacs-dir' or the local directory.
+      ;;   "$HOME/.config/emacs-legacy/auto-save-list/.saves-"
+      ;; auto-save-list-file-prefix (concat doom-cache-dir "autosave/")
+      ;; tramp-auto-save-directory  (concat doom-cache-dir "tramp-autosave/")
+
+      ;; auto-save-file-name-transforms
+      ;; (list (list "\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'"
+      ;;             ;; Prefix tramp autosaves to prevent conflicts with local ones
+      ;;             (concat auto-save-list-file-prefix "tramp-\\2") t)
+      ;;       (list ".*" auto-save-list-file-prefix t))
+      )
+
+;; (defadvice! doom--shut-up-autosave-a (fn &rest args)
+;;   "If a file has autosaved data, `after-find-file' will pause for 1 second to
+;; tell you about it. Very annoying. This prevents that."
+;;   :around #'after-find-file
+;;   (letf! ((#'sit-for #'ignore))
+;;     (apply fn args)))
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; ...
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Buffer Name
+
+;; Uniquify — overrides Emacs default mechanism for making buffer names unique
+;;  https://www.emacswiki.org/emacs/uniquify
+(setq uniquify-buffer-name-style 'reverse
+      uniquify-separator "/"
+      uniquify-after-kill-buffer-p t ; rename after killing uniquified
+      uniquify-ignore-buffers-re "^\\*" ; don't muck with special buffers (or Gnus mail buffers)
+      )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -133,76 +284,6 @@
 ;;              (run-hooks 'buffer-list-update-hook)
 ;;              t)))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Fringes
-
-;; Reduce the clutter in the fringes; we'd like to reserve that space for more
-;; useful information, like git-gutter and flycheck.
-(setq indicate-buffer-boundaries nil
-      indicate-empty-lines nil)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Windows/frames
-
-;; A simple frame title
-;; (setq frame-title-format '("%b – Doom Emacs")
-;;       icon-title-format frame-title-format)
-
-;; Don't resize the frames in steps; it looks weird, especially in tiling window managers, where it
-;; can leave unseemly gaps.
-(setq frame-resize-pixelwise t)
-
-;; But do not resize windows pixelwise, this can cause crashes in some cases when resizing too many
-;; windows at once or rapidly.
-(setq window-resize-pixelwise nil)
-
-;; UX: GUIs are inconsistent across systems, desktop environments, and themes, and don't match the
-;;   look of Emacs. They also impose inconsistent shortcut key paradigms. I'd rather Emacs be
-;;   responsible for prompting.
-(setq use-dialog-box nil)
-(when (bound-and-true-p tooltip-mode)
-  (tooltip-mode -1))
-
-;; FIX: The native border "consumes" a pixel of the fringe on righter-most splits, `window-divider'
-;;   does not. Available since Emacs 25.1.
-(setq window-divider-default-places t
-      window-divider-default-bottom-width 1
-      window-divider-default-right-width 1)
-(add-hook 'doom-init-ui-hook #'window-divider-mode)
-
-;; UX: Favor vertical splits over horizontal ones. Monitors are trending toward wide, rather than
-;;   tall.
-(setq split-width-threshold 160
-      split-height-threshold nil)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Minibuffer
-
-;; Allow for minibuffer-ception. Sometimes we need another minibuffer command while we're in the
-;; minibuffer.
-(setq enable-recursive-minibuffers t)
-
-;; Show current key-sequence in minibuffer ala 'set showcmd' in vim. Any feedback after typing is
-;; better UX than no feedback at all.
-(setq echo-keystrokes 0.02)
-
-;; Expand the minibuffer to fit multi-line text displayed in the echo-area. This
-;; doesn't look too great with direnv, however...
-(setq resize-mini-windows 'grow-only)
-
-;; Typing yes/no is obnoxious when y/n will do
-(if (boundp 'use-short-answers)
-    (setq use-short-answers t)
-  ;; DEPRECATED: Remove when we drop 27.x support
-  ;; (advice-add #'yes-or-no-p :override #'y-or-n-p)
-  )
-
-;; Try to keep the cursor out of the read-only portions of the minibuffer.
-(setq minibuffer-prompt-properties '(read-only t intangible t cursor-intangible t face minibuffer-prompt))
-(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -284,58 +365,6 @@ possible."
                                parent-directory))
              (progn (make-directory parent-directory 'parents)
                     t))))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Backup / Lockfile / Autosave
-;;
-;;   https://www.gnu.org/software/emacs/manual/html_node/emacs/Auto-Save-Files.html
-
-;; Don't generate backups or lockfiles. While auto-save maintains a copy so long as a buffer is
-;; unsaved, backups create copies once, when the file is first written, and never again until it is
-;; killed and reopened. This is better suited to version control, and I don't want world-readable
-;; copies of potentially sensitive material floating around our filesystem.
-(setq create-lockfiles nil
-      make-backup-files nil
-
-      ;; But in case the user does enable it, some sensible defaults:
-      version-control t     ; number each backup file
-      backup-by-copying t   ; instead of renaming current file (clobbers links)
-      delete-old-versions t ; clean up after itself
-      kept-old-versions 5
-      kept-new-versions 5
-      ;; Fixme: for filename clash read doc...
-      ;; backup-directory-alist (list (cons "." (concat doom-cache-dir "backup/")))
-      ;; tramp-backup-directory-alist backup-directory-alist
-      )
-
-
-;; But turn on auto-save, so we have a fallback in case of crashes or lost data.
-;; Use `recover-file' or `recover-session' to recover them.
-(setq auto-save-default t
-      ;; Don't auto-disable auto-save after deleting big chunks. This defeats
-      ;; the purpose of a failsafe. This adds the risk of losing the data we
-      ;; just deleted, but I believe that's VCS's jurisdiction, not ours.
-      auto-save-include-big-deletions t
-
-      ;; Keep it out of `doom-emacs-dir' or the local directory.
-      ;;   "$HOME/.config/emacs-legacy/auto-save-list/.saves-"
-      ;; auto-save-list-file-prefix (concat doom-cache-dir "autosave/")
-      ;; tramp-auto-save-directory  (concat doom-cache-dir "tramp-autosave/")
-
-      ;; auto-save-file-name-transforms
-      ;; (list (list "\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'"
-      ;;             ;; Prefix tramp autosaves to prevent conflicts with local ones
-      ;;             (concat auto-save-list-file-prefix "tramp-\\2") t)
-      ;;       (list ".*" auto-save-list-file-prefix t))
-      )
-
-;; (defadvice! doom--shut-up-autosave-a (fn &rest args)
-;;   "If a file has autosaved data, `after-find-file' will pause for 1 second to
-;; tell you about it. Very annoying. This prevents that."
-;;   :around #'after-find-file
-;;   (letf! ((#'sit-for #'ignore))
-;;     (apply fn args)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;

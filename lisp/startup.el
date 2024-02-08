@@ -1,9 +1,18 @@
 ;;; startup.el --- Startup -*- lexical-binding: t; -*-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+;;
+;; Startup
+;;   - define hooks
+;;   - some reset...
+;;   - set default encoding
+;;   - optimise perf...
+;;   - add some hooks
+;;     - show startup time
+;;     - start server
+;;
 ;; See also early-init.el
-
+;;
 ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Startup-Summary.html#Startup-Summary
 ;;  1. ...
 ;;  2. set before-init-time
@@ -18,6 +27,8 @@
 ;; 28. run window-setup-hook
 ;; 30. If a daemon was requested, it calls server-start
 ;; 31. call emacs-session-restore
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -41,38 +52,22 @@
   :local 'permanent-local
   :group 'doom)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Show Startup time
-
-(defun _display-startup-time ()
-  (message "Emacs loaded in %s with %d garbage collections."
-           (format "%.2f seconds"
-                   (float-time
-                   (time-subtract after-init-time before-init-time)))
-           gcs-done))
-
-(add-hook 'emacs-startup-hook #'_display-startup-time)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; Compilation
+;; Some Emacs Reset... that could be moved elsewhere...
 
-;; Whether to report warnings and errors from asynchronous native compilation
+;; Native Compilation
+;;   Whether to report warnings and errors from asynchronous native compilation
 (setq native-comp-async-report-warnings-errors nil)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Emacs Reset
-
-;; Override Emacs function risky-local-variable-p
+;; Override Emacs function: risky-local-variable-p
 ;;   allow remembering risky variables
 ;;   for spam asking y/n for some files...
 (defun risky-local-variable-p (sym &optional _ignored) nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; Default Encoding
+;; Default Encoding to UTF-8
 
 (set-language-environment 'utf-8)
 ;; (set-language-environment "UTF-8")
@@ -158,7 +153,25 @@
       gcmh-high-cons-threshold (* 16 1024 1024))  ; 16mb
 (add-hook 'doom-first-buffer-hook #'gcmh-mode)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Add Hooks
+;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Show Startup time
+
+(defun _display-startup-time ()
+  (message "Emacs loaded in %s with %d garbage collections."
+           (format "%.2f seconds"
+                   (float-time
+                   (time-subtract after-init-time before-init-time)))
+           gcs-done))
+
+(add-hook 'emacs-startup-hook #'_display-startup-time)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Server for emacsclient
 
