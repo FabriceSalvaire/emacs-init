@@ -1,0 +1,272 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; [GNU Emacs Lisp Reference Manual](https://www.gnu.org/software/emacs/manual/html_node/elisp/index.html)
+;; [Elisp Reference Sheet - CheatSheet.pdf](http://alhassy.com/ElispCheatSheet/CheatSheet.pdf)
+
+;; Lisp... 
+(+ 1 (+ 2 3))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; nil <=> ()
+;; t means true
+;; [nil explained](https://www.gnu.org/software/emacs/manual/html_node/eintr/nil-explained.html)
+;; [nil and t](https://www.gnu.org/software/emacs/manual/html_node/elisp/nil-and-t.html)
+
+(booleanp object)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; symbol
+foo
+Foo
+foo/bar
+foo+
+:foo ; keyword symbol
+\(*\ 1\ 2\) ; means '(* 1 2)'
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; set value
+
+(setq foo 1)
+(setq foo 1.234) ; float as usual
+(setq foo ?a) ; character 'a'
+(setq foo 1
+      bar 2)
+
+;; foo -> (a b c)
+;; ` or (quote ...)  means don't evaluate
+(setq foo '(a b c))
+
+(setq counter 0)
+(setq counter (+ counter 1))
+
+;; Constant
+(defconst foo 1) ; informative and not enforced in Emacs !
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; String
+;; [Strings and Characters](https://www.gnu.org/software/emacs/manual/html_node/elisp/Strings-and-Characters.html)
+
+(setq foo "...")
+(concat foo "...")
+(substring "The quick brown fox jumped." 16 19)
+(string ?a) ; -> "a"
+(make-string 3 ?x) ; -> "xxx"
+
+;; Message
+(message "This message appears in the echo area!")
+(message "The name of this buffer is: %s." (buffer-name))
+(message "The value of fill-column is %d." fill-column)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; list car crd cons...
+;;
+
+(car '(a b c)) ; -> a
+(cdr '(a b c)) ; -> (b c)
+(cons 'a '(b c)) ; -> (a b c)
+(nthcdr 2 '(a b c d)) ; -> (c d)
+(nth 2 '(a b c d)) ; -> c
+
+(setq alist '(a b c))
+(setcar alist 'aa) ; -> aa and now alist = (aa b c)
+(setcdr alist 'bb) ; -> bb and now alist = (aa . bb)
+
+(list 'a 'b 'c) ; -> (a b c)
+(reverse alist)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Vector type
+;; [Vectors](https://www.gnu.org/software/emacs/manual/html_node/elisp/Vectors.html)
+
+[1 "two" (three)]
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Hash
+;; [Hash Tables](https://www.gnu.org/software/emacs/manual/html_node/elisp/Hash-Tables.html)
+
+(setq ahash (make-hash-table))
+(puthash 'key1 1 ahash)
+(gethash 'key1 ahash)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; helper functions
+
+(1+ 1) ; -> 2
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Function
+;; [Functions (GNU Emacs Lisp Reference Manual)](https://www.gnu.org/software/emacs/manual/html_node/elisp/Functions.html)
+
+(defun multiply-by-seven (number)
+  "Multiply NUMBER by seven."
+  (* 7 number))
+(multiply-by-seven 3)
+
+;; Interactive version.
+;; [Using Interactive (GNU Emacs Lisp Reference Manual)](https://www.gnu.org/software/emacs/manual/html_node/elisp/Using-Interactive.html)
+(defun multiply-by-seven (number)
+  "Multiply NUMBER by seven."
+  (interactive "p")
+  (message "The result is %d" (* 7 number)))
+
+;; let
+;; [Lexical & Dynamic Binding Differences (Programming in Emacs Lisp)](https://www.gnu.org/software/emacs/manual/html_node/eintr/Lexical-_0026-Dynamic-Binding-Differences.html)
+(let ((zebra "stripes")
+      (tiger "fierce")
+      (unitialised) ; -> nil
+      )
+  (message "One kind of animal has %s and another is %s."
+           zebra tiger))
+
+;; block of codes
+;; [Sequencing](https://www.gnu.org/software/emacs/manual/html_node/elisp/Sequencing.html)
+(progn
+  ()
+  ()
+  () ; return this
+  )
+(prog1 ; or prog2
+  () ; prog1 return this
+  () ; prog2 return this
+  ()
+  )
+
+;; [Conditionals](https://www.gnu.org/software/emacs/manual/html_node/elisp/Conditionals.html)
+;; if
+(if (> 5 4)                             ; if-part
+    (message "5 is greater than 4!"))   ; then-part
+
+(if (> 4 5)                               ; if-part
+    (message "4 falsely greater than 5!") ; then-part
+  (message "4 is not greater than 5!"))   ; else-part
+
+;; macro when / unless
+(when condition a b c)
+;; is
+(if condition (progn a b c) nil)
+(unless condition a b c)
+
+;; macro when-let if-let while-let
+(when-let ((result1 (do-computation))
+           (result2 (do-more result1)))
+  (do-something result2))
+;;
+(let ((result1 (do-computation)))
+  (when result1
+    (let ((result2 (do-more result1)))
+      (when result2
+        (do-something result2)))))
+
+;; Macro: if-let spec then-form else-forms...
+;; Evaluate each binding in spec in turn, like in let* (see Local Variables, stopping if a binding
+;; value is nil. If all are non-nil, return the value of then-form, otherwise the last form in
+;; else-forms.
+
+;; Macro: when-let spec then-forms...
+;; Like if-let, but without else-forms.
+
+;; Macro: while-let spec then-forms...
+;; Like when-let, but repeat until a binding in spec is nil. The return value is always nil.
+
+;; case
+;; [Conditionals](https://www.gnu.org/software/emacs/manual/html_node/elisp/Conditionals.html)
+(cond ((numberp x) x)
+      ((stringp x) x)
+      ((bufferp x)
+       (setq temporary-hack x) ; multiple body-forms
+       (buffer-name x))        ; in one clause
+      ((symbolp x) (symbol-value x)))
+
+;; pattern matching
+;; [Pattern-Matching Conditional](https://www.gnu.org/software/emacs/manual/html_node/elisp/Pattern_002dMatching-Conditional.html)
+;; pcase macro
+(pcase (get-return-code x)
+  ;; string
+  ((and (pred stringp) msg)
+   (message "%s" msg))
+
+  ;; symbol
+  ('success       (message "Done!"))
+  ('would-block   (message "Sorry, can't do it now"))
+  ('read-only     (message "The schmilblick is read-only"))
+  ('access-denied (message "You do not have the needed rights"))
+
+  ;; default
+  (code           (message "Unknown return code %S" code)))
+
+;; while
+(defun print-elements-of-list (list)
+  "Print each element of LIST on a line of its own."
+  (while list
+    (print (car list))
+    (setq list (cdr list))))
+
+(defun triangle (number)
+  "Return sum of numbers 1 through NUMBER inclusive."
+  (let ((total 0))
+    (while (> number 0)
+      (setq total (+ total number))
+      (setq number (1- number)))
+    total))
+
+;; dolist dotimes
+;; dolist works like a while loop that CDRs down a list
+;; (dolist (VAR LIST [RESULT]) BODY...)
+
+;; reverse a list
+(let (value) ; make sure list starts empty
+  (while list
+    (setq value (cons (car list) value)) ; -> (a . nil) -> (b . nil) -> (c . (b a))
+    (setq list (cdr list)))
+  value))
+
+(let (value)  ; make sure list starts empty
+(dolist (element list value)
+  (setq value (cons element value))))
+
+;; (dotimes (VAR COUNT [RESULT]) BODY...)
+(let (value)
+  (dotimes (number 3)
+    (setq value (cons number value)))
+  value)
+; -> (2 1 0)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; lambda
+(lambda (a b c) (+ a b c))
+(funcall (lambda (a b c) (+ a b c))
+         1 2 3)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; &optional &rest
+;; [Argument List](https://www.gnu.org/software/emacs/manual/html_node/elisp/Argument-List.html)
+(defun foo (a b &optional c d &rest e)
+  (message "%s %s [%s %s] * %s"  a b c d e))
+(foo 1 2)
+;; -> "1 2 [nil nil] * nil"
+(foo 1 2 3)
+;; -> "1 2 [3 nil] * nil"
+(foo 1 2 3 4)
+;; -> "1 2 [3 4] * nil"
+;(foo 1 2 2 3 4 5 6)
+;; -> "1 2 [2 3] * (4 5 6)"
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; generators
+;; [Generators](https://www.gnu.org/software/emacs/manual/html_node/elisp/Generators.html)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; [Macros](https://www.gnu.org/software/emacs/manual/html_node/elisp/Macros.html)
