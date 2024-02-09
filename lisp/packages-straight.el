@@ -138,6 +138,9 @@
 (defconst _packages_to_load
   '(
     gcmh
+    ;; //github.com/noctuid/general.el
+    ;; More convenient key definitions in emacs
+    general
     ))
 
 ;; Fixme: useless ?
