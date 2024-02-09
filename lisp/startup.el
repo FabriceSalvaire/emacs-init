@@ -175,19 +175,17 @@
 ;;
 ;; Server for emacsclient
 
-;; see doom-ui
-(defun _start-server ()
-  (when-let (name (getenv "EMACS_SERVER_NAME"))
-    (setq server-name name))
-  (unless (server-running-p)
-    (server-start)))
-
 (use-package server
   :if window-system
-  ;; :after-call doom-first-input-hook doom-first-file-hook focus-out-hook
-  :hook ((doom-first-input doom-first-file focus-out) . _start-server)
   :init
+  (defun _start-server ()
+    (when-let (name (getenv "EMACS_SERVER_NAME"))
+      (setq server-name name))
+    (unless (server-running-p)
+      (server-start)))
   ;; (add-hook 'after-init-hook #'_start-server)
+  ;; :after-call doom-first-input-hook doom-first-file-hook focus-out-hook
+  :hook ((doom-first-input doom-first-file focus-out) . #'_start-server)
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
