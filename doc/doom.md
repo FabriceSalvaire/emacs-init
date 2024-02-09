@@ -3,6 +3,10 @@
 - comment-region ?
 - disable evil
 
+# Customisation
+
+[zzamboni.org | My Doom Emacs configuration, with commentary](https://zzamboni.org/post/my-doom-emacs-configuration-with-commentary/)
+
 # Shortcuts
 
 ## Dired

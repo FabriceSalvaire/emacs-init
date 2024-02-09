@@ -1,14 +1,36 @@
 ---
 
+- clone older setup to compare...
+- click link ?
+- lisp color ()
+- [X] which-key tout n'est pas affiché
 - color paren match / cursor
 - M-x history
 - Alt-Space just-one-space / plasma wayland issue ???
 - buffer h split no so visible
 - use-package custom:
+- emacs daemon
 - [X] flyspell _ not readable
 - [X] bug; on peut copier indent char ou bien quand on commente la ligne
 
 ---
+For doom
+- C-x b switch buffer ??? 
+- C-x f ne garde pas en mémoire le dernier répertoire visité ?
+- dired / file buffer : a double q -> q exit dired
+
+---
+
+Why does Doom not use dash, f, s, or similar libraries?
+
+subr-x, seq, map, pcase, and cl-lib are all built into Emacs and, since Emacs 27.1 (the minimum version Doom supports), have made Dash and co (mostly) redundant. One of Doom’s goals is to prefer native functionality where possible or trivial. That said, many third-party packages depend on them, so chances are they are already installed on your system.
+
+---
+
+[mickeynp/ligature.el: Display typographical ligatures in Emacs](https://github.com/mickeynp/ligature.el)
+This package maps ordinary graphemes (characters) to fancy ligatures, if both your version of Emacs and the font supports it.
+[Unicode, Ligatures and Color Emoji - Mastering Emacs](https://www.masteringemacs.org/article/unicode-ligatures-color-emoji)
+
 
 - https://copr.fedorainfracloud.org/coprs/stevenlin/emacs-pgtk-nativecomp
 - [mina86/auto-dim-other-buffers.el: Visually makes non-selected windows less prominent](https://github.com/mina86/auto-dim-other-buffers.el)
@@ -107,10 +129,12 @@
 - [!] `./checkers/spell/config.el`
 - [!] `./checkers/syntax/config.el`
 - [!] `./completion/company/config.el`
+       [tumashu/company-posframe](https://github.com/tumashu/company-posframe)
 - [ ] `./completion/helm/config.el`
 - [ ] `./completion/ido/config.el`
 - [!] `./completion/ivy/config.el`
 - [ ] `./completion/vertico/config.el`
+       [minad/vertico: :dizzy: vertico.el - VERTical Interactive COmpletion](https://github.com/minad/vertico)
 
 - [!] `./config/default/config.el`
 
