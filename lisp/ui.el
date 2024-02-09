@@ -7,13 +7,16 @@
 ;;   - fullscreen window
 ;;   - enable/disable ...bar
 ;;   - theme
+;;   - icons
 ;;   - mouse
 ;;   - cursor
 ;;   - windows/frame
 ;;   - scrolling
+;;   - horizontal line
 ;;   - fringes
 ;;   - minibuffer
 ;;   - modeline
+;;   - line / column mode
 ;;
 ;; See Doom doom-ui.el
 ;;          doom-editor.py
@@ -77,6 +80,25 @@
 
 ;; Set the line spacing
 (setq-default line-spacing 3) ; px
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Icons
+;;   https://github.com/rainstormstudio/nerd-icons.el
+;;   Nerd-icons.el is a library for easily using Nerd Font icons inside Emacs, an alternative to all-the-icons.
+;;   https://github.com/rainstormstudio/nerd-icons.el
+
+(use-package nerd-icons
+  :commands (nerd-icons-octicon
+             nerd-icons-faicon
+             nerd-icons-flicon
+             nerd-icons-wicon
+             nerd-icons-mdicon
+             nerd-icons-codicon
+             nerd-icons-devicon
+             nerd-icons-ipsicon
+             nerd-icons-pomicon
+             nerd-icons-powerline))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -157,6 +179,42 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
+;; Highlights the current line
+
+(use-package hl-line
+  :hook (doom-first-buffer . global-hl-line-mode)
+  :init
+  (defvar global-hl-line-modes
+    '(prog-mode
+      text-mode
+      conf-mode
+      special-mode
+      org-agenda-mode
+      dired-mode
+      )
+    "What modes to enable `hl-line-mode' in.")
+  :config
+  ;; HACK I reimplement `global-hl-line-mode' so we can white/blacklist modes in
+  ;;      `global-hl-line-modes' _and_ so we can use `global-hl-line-mode',
+  ;;      which users expect to control hl-line in Emacs.
+  ;;
+  ;; (define-globalized-minor-mode GLOBAL-MODE MODE TURN-ON [KEY VALUE]... BODY...)
+  ;;   Make a global mode GLOBAL-MODE corresponding to buffer-local minor MODE.
+  ;;   TURN-ON is a function that will be called with no args in every buffer and that should try
+  ;;   to turn MODE on if applicable for that buffer.
+  (define-globalized-minor-mode global-hl-line-mode hl-line-mode
+    (lambda ()
+      (and (cond (hl-line-mode nil)
+                 ((null global-hl-line-modes) nil)
+                 ((eq global-hl-line-modes t))
+                 ((eq (car global-hl-line-modes) 'not)
+                  (not (derived-mode-p global-hl-line-modes)))
+                 ((apply #'derived-mode-p global-hl-line-modes)))
+           (hl-line-mode +1))))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;; Fringes
 
 ;; Reduce the clutter in the fringes; we'd like to reserve that space for more
@@ -227,6 +285,14 @@
   :init
   (powerline-default-theme)
   )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Line & Column Mode
+;;   Show line/column in the modeline
+
+(setq column-number-mode t)
+;; (setq line-number-mode t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

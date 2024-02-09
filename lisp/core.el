@@ -77,6 +77,122 @@
 ;;   (letf! ((#'sit-for #'ignore))
 ;;     (apply fn args)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Auto Revert
+;;   https://www.gnu.org/software/emacs/manual/html_node/emacs/Auto-Revert.html
+
+(use-package autorevert
+  ;; revert buffers when their files/state have changed
+  :hook (focus-in . doom-auto-revert-buffers-h)
+  :hook (after-save . doom-auto-revert-buffers-h)
+  ;; Fixme: doom-switch-...-hook
+  ;; :hook (doom-switch-buffer . doom-auto-revert-buffer-h)
+  ;; :hook (doom-switch-window . doom-auto-revert-buffer-h)
+  :config
+  (setq auto-revert-verbose t ; let us know when it happens
+        auto-revert-use-notify nil
+        auto-revert-stop-on-user-input nil
+        ;; Only prompts for confirmation when buffer is unsaved.
+        revert-without-query (list "."))
+
+  ;; `auto-revert-mode' and `global-auto-revert-mode' would, normally, abuse the
+  ;; heck out of file watchers _or_ aggressively poll your buffer list every X
+  ;; seconds. Too many watchers can grind Emacs to a halt if you preform
+  ;; expensive or batch processes on files outside of Emacs (e.g. their mtime
+  ;; changes), and polling your buffer list is terribly inefficient as your
+  ;; buffer list grows into the hundreds.
+  ;;
+  ;; Doom does this lazily instead. i.e. All visible buffers are reverted
+  ;; immediately when a) a file is saved or b) Emacs is refocused (after using
+  ;; another app). Meanwhile, buried buffers are reverted only when they are
+  ;; switched to. This way, Emacs only ever has to operate on, at minimum, a
+  ;; single buffer and, at maximum, ~10 buffers (after all, when do you ever
+  ;; have more than 10 windows in any single frame?).
+  (defun doom-auto-revert-buffer-h ()
+    "Auto revert current buffer, if necessary."
+    (unless (or auto-revert-mode (active-minibuffer-window))
+      (let ((auto-revert-mode t))
+        (auto-revert-handler))))
+
+  (defun doom-auto-revert-buffers-h ()
+    "Auto revert stale buffers in visible windows, if necessary."
+    (dolist (buf (doom-visible-buffers))
+      (with-current-buffer buf
+        (doom-auto-revert-buffer-h)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; savehist
+;;   https://www.emacswiki.org/emacs/SaveHist
+
+(use-package savehist
+  ;; persist variables across sessions
+  ;;D;; :defer-incrementally custom
+  :hook (doom-first-input . savehist-mode)
+
+  ;; :custom
+  ;;D;; (savehist-file (concat doom-cache-dir "savehist"))
+  :config
+  (setq savehist-save-minibuffer-history t
+        savehist-autosave-interval nil     ; save on kill only
+        savehist-additional-variables
+        '(kill-ring                        ; persist clipboard
+          register-alist                   ; persist macros
+          mark-ring global-mark-ring       ; persist marks
+          search-ring regexp-search-ring)) ; persist searches
+
+  (add-hook! 'savehist-save-hook
+    (defun doom-savehist-unpropertize-variables-h ()
+      "Remove text properties from `kill-ring' to reduce savehist cache size."
+      (setq kill-ring
+            (mapcar #'substring-no-properties
+                    (cl-remove-if-not #'stringp kill-ring))
+            register-alist
+            (cl-loop for (reg . item) in register-alist
+                     if (stringp item)
+                     collect (cons reg (substring-no-properties item))
+                     else collect (cons reg item))))
+
+    (defun doom-savehist-remove-unprintable-registers-h ()
+      "Remove unwriteable registers (e.g. containing window configurations).
+Otherwise, `savehist' would discard `register-alist' entirely if we don't omit
+the unwritable tidbits."
+      ;; Save new value in the temp buffer savehist is running
+      ;; `savehist-save-hook' in. We don't want to actually remove the
+      ;; unserializable registers in the current session!
+      (setq-local register-alist
+                  (cl-remove-if-not #'savehist-printable register-alist))))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; saveplace — persistent point location in buffers
+;;   https://www.emacswiki.org/emacs/SaveHist
+
+(use-package saveplace
+  :hook (doom-first-file . save-place-mode)
+
+  ;; :custom
+  ;;D;; (save-place-file (concat doom-cache-dir "saveplace"))
+  :config
+  (defadvice! doom--recenter-on-load-saveplace-a (&rest _)
+    "Recenter on cursor when loading a saved place."
+    :after-while #'save-place-find-file-hook
+    (if buffer-file-name (ignore-errors (recenter))))
+
+  (defadvice! doom--inhibit-saveplace-in-long-files-a (fn &rest args)
+    :around #'save-place-to-alist
+    (unless doom-large-file-p
+      (apply fn args)))
+
+  (defadvice! doom--dont-prettify-saveplace-cache-a (fn)
+    "`save-place-alist-to-file' uses `pp' to prettify the contents of its cache.
+`pp' can be expensive for longer lists, and there's no reason to prettify cache
+files, so this replace calls to `pp' with the much faster `prin1'."
+    :around #'save-place-alist-to-file
+    (letf! ((#'pp #'prin1)) (funcall fn)))
+  )
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -240,3 +356,66 @@ or file path may exist now."
              (eq buffer (window-buffer (selected-window))) ; only visible buffers
              (set-auto-mode)
              (not (eq major-mode 'fundamental-mode)))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Helpfull
+;;   https://github.com/Wilfred/helpful
+
+(use-package helpful
+  :commands helpful--read-symbol
+  :hook (helpful-mode . visual-line-mode)
+
+  :init
+  ;; Make `apropos' et co search more extensively. They're more useful this way.
+  (setq apropos-do-all t)
+
+  ;; Fixme: don't work
+  (global-set-key [remap describe-command]  #'helpful-command)
+  (global-set-key [remap describe-function] #'helpful-callable) ; C-h f / F1 f
+  (global-set-key [remap describe-key]      #'helpful-key)
+  (global-set-key [remap describe-symbol]   #'helpful-symbol)
+  (global-set-key [remap describe-variable] #'helpful-variable)
+
+  (defun doom-use-helpful-a (fn &rest args)
+    "Force FN to use helpful instead of the old describe-* commands."
+    (letf! ((#'describe-function #'helpful-function)
+            (#'describe-variable #'helpful-variable))
+      (apply fn args)))
+
+  (after! apropos
+    ;; patch apropos buttons to call helpful instead of help
+    (dolist (fun-bt '(apropos-function apropos-macro apropos-command))
+      (button-type-put
+       fun-bt 'action
+       (lambda (button)
+         (helpful-callable (button-get button 'apropos-symbol)))))
+    (dolist (var-bt '(apropos-variable apropos-user-option))
+      (button-type-put
+       var-bt 'action
+       (lambda (button)
+         (helpful-variable (button-get button 'apropos-symbol))))))
+
+  (when (> emacs-major-version 28)
+    ;; REVIEW This should be reported upstream to Emacs.
+    (defadvice! doom--find-function-search-for-symbol-save-excursion-a (fn &rest args)
+      "Suppress cursor movement by `find-function-search-for-symbol'.
+
+Addresses an unwanted side-effect in `find-function-search-for-symbol' on Emacs
+29 where the cursor is moved to a variable's definition if it's defined in the
+current buffer."
+      :around #'find-function-search-for-symbol
+      (let (buf pos)
+        (letf! (defun find-library-name (library)
+                 (let ((filename (funcall find-library-name library)))
+                   (with-current-buffer (find-file-noselect filename)
+                     (setq buf (current-buffer)
+                           pos (point)))
+                   filename))
+          (prog1 (apply fn args)
+            (when (buffer-live-p buf)
+              (with-current-buffer buf (goto-char pos))))))))
+
+  :config
+  (setq helpful-set-variable-function #'setq!)
+  )
