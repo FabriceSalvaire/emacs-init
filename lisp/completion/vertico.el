@@ -13,11 +13,14 @@ overrides `completion-styles' during company completion sessions.")
 (defvar +vertico-consult-dir-container-args nil
   "Command to call for listing container hosts.")
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Packages
+;; vertico — VERTical Interactive COmpletion
+;;   https://github.com/minad/vertico
 
-(use-package! vertico
+(use-package vertico
   :hook (doom-first-input . vertico-mode)
+
   :init
   (defadvice! +vertico-crm-indicator-a (args)
     :filter-args #'completing-read-multiple
@@ -27,6 +30,7 @@ overrides `completion-styles' during company completion sessions.")
                    crm-separator)
                   (car args))
           (cdr args)))
+
   :config
   (setq vertico-resize nil
         vertico-count 17
@@ -38,16 +42,16 @@ overrides `completion-styles' during company completion sessions.")
                            #'completion--in-region)
                          args)))
 
-  (map! :when (modulep! :editor evil +everywhere)
-        :map vertico-map
-        "M-RET" #'vertico-exit-input
-        "C-SPC" #'+vertico/embark-preview
-        "C-j"   #'vertico-next
-        "C-M-j" #'vertico-next-group
-        "C-k"   #'vertico-previous
-        "C-M-k" #'vertico-previous-group
-        "C-h" (cmds! (eq 'file (vertico--metadata-get 'category)) #'vertico-directory-up)
-        "C-l" (cmds! (eq 'file (vertico--metadata-get 'category)) #'+vertico/enter-or-preview))
+  ;; (map! :when (modulep! :editor evil +everywhere)
+  ;;       :map vertico-map
+  ;;       "M-RET" #'vertico-exit-input
+  ;;       "C-SPC" #'+vertico/embark-preview
+  ;;       "C-j"   #'vertico-next
+  ;;       "C-M-j" #'vertico-next-group
+  ;;       "C-k"   #'vertico-previous
+  ;;       "C-M-k" #'vertico-previous-group
+  ;;       "C-h" (cmds! (eq 'file (vertico--metadata-get 'category)) #'vertico-directory-up)
+  ;;       "C-l" (cmds! (eq 'file (vertico--metadata-get 'category)) #'+vertico/enter-or-preview))
 
   ;; Cleans up path when moving directories with shadowed paths syntax, e.g.
   ;; cleans ~/foo/bar/// to /, and ~/foo/bar/~/ to ~/.
@@ -60,11 +64,17 @@ overrides `completion-styles' during company completion sessions.")
   (defadvice! +vertico--suppress-completion-help-a (fn &rest args)
     :around #'ffap-menu-ask
     (letf! ((#'minibuffer-completion-help #'ignore))
-      (apply fn args))))
+      (apply fn args)))
+  )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; orderless — Emacs completion style that matches multiple regexps in any order
+;;   https://github.com/oantolin/orderless
 
-(use-package! orderless
+(use-package orderless
   :after-call doom-first-input-hook
+
   :config
   (defadvice! +vertico--company-capf--candidates-a (fn &rest args)
     "Highlight company matches correctly, and try default completion styles before
@@ -109,10 +119,15 @@ orderless."
         orderless-style-dispatchers '(+vertico-orderless-dispatch)
         orderless-component-separator "[ &]")
   ;; ...otherwise find-file gets different highlighting than other commands
-  (set-face-attribute 'completions-first-difference nil :inherit nil))
+  (set-face-attribute 'completions-first-difference nil :inherit nil)
+  )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; consult - Consulting completing-read
+;;   https://github.com/minad/consult
 
-(use-package! consult
+(use-package consult
   :defer t
   :preface
   (define-key!
@@ -132,6 +147,7 @@ orderless."
     [remap switch-to-buffer-other-frame]  #'consult-buffer-other-frame
     [remap yank-pop]                      #'consult-yank-pop
     [remap persp-switch-to-buffer]        #'+vertico/switch-workspace-buffer)
+
   :config
   (defadvice! +vertico--consult-recentf-a (&rest _args)
     "`consult-recent-file' needs to have `recentf-mode' on to work correctly.
@@ -192,14 +208,20 @@ orderless."
                          (lambda (x)
                            (eq (buffer-local-value 'major-mode x) 'org-mode))
                          (buffer-list)))))))
-    (add-to-list 'consult-buffer-sources '+vertico--consult-org-source 'append)))
+    (add-to-list 'consult-buffer-sources '+vertico--consult-org-source 'append))
+  )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; consult-dir — Insert paths into the minibuffer prompt in Emacs
+;;   https://github.com/karthink/consult-dir
 
-(use-package! consult-dir
+(use-package consult-dir
   :bind (([remap list-directory] . consult-dir)
          :map vertico-map
          ("C-x C-d" . consult-dir)
          ("C-x C-j" . consult-dir-jump-file))
+
   :config
   (when (modulep! :tools docker)
     ;; TODO Replace with `tramp-container--completion-function' when we drop support for <29
@@ -245,15 +267,23 @@ orderless."
     (add-to-list 'consult-dir-sources '+vertico--consult-dir-source-tramp-docker t))
 
   (add-to-list 'consult-dir-sources 'consult-dir--source-tramp-ssh t)
-  (add-to-list 'consult-dir-sources 'consult-dir--source-tramp-local t))
+  (add-to-list 'consult-dir-sources 'consult-dir--source-tramp-local t)
+  )
 
-(use-package! consult-flycheck
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package consult-flycheck
   :when (and (modulep! :checkers syntax)
              (not (modulep! :checkers syntax +flymake)))
-  :after (consult flycheck))
+  :after (consult flycheck)
+  )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; embark — Emacs Mini-Buffer Actions Rooted in Keymaps
+;;   https://github.com/oantolin/embark
 
-(use-package! embark
+(use-package embark
   :defer t
   :init
   (setq which-key-use-C-h-commands nil
@@ -307,8 +337,12 @@ orderless."
          (:when (modulep! :ui workspaces)
            :desc "Open in new workspace"       "TAB" #'+vertico/embark-open-in-new-workspace))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; marginalia — Marginalia in the minibuffer
+;;   https://github.com/minad/marginalia
 
-(use-package! marginalia
+(use-package marginalia
   :hook (doom-first-input . marginalia-mode)
   :init
   (map! :map minibuffer-local-map
@@ -328,16 +362,28 @@ orderless."
             '(projectile-find-file . project-file)
             '(projectile-recentf . project-file)
             '(projectile-switch-to-buffer . buffer)
-            '(projectile-switch-project . project-file)))
+            '(projectile-switch-project . project-file))
+  )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; wgrep — Writable grep buffer and apply the changes to files
+;;   https://github.com/mhayashi1120/Emacs-wgrep
 
-(use-package! wgrep
+(use-package wgrep
   :commands wgrep-change-to-wgrep-mode
-  :config (setq wgrep-auto-save-buffer t))
+  :config (setq wgrep-auto-save-buffer t)
+  )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; vertico-posframe
+;;   https://github.com/tumashu/vertico-posframe
 
-(use-package! vertico-posframe
-  :when (modulep! +childframe)
+(use-package vertico-posframe
+  :disabled
+  ;; :when (modulep! +childframe)
   :hook (vertico-mode . vertico-posframe-mode)
   :config
-  (add-hook 'doom-after-reload-hook #'posframe-delete-all))
+  (add-hook 'doom-after-reload-hook #'posframe-delete-all)
+  )
