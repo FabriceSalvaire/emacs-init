@@ -73,7 +73,8 @@ overrides `completion-styles' during company completion sessions.")
 ;;   https://github.com/oantolin/orderless
 
 (use-package orderless
-  :after-call doom-first-input-hook
+  ;; Fixme: doom
+  ;; :after-call doom-first-input-hook
 
   :config
   (defadvice! +vertico--company-capf--candidates-a (fn &rest args)
@@ -162,14 +163,15 @@ orderless."
         consult-async-refresh-delay  0.15
         consult-async-input-throttle 0.2
         consult-async-input-debounce 0.1)
-  (if doom-projectile-fd-binary
-      (setq consult-fd-args
-            '(doom-projectile-fd-binary
-              "--color=never"
-              ;; https://github.com/sharkdp/fd/issues/839
-              "--full-path --absolute-path"
-              "--hidden --exclude .git"
-              (if (featurep :system 'windows) "--path-separator=/"))))
+  ;; Fixme:
+  ;; (if doom-projectile-fd-binary
+  ;;     (setq consult-fd-args
+  ;;           '(doom-projectile-fd-binary
+  ;;             "--color=never"
+  ;;             ;; https://github.com/sharkdp/fd/issues/839
+  ;;             "--full-path --absolute-path"
+  ;;             "--hidden --exclude .git"
+  ;;             (if (featurep :system 'windows) "--path-separator=/"))))
 
   (consult-customize
    consult-ripgrep consult-git-grep consult-grep
@@ -184,31 +186,31 @@ orderless."
   (consult-customize
    consult-theme
    :preview-key (list "C-SPC" :debounce 0.5 'any))
-  (when (modulep! :lang org)
-    (defvar +vertico--consult-org-source
-      (list :name     "Org Buffer"
-            :category 'buffer
-            :narrow   ?o
-            :hidden   t
-            :face     'consult-buffer
-            :history  'buffer-name-history
-            :state    #'consult--buffer-state
-            :new
-            (lambda (name)
-              (with-current-buffer (get-buffer-create name)
-                (insert "#+title: " name "\n\n")
-                (org-mode)
-                (consult--buffer-action (current-buffer))))
-            :items
-            (lambda ()
-              (mapcar #'buffer-name
-                      (if (featurep 'org)
-                          (org-buffer-list)
-                        (seq-filter
-                         (lambda (x)
-                           (eq (buffer-local-value 'major-mode x) 'org-mode))
-                         (buffer-list)))))))
-    (add-to-list 'consult-buffer-sources '+vertico--consult-org-source 'append))
+  ;; (when (modulep! :lang org)
+  ;;   (defvar +vertico--consult-org-source
+  ;;     (list :name     "Org Buffer"
+  ;;           :category 'buffer
+  ;;           :narrow   ?o
+  ;;           :hidden   t
+  ;;           :face     'consult-buffer
+  ;;           :history  'buffer-name-history
+  ;;           :state    #'consult--buffer-state
+  ;;           :new
+  ;;           (lambda (name)
+  ;;             (with-current-buffer (get-buffer-create name)
+  ;;               (insert "#+title: " name "\n\n")
+  ;;               (org-mode)
+  ;;               (consult--buffer-action (current-buffer))))
+  ;;           :items
+  ;;           (lambda ()
+  ;;             (mapcar #'buffer-name
+  ;;                     (if (featurep 'org)
+  ;;                         (org-buffer-list)
+  ;;                       (seq-filter
+  ;;                        (lambda (x)
+  ;;                          (eq (buffer-local-value 'major-mode x) 'org-mode))
+  ;;                        (buffer-list)))))))
+  ;;   (add-to-list 'consult-buffer-sources '+vertico--consult-org-source 'append))
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -223,58 +225,61 @@ orderless."
          ("C-x C-j" . consult-dir-jump-file))
 
   :config
-  (when (modulep! :tools docker)
-    ;; TODO Replace with `tramp-container--completion-function' when we drop support for <29
-    (defun +vertico--consult-dir-container-hosts (host)
-      "Get a list of hosts from HOST."
-      (cl-loop for line in (cdr
-                            (ignore-errors
-                              (apply #'process-lines +vertico-consult-dir-container-executable
-                                     (append +vertico-consult-dir-container-args (list "ps")))))
-               for cand = (split-string line "[[:space:]]+" t)
-               collect (let ((user (unless (string-empty-p (car cand))
-                                     (concat (car cand) "@")))
-                             (hostname (car (last cand))))
-                         (format "/%s:%s%s:/" host user hostname))))
+  ;; (when (modulep! :tools docker)
+  ;;   ;; TODO Replace with `tramp-container--completion-function' when we drop support for <29
+  ;;   (defun +vertico--consult-dir-container-hosts (host)
+  ;;     "Get a list of hosts from HOST."
+  ;;     (cl-loop for line in (cdr
+  ;;                           (ignore-errors
+  ;;                             (apply #'process-lines +vertico-consult-dir-container-executable
+  ;;                                    (append +vertico-consult-dir-container-args (list "ps")))))
+  ;;              for cand = (split-string line "[[:space:]]+" t)
+  ;;              collect (let ((user (unless (string-empty-p (car cand))
+  ;;                                    (concat (car cand) "@")))
+  ;;                            (hostname (car (last cand))))
+  ;;                        (format "/%s:%s%s:/" host user hostname))))
 
-    (defun +vertico--consult-dir-podman-hosts ()
-      (let ((+vertico-consult-dir-container-executable "podman"))
-        (+vertico--consult-dir-container-hosts "podman")))
+    ;; (defun +vertico--consult-dir-podman-hosts ()
+    ;;   (let ((+vertico-consult-dir-container-executable "podman"))
+    ;;     (+vertico--consult-dir-container-hosts "podman")))
 
-    (defun +vertico--consult-dir-docker-hosts ()
-      (let ((+vertico-consult-dir-container-executable "docker"))
-        (+vertico--consult-dir-container-hosts "docker")))
+    ;; (defun +vertico--consult-dir-docker-hosts ()
+    ;;   (let ((+vertico-consult-dir-container-executable "docker"))
+    ;;     (+vertico--consult-dir-container-hosts "docker")))
 
-    (defvar +vertico--consult-dir-source-tramp-podman
-      `(:name     "Podman"
-        :narrow   ?p
-        :category file
-        :face     consult-file
-        :history  file-name-history
-        :items    ,#'+vertico--consult-dir-podman-hosts)
-      "Podman candiadate source for `consult-dir'.")
+    ;; (defvar +vertico--consult-dir-source-tramp-podman
+    ;;   `(:name     "Podman"
+    ;;     :narrow   ?p
+    ;;     :category file
+    ;;     :face     consult-file
+    ;;     :history  file-name-history
+    ;;     :items    ,#'+vertico--consult-dir-podman-hosts)
+    ;;   "Podman candiadate source for `consult-dir'.")
 
-    (defvar +vertico--consult-dir-source-tramp-docker
-      `(:name     "Docker"
-        :narrow   ?d
-        :category file
-        :face     consult-file
-        :history  file-name-history
-        :items    ,#'+vertico--consult-dir-docker-hosts)
-      "Docker candiadate source for `consult-dir'.")
+    ;; (defvar +vertico--consult-dir-source-tramp-docker
+    ;;   `(:name     "Docker"
+    ;;     :narrow   ?d
+    ;;     :category file
+    ;;     :face     consult-file
+    ;;     :history  file-name-history
+    ;;     :items    ,#'+vertico--consult-dir-docker-hosts)
+    ;;   "Docker candiadate source for `consult-dir'.")
 
-    (add-to-list 'consult-dir-sources '+vertico--consult-dir-source-tramp-podman t)
-    (add-to-list 'consult-dir-sources '+vertico--consult-dir-source-tramp-docker t))
+    ;; (add-to-list 'consult-dir-sources '+vertico--consult-dir-source-tramp-podman t)
+    ;; (add-to-list 'consult-dir-sources '+vertico--consult-dir-source-tramp-docker t))
 
   (add-to-list 'consult-dir-sources 'consult-dir--source-tramp-ssh t)
   (add-to-list 'consult-dir-sources 'consult-dir--source-tramp-local t)
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; consult-flycheck — Consult integration for Flycheck
+;;   https://github.com/minad/consult-flycheck
 
 (use-package consult-flycheck
-  :when (and (modulep! :checkers syntax)
-             (not (modulep! :checkers syntax +flymake)))
+  ;; :when (and (modulep! :checkers syntax)
+  ;;            (not (modulep! :checkers syntax +flymake)))
   :after (consult flycheck)
   )
 
@@ -295,8 +300,9 @@ orderless."
          "C-c C-;"           #'embark-export
          "C-c C-l"           #'embark-collect
          :desc "Export to writable buffer" "C-c C-e" #'+vertico/embark-export-write)
-        (:leader
-         :desc "Actions" "a" #'embark-act)) ; to be moved to :config default if accepted
+        ;; (:leader
+        ;;  :desc "Actions" "a" #'embark-act)) ; to be moved to :config default if accepted
+        )
   :config
   (require 'consult)
 
@@ -332,10 +338,13 @@ orderless."
   (setf (alist-get 'package embark-keymap-alist) #'+vertico/embark-doom-package-map)
   (map! (:map embark-file-map
          :desc "Open target with sudo"        "s"   #'doom/sudo-find-file
-         (:when (modulep! :tools magit)
-           :desc "Open magit-status of target" "g"   #'+vertico/embark-magit-status)
-         (:when (modulep! :ui workspaces)
-           :desc "Open in new workspace"       "TAB" #'+vertico/embark-open-in-new-workspace))))
+         ;; Fixme:
+         ;; (:when (modulep! :tools magit)
+         ;; :desc "Open magit-status of target" "g"   #'+vertico/embark-magit-status)
+         ;; (:when (modulep! :ui workspaces)
+        ;;        :desc "Open in new workspace"       "TAB" #'+vertico/embark-open-in-new-workspace)
+        ))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -348,8 +357,9 @@ orderless."
   (map! :map minibuffer-local-map
         :desc "Cycle marginalia views" "M-A" #'marginalia-cycle)
   :config
-  (when (modulep! +icons)
-    (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
+  ;; (when (modulep! +icons)
+  ;;   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup)
+  ;; )
   (advice-add #'marginalia--project-root :override #'doom-project-root)
   (pushnew! marginalia-command-categories
             '(+default/find-file-under-here . file)

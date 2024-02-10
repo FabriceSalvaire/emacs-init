@@ -1,13 +1,26 @@
 ;;; completion/company/config.el -*- lexical-binding: t; -*-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Company — Modular in-buffer completion framework
+;;   https://company-mode.github.io
+;;   https://github.com/company-mode/company-mode
+;;
+;;   Company is a text completion framework.
+;;   It uses pluggable back-ends and front-ends to retrieve and display completion candidates.
+;;   It comes with several back-ends such as Elisp, Clang, Semantic, Ispell, CMake, BBDB, Yasnippet,
+;;   Dabbrev, Etags, Gtags, Files, Keywords and a few others.
+;;   The CAPF back-end provides a bridge to the standard completion-at-point-functions facility, and
+;;   thus works with any major mode that defines a proper completion function.
 
 (use-package company
-  :commands (company-complete-common
-             company-complete-common-or-cycle
-             company-manual-begin
-             company-grab-line)
+  :commands
+  company-complete-common
+  company-complete-common-or-cycle
+  company-manual-begin
+  company-grab-line
   :hook (doom-first-input . global-company-mode)
+
   :init
   (setq company-minimum-prefix-length 2
         company-tooltip-limit 14
@@ -40,31 +53,33 @@
         ;; Make `company-dabbrev' fully case-sensitive, to improve UX with
         ;; domain-specific words with particular casing.
         company-dabbrev-ignore-case nil
-        company-dabbrev-downcase nil)
+        company-dabbrev-downcase nil
+        )
 
-  (when (modulep! +tng)
-    (add-hook 'global-company-mode-hook #'company-tng-mode))
+  ;; company-mode configuration for single-button interaction
+  ;; (when (modulep! +tng)
+  ;;   (add-hook 'global-company-mode-hook #'company-tng-mode))
 
   :config
-  (when (modulep! :editor evil)
-    (add-hook 'company-mode-hook #'evil-normalize-keymaps)
-    (add-hook! 'evil-normal-state-entry-hook
-      (defun +company-abort-h ()
-        ;; HACK `company-abort' doesn't no-op if company isn't active; causing
-        ;;      unwanted side-effects, like the suppression of messages in the
-        ;;      echo-area.
-        ;; REVIEW Revisit this to refactor; shouldn't be necessary!
-        (when company-candidates
-          (company-abort))))
-    ;; Allow users to switch between backends on the fly. E.g. C-x C-s followed
-    ;; by C-x C-n, will switch from `company-yasnippet' to
-    ;; `company-dabbrev-code'.
-    (defadvice! +company--abort-previous-a (&rest _)
-      :before #'company-begin-backend
-      (company-abort)))
+  ;; (when (modulep! :editor evil)
+  ;;   (add-hook 'company-mode-hook #'evil-normalize-keymaps)
+  ;;   (add-hook! 'evil-normal-state-entry-hook
+  ;;     (defun +company-abort-h ()
+  ;;       ;; HACK `company-abort' doesn't no-op if company isn't active; causing
+  ;;       ;;      unwanted side-effects, like the suppression of messages in the
+  ;;       ;;      echo-area.
+  ;;       ;; REVIEW Revisit this to refactor; shouldn't be necessary!
+  ;;       (when company-candidates
+  ;;         (company-abort))))
+  ;;   ;; Allow users to switch between backends on the fly. E.g. C-x C-s followed
+  ;;   ;; by C-x C-n, will switch from `company-yasnippet' to
+  ;;   ;; `company-dabbrev-code'.
+  ;;   (defadvice! +company--abort-previous-a (&rest _)
+  ;;     :before #'company-begin-backend
+  ;;     (company-abort)))
 
-  (add-hook 'after-change-major-mode-hook #'+company-init-backends-h 'append)
-
+  ;; Fixme:
+  ;; (add-hook 'after-change-major-mode-hook #'+company-init-backends-h 'append)
 
   ;; NOTE Fix #1335: ensure `company-emulation-alist' is the first item of
   ;;      `emulation-mode-map-alists', thus higher priority than keymaps of
@@ -73,10 +88,13 @@
   ;;      cause problems, because when completion is activated, the value of
   ;;      `company-emulation-alist' is ((t . company-my-keymap)), when
   ;;      completion is not activated, the value is ((t . nil)).
-  (add-hook! 'evil-local-mode-hook
-    (when (memq 'company-emulation-alist emulation-mode-map-alists)
-      (company-ensure-emulation-alist)))
+  ;; (add-hook! 'evil-local-mode-hook
+  ;;   (when (memq 'company-emulation-alist emulation-mode-map-alists)
+  ;;     (company-ensure-emulation-alist)))
 
+  ;; eldoc-mode is a minor mode which shows you, in the echo area,
+  ;; the argument list of the function call you are currently writing.
+  ;;   https://www.emacswiki.org/emacs/ElDoc
   ;; Fix #4355: allow eldoc to trigger after completions.
   (after! eldoc
     (eldoc-add-command 'company-complete-selection
@@ -87,14 +105,22 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(after company-files
+(after! company-files
   ;; Fix `company-files' completion for org file:* links
   (add-to-list 'company-files--regexps "file:\\(\\(?:\\.\\{1,2\\}/\\|~/\\|/\\)[^\]\n]*\\)"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; company-box — company front-end with icons
+;;  https://github.com/sebastiencs/company-box
+;;  - Differents colors for differents backends
+;;  - Icons associated to functions/variables/.. and their backends
+;;  - Display candidate's documentation (support quickhelp-string)
+;;  - Not limited by the current window size, buffer's text properties
 
 (use-package company-box
-  :when (modulep! +childframe)
+  :disabled
+  ;; :when (modulep! +childframe)
   :hook (company-mode . company-box-mode)
   :config
   (setq company-box-show-single-candidate t
@@ -176,11 +202,19 @@
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; company-dict
+;;   A port of ac-source-dictionary to company-mode, plus annotation and documentation support.
+;;   https://github.com/hlissner/emacs-company-dict
+;;   This simple company backend emulates ac-source-dictionary and vim's dictionary omnicompletion
+;;   (C-x C-k). It's much like company-keywords, but with lazy-loaded dictionary files, and support
+;;   for annotations and documentation.
 
 (use-package company-dict
   :defer t
   :config
-  (setq company-dict-dir (expand-file-name "dicts" doom-user-dir))
+  ;; (setq company-dict-dir (expand-file-name "dicts" doom-user-dir))
+  ;; Fixme: doom
   (add-hook! 'doom-project-hook
     (defun +company-enable-project-dicts-h (mode &rest _)
       "Enable per-project dictionaries."
