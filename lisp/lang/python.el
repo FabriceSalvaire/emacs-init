@@ -32,12 +32,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package emacs
-  :bind (:map python-mode-map
-              ("C-<delete>" . py-kill-word)
-              ("C-<backspace>" . py-backward-kill-word)
-         :map python-ts-mode-map
-              ("C-<delete>" . py-kill-word)
-              ("C-<backspace>" . py-backward-kill-word))
+  ;; :bind (:map python-mode-map
+  ;;             ("C-<delete>" . py-kill-word)
+  ;;             ("C-<backspace>" . py-backward-kill-word)
+  ;;        :map python-ts-mode-map
+  ;;             ("C-<delete>" . py-kill-word)
+  ;;             ("C-<backspace>" . py-backward-kill-word))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Company JEDI
