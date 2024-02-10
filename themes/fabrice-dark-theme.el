@@ -1,6 +1,10 @@
 (deftheme fabrice-dark
   "Created 2024-02-06.")
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Doom is set to doom-one
+
 ;; Gray Scale
 ;; for i in range(1, 17):
 ;;     _ = 256 // i
@@ -31,6 +35,8 @@
 ;; (require 'color)
 ;; (color-darken-name "#ffffff" 40)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (custom-theme-set-faces
  'fabrice-dark
 
@@ -59,11 +65,11 @@
  '(cursor ((t (:background "#51afef"))))
  '(hl-line ((t (:background "#101010"))))
  '(column-marker-1 ((t (:weight bold :background "gray0")))) ; tomato3
- 
- '(escape-glyph ((t (:foreground "#46D9FF"))))
+
+ '(escape-glyph ((t (:foreground "#46d9ff"))))
  '(homoglyph ((((background dark)) (:foreground "cyan")) (((type pc)) (:foreground "magenta")) (t (:foreground "brown"))))
  '(minibuffer-prompt ((t (:foreground "#51afef"))))
- '(highlight ((t (:foreground "#1B2229" :background "#51afef"))))
+ '(highlight ((t (:foreground "#1B2229" :background "#51afef")))) ; black/blue
  '(region ((t (:extend t :background "#42444a"))))
  '(shadow ((t (:foreground "#5B6268"))))
  '(secondary-selection ((t (:extend t :background "#3f444a"))))
@@ -141,12 +147,16 @@
  '(diredfl-rare-priv ((t (:foreground "chocolate"))))
  '(diredfl-read-priv ((t (:foreground "light goldenrod"))))
  '(diredfl-write-priv ((t (:foreground "orange red"))))
- 
+
  '(whitespace-empty ((t (:background "#808080" :foreground "#ee0000"))))
  '(whitespace-tab ((t (:inherit (whitespace-empty)))))
  '(whitespace-trailing ((t (:inherit (whitespace-empty)))))
 
-;; '(highlight-indent-guides-character-face ((t (:foreground "gainsboro"))))
+ '(show-paren-match ((t (:foreground "#ff6c6b" :background "#1B2229"))))
+
+ '(vertico-current ((t (:background "#42444a"))))
+
+ ;; '(highlight-indent-guides-character-face ((t (:foreground "gainsboro"))))
  ;; '(highlight-indent-guides-stack-character-face ((t (:inherit (highlight-indent-guides-character-face)))))
  ;; '(highlight-indent-guides-top-character-face ((t (:inherit (highlight-indent-guides-character-face)))))
  )
