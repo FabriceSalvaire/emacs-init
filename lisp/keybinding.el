@@ -253,7 +253,7 @@ all hooks after it are ignored.")
 (defvar doom--map-batch-forms nil)
 (defvar doom--map-state '(:dummy t))
 (defvar doom--map-parent-state nil)
-;; (defvar doom--map-evil-p nil)
+(defvar doom--map-evil-p nil)
 ;; (after! evil (setq doom--map-evil-p t))
 
 (defun doom--map-process (rest)
