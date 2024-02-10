@@ -4,11 +4,17 @@
 ;;
 ;; Edition
 ;;   See Doom doom-editor.el
-;,   - fill-colum / column marker
+;;   - fill-colum / column marker
+;;   - long line
 ;;   - indentation / whitespace
 ;;   - parenthese
+;;   - sentence
+;;   - EOL
+;;   - clipboard / kill-ring
+;;   - better-jump
 ;;   - multiple cursor
 ;;   - string inflection
+;;   - minified file
 ;;
 ;; https://www.emacswiki.org/emacs/ShowWhiteSpace
 ;; https://github.com/Lindydancer/char-font-lock
@@ -489,8 +495,8 @@ on."
 ;;
 ;; Clipboard / kill-ring
 
-;; Cull duplicates in the kill ring to reduce bloat and make the kill ring easier to peruse (with
-;; `counsel-yank-pop' or `helm-show-kill-ring'.
+;; Cull duplicates in the kill ring to reduce bloat and make the kill ring easier to peruse
+;; (with `counsel-yank-pop' or `helm-show-kill-ring'.
 (setq kill-do-not-save-duplicates t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
