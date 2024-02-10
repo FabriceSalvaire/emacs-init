@@ -137,10 +137,24 @@
 
 (defconst _packages_to_load
   '(
+    ;; see startup.el
     gcmh
-    ;; //github.com/noctuid/general.el
-    ;; More convenient key definitions in emacs
+
+    ;; General — More convenient key definitions in emacs
+    ;;   https://github.com/noctuid/general.el
     general
+
+    ;; Emacs rainbow delimiters mode
+    ;;   https://github.com/Fanael/rainbow-delimiters
+    ;;   rainbow-delimiters is a "rainbow parentheses"-like mode which highlights delimiters such as
+    ;;   parentheses, brackets or braces according to their depth. Each successive level is
+    ;;   highlighted in a different color. This makes it easy to spot matching delimiters, orient
+    ;;   yourself in the code, and tell which statements are at a given depth.
+    rainbow-delimiters
+
+    ;; highlight-quoted — Highlight Lisp quotes and quoted symbols
+    ;;   https://github.com/Fanael/highlight-quoted
+    highlight-quoted
     ))
 
 ;; Fixme: useless ?

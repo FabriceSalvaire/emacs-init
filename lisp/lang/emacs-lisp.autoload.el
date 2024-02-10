@@ -233,6 +233,7 @@ https://emacs.stackexchange.com/questions/10230/how-to-indent-keywords-aligned"
 ;;;###autoload
 (defun +emacs-lisp-init-straight-maybe-h ()
   "Make sure straight sees modifications to installed packages."
+  ;; Fixme: doom-local-dir
   (when (file-in-directory-p (or buffer-file-name default-directory) doom-local-dir)
     (add-hook 'after-save-hook #'straight-register-file-modification
               nil 'local)))
@@ -398,10 +399,12 @@ This generally applies to your private config (`doom-user-dir') or Doom's source
                (derived-mode-p 'emacs-lisp-mode)
                (not (+emacs-lisp--in-package-buffer-p)))
     (setq +emacs-lisp-non-package-mode nil))
-  (when-let ((modesym (cond ((modulep! :checkers syntax +flymake)
-                             #'+emacs-lisp--flymake-non-package-mode)
-                            ((modulep! :checkers syntax)
-                             #'+emacs-lisp--flycheck-non-package-mode))))
+  ;; Fixme: doom
+  ;; (when-let ((modesym (cond ((modulep! :checkers syntax +flymake)
+  ;;                            #'+emacs-lisp--flymake-non-package-mode)
+  ;;                           ((modulep! :checkers syntax)
+  ;;                            #'+emacs-lisp--flycheck-non-package-mode))))
+  (when-let ((modesym #'+emacs-lisp--flycheck-non-package-mode))
     (if (not +emacs-lisp-non-package-mode)
         (when (symbol-value modesym)
           (funcall modesym -1))

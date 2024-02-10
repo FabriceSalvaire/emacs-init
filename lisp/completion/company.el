@@ -164,10 +164,10 @@ C-x C-l."
 
 Uses ivy, helm, vertico, or ido, if available."
   (interactive)
-  (cond ((modulep! :completion ivy)
-         (call-interactively #'counsel-company))
-        ((modulep! :completion helm)
-         (call-interactively #'helm-company))
+  (cond ;; ((modulep! :completion ivy)
+        ;;  (call-interactively #'counsel-company))
+        ;; ((modulep! :completion helm)
+        ;;  (call-interactively #'helm-company))
         ((not company-candidates)
          (user-error "No company candidates available"))
         ((when-let (cand (completing-read "Candidate: " company-candidates))

@@ -1,5 +1,7 @@
 ;;; lang/emacs-lisp/config.el -*- lexical-binding: t; -*-
 
+(load "lang/emacs-lisp.autoload.el")
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defvar +emacs-lisp-enable-extra-fontification t
@@ -70,23 +72,22 @@ See `+emacs-lisp-non-package-mode' for details.")
     outline-regexp +emacs-lisp-outline-regexp
     outline-level #'+emacs-lisp-outline-level)
 
-  ;; DEPRECATED: Remove when 27.x support is dropped.
-  (when (< emacs-major-version 28)
-    ;; As of Emacs 28+, `emacs-lisp-mode' uses a shorter label in the mode-line
-    ;; ("ELisp/X", where X = l or d, depending on `lexical-binding'). In <=27,
-    ;; it uses "Emacs-Lisp". The former is more useful, so I backport it:
-    (setq-hook! 'emacs-lisp-mode-hook
-      mode-name `("ELisp"
-                  (lexical-binding (:propertize "/l"
-                                    help-echo "Using lexical-binding mode")
-                                   (:propertize "/d"
-                                    help-echo "Using old dynamic scoping mode"
-                                    face warning
-                                    mouse-face mode-line-highlight)))))
+  ;; ;; DEPRECATED: Remove when 27.x support is dropped.
+  ;; (when (< emacs-major-version 28)
+  ;;   ;; As of Emacs 28+, `emacs-lisp-mode' uses a shorter label in the mode-line
+  ;;   ;; ("ELisp/X", where X = l or d, depending on `lexical-binding'). In <=27,
+  ;;   ;; it uses "Emacs-Lisp". The former is more useful, so I backport it:
+  ;;   (setq-hook! 'emacs-lisp-mode-hook
+  ;;     mode-name `("ELisp"
+  ;;                 (lexical-binding (:propertize "/l"
+  ;;                                   help-echo "Using lexical-binding mode")
+  ;;                                  (:propertize "/d"
+  ;;                                   help-echo "Using old dynamic scoping mode"
+  ;;                                   face warning
+  ;;                                   mouse-face mode-line-highlight)))))
 
   ;; Introduces logic to improve plist indentation in emacs-lisp-mode.
-  ;; Fixme: doom
-  ;; (advice-add #'calculate-lisp-indent :override #'+emacs-lisp--calculate-lisp-indent-a)
+  (advice-add #'calculate-lisp-indent :override #'+emacs-lisp--calculate-lisp-indent-a) ; cf. autoload
 
   ;; Variable-width indentation is superior in elisp. Otherwise, `dtrt-indent'
   ;; and `editorconfig' would force fixed indentation on elisp.
@@ -96,13 +97,13 @@ See `+emacs-lisp-non-package-mode' for details.")
              ;; Allow folding of outlines in comments
              #'outline-minor-mode
              ;; Make parenthesis depth easier to distinguish at a glance
-             ;; Fixme: doom #'rainbow-delimiters-mode
+             #'rainbow-delimiters-mode
              ;; Make quoted symbols easier to distinguish from free variables
-             ;; Fixme: doom #'highlight-quoted-mode
+             #'highlight-quoted-mode
              ;; Extend imenu support to Doom constructs
-             ;; Fixme: doom #'+emacs-lisp-extend-imenu-h
+             #'+emacs-lisp-extend-imenu-h ; cf. autoload
              ;; Ensure straight sees modifications to installed packages
-             ;; Fixme: doom #'+emacs-lisp-init-straight-maybe-h
+             ;; Fixme: #'+emacs-lisp-init-straight-maybe-h ; cf. autoload
              )
 
   ;; UX: Both Flycheck's and Flymake's two emacs-lisp checkers produce a *lot*
@@ -110,8 +111,7 @@ See `+emacs-lisp-non-package-mode' for details.")
   ;;   so I disable `checkdoc' (`emacs-lisp-checkdoc', `elisp-flymake-checkdoc')
   ;;   and set `byte-compile-warnings' to a subset that makes more sense (see
   ;;   `+emacs-lisp-linter-warnings')
-  ;; Fixme: doom
-  ;; (add-hook! '(flycheck-mode-hook flymake-mode-hook) #'+emacs-lisp-non-package-mode)
+  (add-hook! '(flycheck-mode-hook flymake-mode-hook) #'+emacs-lisp-non-package-mode)
 
   (defadvice! +syntax--fix-elisp-flymake-load-path (orig-fn &rest args)
     "Set load path for elisp byte compilation Flymake backend"
@@ -122,16 +122,15 @@ See `+emacs-lisp-non-package-mode' for details.")
 
   ;; Enhance elisp syntax highlighting, by highlighting Doom-specific
   ;; constructs, defined symbols, and truncating :pin's in `package!' calls.
-  ;; Fixme: +emacs-lisp-highlight-vars-and-faces
-  ;; (font-lock-add-keywords
-  ;;  'emacs-lisp-mode
-  ;;  (append `(;; custom Doom cookies
-  ;;            ("^;;;###\\(autodef\\|if\\|package\\)[ \n]" (1 font-lock-warning-face t)))
-  ;;          ;; Shorten the :pin of `package!' statements to 10 characters
-  ;;          `(("(package!\\_>" (0 (+emacs-lisp-truncate-pin))))
-  ;;          ;; highlight defined, special variables & functions
-  ;;          (when +emacs-lisp-enable-extra-fontification
-  ;;            `((+emacs-lisp-highlight-vars-and-faces . +emacs-lisp--face)))))
+  (font-lock-add-keywords
+   'emacs-lisp-mode
+   (append `(;; custom Doom cookies
+             ("^;;;###\\(autodef\\|if\\|package\\)[ \n]" (1 font-lock-warning-face t)))
+           ;; Shorten the :pin of `package!' statements to 10 characters
+           `(("(package!\\_>" (0 (+emacs-lisp-truncate-pin))))
+           ;; highlight defined, special variables & functions
+           (when +emacs-lisp-enable-extra-fontification
+             `((+emacs-lisp-highlight-vars-and-faces . +emacs-lisp--face)))))
 
   (defadvice! +emacs-lisp-append-value-to-eldoc-a (fn sym)
     "Display variable value next to documentation in eldoc."
@@ -206,8 +205,9 @@ See `+emacs-lisp-non-package-mode' for details.")
                            ,@match-highlights)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; overseer
 
-;;;###package overseer
 (autoload 'overseer-test "overseer" nil t)
 ;; Properly lazy load overseer by not loading it so early:
 (remove-hook 'emacs-lisp-mode-hook #'overseer-enable-mode)
@@ -271,6 +271,7 @@ See `+emacs-lisp-non-package-mode' for details.")
 ;;   https://github.com/jorgenschaefer/emacs-buttercup
 
 (use-package buttercup
+  :disabled
   :defer t
   ;; Fixme: doom
   ;; :minor ("/test[/-].+\\.el$" . buttercup-minor-mode)
