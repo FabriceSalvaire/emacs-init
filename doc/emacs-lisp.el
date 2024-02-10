@@ -89,6 +89,17 @@ foo+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
+;; Association Lists or alist
+;;  https://www.gnu.org/software/emacs/manual/html_node/elisp/Association-Lists.html
+;;  An association list, or alist for short, records a mapping from keys to values. It is a list of
+;;  cons cells called associations: the CAR of each cons cell is the key, and the CDR is the
+;;  associated value.
+
+(setq alist ((key_a . 1) ("key_b" 2 3)))
+(assoc 'key_a alist) -> 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;; Vector type
 ;; [Vectors](https://www.gnu.org/software/emacs/manual/html_node/elisp/Vectors.html)
 

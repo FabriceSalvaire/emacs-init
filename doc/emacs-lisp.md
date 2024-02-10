@@ -9,8 +9,11 @@
 
 ## References
 
-* https://www.gnu.org/software/emacs/manual/html_node/elisp/index.html
-* https://en.wikipedia.org/wiki/Lisp_(programming_language)
+- https://www.gnu.org/software/emacs/manual/html_node/elisp/index.html
+- https://en.wikipedia.org/wiki/Lisp_(programming_language)
+
+- [Common Lisp](https://lisp-lang.org)
+- [Common Lisp Extensions](https://www.gnu.org/software/emacs/manual/html_mono/cl.html)
 
 ## eval-when-compile
 
@@ -22,12 +25,12 @@ program. If you load the source file, rather than compiling it, body is evaluate
 
 ## nil and t
 
-**nil** is
-* a symbol with the name ‘nil’
-* the logical truth value false
-* the empty list `nil` === `()`
+- *nil** is
+- a symbol with the name ‘nil’
+- the logical truth value false
+- the empty list `nil` === `()`
 
-**t** is true
+- *t** is true
 
 ## List / Dotted Pair Notation
 

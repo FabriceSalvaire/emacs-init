@@ -1,8 +1,16 @@
 ---
 
+- look doom config
+- check module autoload.el
+- vertico
+  [X] fix color
+  strange behaviour for C-x f
+    ...dir/ completion bloqué ???
+- Error (use-package): markdown-mode/:config: Symbol’s function definition is void: set-flyspell-predicate!
+- répertorier les fonctions utiles de doom lib
 - clone older setup to compare...
 - click link ?
-- lisp color ()
+- [x] parent match color ()
 - [X] which-key tout n'est pas affiché
 - color paren match / cursor
 - M-x history
@@ -31,8 +39,10 @@ subr-x, seq, map, pcase, and cl-lib are all built into Emacs and, since Emacs 27
 This package maps ordinary graphemes (characters) to fancy ligatures, if both your version of Emacs and the font supports it.
 [Unicode, Ligatures and Color Emoji - Mastering Emacs](https://www.masteringemacs.org/article/unicode-ligatures-color-emoji)
 
-
+- https://copr.fedorainfracloud.org/coprs/deathwish/emacs-pgtk-nativecomp/
+- https://github.com/A6GibKm/emacs-pgtk-nativecomp-copr/tree/master
 - https://copr.fedorainfracloud.org/coprs/stevenlin/emacs-pgtk-nativecomp
+
 - [mina86/auto-dim-other-buffers.el: Visually makes non-selected windows less prominent](https://github.com/mina86/auto-dim-other-buffers.el)
 - [Org mode for GNU Emacs](https://orgmode.org)
 
@@ -134,7 +144,6 @@ This package maps ordinary graphemes (characters) to fancy ligatures, if both yo
 - [ ] `./completion/ido/config.el`
 - [!] `./completion/ivy/config.el`
 - [ ] `./completion/vertico/config.el`
-       [minad/vertico: :dizzy: vertico.el - VERTical Interactive COmpletion](https://github.com/minad/vertico)
 
 - [!] `./config/default/config.el`
 
