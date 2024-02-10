@@ -156,7 +156,7 @@ orderless."
     :before (list #'consult-recent-file #'consult-buffer)
     (recentf-mode +1))
 
-  (setq consult-project-function #'doom-project-root
+  (setq ;; consult-project-function #'doom-project-root
         consult-narrow-key "<"
         consult-line-numbers-widen t
         consult-async-min-input 2
@@ -176,11 +176,12 @@ orderless."
   (consult-customize
    consult-ripgrep consult-git-grep consult-grep
    consult-bookmark consult-recent-file
-   +default/search-project +default/search-other-project
-   +default/search-project-for-symbol-at-point
-   +default/search-cwd +default/search-other-cwd
-   +default/search-notes-for-symbol-at-point
-   +default/search-emacsd
+   ;; Fixme: doom-emacs/modules/config/default/autoload/search.el
+   ;; +default/search-project +default/search-other-project
+   ;; +default/search-project-for-symbol-at-point
+   ;; +default/search-cwd +default/search-other-cwd
+   ;; +default/search-notes-for-symbol-at-point
+   ;; +default/search-emacsd
    consult--source-recent-file consult--source-project-recent-file consult--source-bookmark
    :preview-key "C-SPC")
   (consult-customize
