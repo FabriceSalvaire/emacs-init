@@ -1,5 +1,7 @@
 ;;; lang/emacs-lisp/config.el -*- lexical-binding: t; -*-
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defvar +emacs-lisp-enable-extra-fontification t
   "If non-nil, highlight special forms, and defined functions and variables.")
 
@@ -24,32 +26,38 @@ See `+emacs-lisp-non-package-mode' for details.")
 ;; to pretend it isn't loaded
 (defer-feature! elisp-mode emacs-lisp-mode)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;
-;;; Config
-
-(use-package! elisp-mode
+;; (use-package elisp-mode
+(use-package emacs
+  :ensure nil
   :mode ("\\.Cask\\'" . emacs-lisp-mode)
-  :interpreter ("doomscript" . emacs-lisp-mode)
+  ;; :interpreter ("doomscript" . emacs-lisp-mode)
+
   :config
-  (set-repl-handler! '(emacs-lisp-mode lisp-interaction-mode) #'+emacs-lisp/open-repl)
-  (set-eval-handler! '(emacs-lisp-mode lisp-interaction-mode) #'+emacs-lisp-eval)
-  (set-lookup-handlers! '(emacs-lisp-mode lisp-interaction-mode helpful-mode)
-    :definition    #'+emacs-lisp-lookup-definition
-    :documentation #'+emacs-lisp-lookup-documentation)
-  (set-docsets! '(emacs-lisp-mode lisp-interaction-mode) "Emacs Lisp")
-  (set-ligatures! 'emacs-lisp-mode :lambda "lambda")
-  (set-formatter! 'lisp-indent #'apheleia-indent-lisp-buffer :modes '(emacs-lisp-mode))
-  (set-rotate-patterns! 'emacs-lisp-mode
-    :symbols '(("t" "nil")
-               ("let" "let*")
-               ("when" "unless")
-               ("advice-add" "advice-remove")
-               ("defadvice!" "undefadvice!")
-               ("add-hook" "remove-hook")
-               ("add-hook!" "remove-hook!")
-               ("it" "xit")
-               ("describe" "xdescribe")))
+  ;; Fixme: doom-emacs/modules/tools/eval/
+  ;; (set-repl-handler! '(emacs-lisp-mode lisp-interaction-mode) #'+emacs-lisp/open-repl)
+  ;; (set-eval-handler! '(emacs-lisp-mode lisp-interaction-mode) #'+emacs-lisp-eval)
+  ;; (set-lookup-handlers! '(emacs-lisp-mode lisp-interaction-mode helpful-mode)
+  ;;   :definition    #'+emacs-lisp-lookup-definition
+  ;;   :documentation #'+emacs-lisp-lookup-documentation)
+  ;; doom-emacs/modules/tools/lookup
+  ;; (set-docsets! '(emacs-lisp-mode lisp-interaction-mode) "Emacs Lisp")
+  ;; doom-emacs/modules/ui/ligatures
+  ;; (set-ligatures! 'emacs-lisp-mode :lambda "lambda")
+  ;; doom-emacs/modules/editor/format
+  ;; (set-formatter! 'lisp-indent #'apheleia-indent-lisp-buffer :modes '(emacs-lisp-mode))
+  ;; doom-emacs/modules/editor/rotate-text/
+  ;; (set-rotate-patterns! 'emacs-lisp-mode
+  ;;   :symbols '(("t" "nil")
+  ;;              ("let" "let*")
+  ;;              ("when" "unless")
+  ;;              ("advice-add" "advice-remove")
+  ;;              ("defadvice!" "undefadvice!")
+  ;;              ("add-hook" "remove-hook")
+  ;;              ("add-hook!" "remove-hook!")
+  ;;              ("it" "xit")
+  ;;              ("describe" "xdescribe")))
 
   (setq-hook! 'emacs-lisp-mode-hook
     ;; Emacs' built-in elisp files use a hybrid tab->space indentation scheme
@@ -77,7 +85,8 @@ See `+emacs-lisp-non-package-mode' for details.")
                                     mouse-face mode-line-highlight)))))
 
   ;; Introduces logic to improve plist indentation in emacs-lisp-mode.
-  (advice-add #'calculate-lisp-indent :override #'+emacs-lisp--calculate-lisp-indent-a)
+  ;; Fixme: doom
+  ;; (advice-add #'calculate-lisp-indent :override #'+emacs-lisp--calculate-lisp-indent-a)
 
   ;; Variable-width indentation is superior in elisp. Otherwise, `dtrt-indent'
   ;; and `editorconfig' would force fixed indentation on elisp.
@@ -87,20 +96,22 @@ See `+emacs-lisp-non-package-mode' for details.")
              ;; Allow folding of outlines in comments
              #'outline-minor-mode
              ;; Make parenthesis depth easier to distinguish at a glance
-             #'rainbow-delimiters-mode
+             ;; Fixme: doom #'rainbow-delimiters-mode
              ;; Make quoted symbols easier to distinguish from free variables
-             #'highlight-quoted-mode
+             ;; Fixme: doom #'highlight-quoted-mode
              ;; Extend imenu support to Doom constructs
-             #'+emacs-lisp-extend-imenu-h
+             ;; Fixme: doom #'+emacs-lisp-extend-imenu-h
              ;; Ensure straight sees modifications to installed packages
-             #'+emacs-lisp-init-straight-maybe-h)
+             ;; Fixme: doom #'+emacs-lisp-init-straight-maybe-h
+             )
 
   ;; UX: Both Flycheck's and Flymake's two emacs-lisp checkers produce a *lot*
   ;;   of false positives in non-packages (like Emacs configs or elisp scripts),
   ;;   so I disable `checkdoc' (`emacs-lisp-checkdoc', `elisp-flymake-checkdoc')
   ;;   and set `byte-compile-warnings' to a subset that makes more sense (see
   ;;   `+emacs-lisp-linter-warnings')
-  (add-hook! '(flycheck-mode-hook flymake-mode-hook) #'+emacs-lisp-non-package-mode)
+  ;; Fixme: doom
+  ;; (add-hook! '(flycheck-mode-hook flymake-mode-hook) #'+emacs-lisp-non-package-mode)
 
   (defadvice! +syntax--fix-elisp-flymake-load-path (orig-fn &rest args)
     "Set load path for elisp byte compilation Flymake backend"
@@ -111,16 +122,17 @@ See `+emacs-lisp-non-package-mode' for details.")
 
   ;; Enhance elisp syntax highlighting, by highlighting Doom-specific
   ;; constructs, defined symbols, and truncating :pin's in `package!' calls.
-  (font-lock-add-keywords
-   'emacs-lisp-mode
-   (append `(;; custom Doom cookies
-             ("^;;;###\\(autodef\\|if\\|package\\)[ \n]" (1 font-lock-warning-face t)))
-           ;; Shorten the :pin of `package!' statements to 10 characters
-           `(("(package!\\_>" (0 (+emacs-lisp-truncate-pin))))
-           ;; highlight defined, special variables & functions
-           (when +emacs-lisp-enable-extra-fontification
-             `((+emacs-lisp-highlight-vars-and-faces . +emacs-lisp--face)))))
- 
+  ;; Fixme: +emacs-lisp-highlight-vars-and-faces
+  ;; (font-lock-add-keywords
+  ;;  'emacs-lisp-mode
+  ;;  (append `(;; custom Doom cookies
+  ;;            ("^;;;###\\(autodef\\|if\\|package\\)[ \n]" (1 font-lock-warning-face t)))
+  ;;          ;; Shorten the :pin of `package!' statements to 10 characters
+  ;;          `(("(package!\\_>" (0 (+emacs-lisp-truncate-pin))))
+  ;;          ;; highlight defined, special variables & functions
+  ;;          (when +emacs-lisp-enable-extra-fontification
+  ;;            `((+emacs-lisp-highlight-vars-and-faces . +emacs-lisp--face)))))
+
   (defadvice! +emacs-lisp-append-value-to-eldoc-a (fn sym)
     "Display variable value next to documentation in eldoc."
     :around #'elisp-get-var-docstring
@@ -137,25 +149,33 @@ See `+emacs-lisp-non-package-mode' for details.")
                             (if (< (length str) limit) "" truncated))))
         ret)))
 
-  (map! :localleader
-        :map (emacs-lisp-mode-map lisp-interaction-mode-map)
-        :desc "Expand macro" "m" #'macrostep-expand
-        (:prefix ("d" . "debug")
-          "f" #'+emacs-lisp/edebug-instrument-defun-on
-          "F" #'+emacs-lisp/edebug-instrument-defun-off)
-        (:prefix ("e" . "eval")
-          "b" #'eval-buffer
-          "d" #'eval-defun
-          "e" #'eval-last-sexp
-          "r" #'eval-region
-          "l" #'load-library)
-        (:prefix ("g" . "goto")
-          "f" #'find-function
-          "v" #'find-variable
-          "l" #'find-library)))
+  ;; (map! :localleader
+  ;;       :map (emacs-lisp-mode-map lisp-interaction-mode-map)
+  ;;       :desc "Expand macro" "m" #'macrostep-expand
+  ;;       (:prefix ("d" . "debug")
+  ;;         "f" #'+emacs-lisp/edebug-instrument-defun-on
+  ;;         "F" #'+emacs-lisp/edebug-instrument-defun-off)
+  ;;       (:prefix ("e" . "eval")
+  ;;         "b" #'eval-buffer
+  ;;         "d" #'eval-defun
+  ;;         "e" #'eval-last-sexp
+  ;;         "r" #'eval-region
+  ;;         "l" #'load-library)
+  ;;       (:prefix ("g" . "goto")
+  ;;         "f" #'find-function
+  ;;         "v" #'find-variable
+  ;;         "l" #'find-library))
+  )
 
-(use-package! ielm
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; InferiorEmacsLispMode
+;;   https://www.emacswiki.org/emacs/InferiorEmacsLispMode
+;;   mode that acts like an interactive Lisp interpreter
+
+(use-package ielm
   :defer t
+
   :config
   (set-lookup-handlers! 'inferior-emacs-lisp-mode
     :definition    #'+emacs-lisp-lookup-definition
@@ -185,33 +205,39 @@ See `+emacs-lisp-non-package-mode' for details.")
                                           (nth 4 state))))))
                            ,@match-highlights)))))
 
-
-;;
-;;; Packages
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;###package overseer
 (autoload 'overseer-test "overseer" nil t)
 ;; Properly lazy load overseer by not loading it so early:
 (remove-hook 'emacs-lisp-mode-hook #'overseer-enable-mode)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;;
+;;
 
-(use-package! flycheck-cask
-  :when (and (modulep! :checkers syntax)
-             (not (modulep! :checkers syntax +flymake)))
+(use-package flycheck-cask
+  ;; :when (and (modulep! :checkers syntax)
+  ;;            (not (modulep! :checkers syntax +flymake)))
   :defer t
   :init
   (add-hook! 'emacs-lisp-mode-hook
-    (add-hook 'flycheck-mode-hook #'flycheck-cask-setup nil t)))
+    (add-hook 'flycheck-mode-hook #'flycheck-cask-setup nil t))
+  )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use-package! flycheck-package
-  :when (and (modulep! :checkers syntax)
-             (not (modulep! :checkers syntax +flymake)))
+(use-package flycheck-package
+  ;; :when (and (modulep! :checkers syntax)
+  ;;            (not (modulep! :checkers syntax +flymake)))
   :after flycheck
-  :config (flycheck-package-setup))
+  :config (flycheck-package-setup)
+  )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use-package! elisp-demos
+(use-package elisp-demos
   :defer t
   :init
   (advice-add #'describe-function-1 :after #'elisp-demos-advice-describe-function-1)
@@ -236,12 +262,18 @@ See `+emacs-lisp-non-package-mode' for details.")
     (let ((org-inhibit-startup t)
           enable-dir-local-variables
           org-mode-hook)
-      (apply fn args))))
+      (apply fn args)))
+  )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; buttercup — Behavior-Driven Emacs Lisp Testing
+;;   https://github.com/jorgenschaefer/emacs-buttercup
 
-(use-package! buttercup
+(use-package buttercup
   :defer t
-  :minor ("/test[/-].+\\.el$" . buttercup-minor-mode)
+  ;; Fixme: doom
+  ;; :minor ("/test[/-].+\\.el$" . buttercup-minor-mode)
   :preface
   ;; buttercup.el doesn't define a keymap for `buttercup-minor-mode', as we have
   ;; to fool its internal `define-minor-mode' call into thinking one exists, so
@@ -250,20 +282,22 @@ See `+emacs-lisp-non-package-mode' for details.")
   :config
   (set-popup-rule! "^\\*Buttercup\\*$" :size 0.45 :select nil :ttl 0)
   (set-yas-minor-mode! 'buttercup-minor-mode)
-  (when (featurep 'evil)
-    (add-hook 'buttercup-minor-mode-hook #'evil-normalize-keymaps))
-  (map! :localleader
-        :map buttercup-minor-mode-map
-        :prefix "t"
-        "t" #'+emacs-lisp/buttercup-run-file
-        "a" #'+emacs-lisp/buttercup-run-project
-        "s" #'buttercup-run-at-point))
+  ;; (when (featurep 'evil)
+  ;;   (add-hook 'buttercup-minor-mode-hook #'evil-normalize-keymaps))
+  ;; (map! :localleader
+  ;;       :map buttercup-minor-mode-map
+  ;;       :prefix "t"
+  ;;       "t" #'+emacs-lisp/buttercup-run-file
+  ;;       "a" #'+emacs-lisp/buttercup-run-project
+  ;;       "s" #'buttercup-run-at-point)
+  )
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Project modes
+;; Project modes
 
-(def-project-mode! +emacs-lisp-ert-mode
-  :modes '(emacs-lisp-mode)
-  :match "/test[/-].+\\.el$"
-  :add-hooks '(overseer-enable-mode))
+;, Fixme: doom
+;; (def-project-mode! +emacs-lisp-ert-mode
+;;   :modes '(emacs-lisp-mode)
+;;   :match "/test[/-].+\\.el$"
+;;   :add-hooks '(overseer-enable-mode))
