@@ -34,23 +34,28 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun _load-files (args)
+(defvar init--module-options nil)
+
+(defun init--load-modules (args)
   "Helper to load Lisp files."
   (catch ':stop
-    (dolist (_ args)
-      (if (eq _ ':stop)
+    (dolist (module args)
+      (if (eq module ':stop)
           (progn
             (message "Stop sub-module loading")
-            (throw ':stop _))
-        (let ((path (concat (symbol-name _) ".el")))
-          ;; (load FILE &optional NOERROR NOMESSAGE NOSUFFIX MUST-SUFFIX)
-          ;; (load path t t)
-          (load path nil nil)
-          )))))
+            (throw ':stop nil))
+        (let ((fist-char (substring (symbol-name module) 0 1)))
+          (if (equal fist-char "+")
+              (push  module init--module-options)
+            (let ((path (concat (symbol-name module) ".el")))
+              ;; (load FILE &optional NOERROR NOMESSAGE NOSUFFIX MUST-SUFFIX)
+              ;; (load path t t)
+              (load path nil nil)
+              )))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(_load-files '(
+(init--load-modules '(
                ;; instead to comment several lines to stop at some point
                ;; use keyword
                ;;   :stop
@@ -99,10 +104,13 @@
                lang/web
                checker
                git
+               +foo
 
                ;; finally
                post-keybinding
                ))
+
+(message "init--module-options %s" init--module-options)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
