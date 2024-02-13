@@ -65,7 +65,36 @@
 ;;   M-x customize-create-theme
 ;;   M-x describe-face
 
-(load-theme 'fabrice-dark t)
+;; (load-theme 'fabrice-dark t)
+
+(setq doom-font (font-spec
+                 :foundry "ADBO"
+                 :family "Source Code Pro"
+                 :size 16 ; => :height 120
+                 :weight 'medium
+                 :slant 'normal
+                 :width 'normal
+                 ))
+;; (custom-set-faces '(default ((t (:family "Source Code Pro"
+;;                                  :foundry "ADBO"
+;;                                  :weight medium
+;;                                  :slant normal
+;;                                  :width normal
+;;                                  :height 120)))))
+;; (setq doom-theme 'doom-one)
+(setq doom-theme 'fabrice-dark)
+
+;; Apply fonts and theme
+(let ((hook (if (daemonp)
+                'server-after-make-frame-hook
+              'after-init-hook)))
+  (add-hook hook #'doom-init-fonts-h -100)
+  (add-hook hook #'doom-init-theme-h -90))
+
+;; PERF: Init UI late, but not too late. Its impact on startup time seems to
+;;   vary wildly depending on exact placement. `window-setup-hook' appears to be
+;;   the sweet spot.
+(add-hook 'window-setup-hook #'doom-init-ui-h -100)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;

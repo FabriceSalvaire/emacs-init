@@ -28,6 +28,7 @@
 (defconst local_theme_path (file-name-concat local_path_prefix "themes"))
 
 (add-to-list 'load-path local_emacs_d_path)
+(add-to-list 'load-path local_theme_path)
 ;; (add-to-list 'load-path local_emacs_site_lisp_path)
 (add-to-list 'custom-theme-load-path local_theme_path)
 
@@ -50,16 +51,23 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (_load-files '(
-               ;; :stop
+               ;; instead to comment several lines to stop at some point
+               ;; use keyword
+               ;;   :stop
 
                ;; 0 load early-init.el
                ;; 1 load this init.el...
 
+               ;; Fixme: move
                ;; load internal libraries
                doom-lib/doom-lib
                doom-lib/buffers
                doom-lib/plist
                doom-lib/ui
+               doom-lib/fonts
+               ;; doom-lib/doom-themes-base
+               ;; doom-lib/doom-themes
+               doom-lib/doom-ui
 
                startup
                ;; packages
@@ -70,8 +78,9 @@
 
                user-functions
 
-               ;; :skip
-               completion/previous ; buffer switch
+               ;; completion/previous ; buffer switch
+               completion/company
+               completion/vertico
                edition
                ;; undo
                speller
@@ -80,9 +89,10 @@
                sysadmin
 
                tree-sitter
-               code-completion
+               ;; code-completion
                magit
                ;; lang/lang
+               lang/emacs-lisp
                lang/markdown
                lang/c-java
                lang/python
@@ -90,7 +100,7 @@
                checker
                git
 
-               ;; must be after
+               ;; finally
                post-keybinding
                ))
 
