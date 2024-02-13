@@ -1,5 +1,9 @@
 ;;; completion/vertico/config.el -*- lexical-binding: t; -*-
 
+(load "completion/vertico.autoload.el")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defvar +vertico-company-completion-styles '(basic partial-completion orderless)
   "Completion styles for company to use.
 
