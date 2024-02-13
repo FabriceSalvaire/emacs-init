@@ -85,7 +85,19 @@ foo+
 (setcdr alist 'bb) ; ⇒ bb and now alist = (aa . bb)
 
 (list 'a 'b 'c) ; ⇒ (a b c)
-(reverse alist)
+
+;; Return non-nil if ELT is an element of LIST.  Comparison done with eq.
+(memq ELT LIST)
+
+;; Add NEWELT to the list stored in the generalized variable PLACE.
+;;   This is morally equivalent to (setf PLACE (cons NEWELT PLACE)),
+;;   except that PLACE is evaluated only once (after NEWELT).
+(push NEWELT PLACE)
+
+;; Return the reversed copy of list, vector, or string SEQ.
+(reverse SES)
+;; Reverse order of items in a list, vector or string SEQ.
+(nreverse SEQ)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;

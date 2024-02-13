@@ -3,6 +3,57 @@
 - comment-region ?
 - disable evil
 
+# Startup
+
+The overall load order is as follows:
+
+```
+> $EMACSDIR/ early-init.el
+  > $EMACSDIR/lisp/ doom.el PERF
+    - $EMACSDIR/lisp/ doom-lib.el
+  > $EMACSDIR/lisp/ doom-start.el
+    - hook: `doom-before-init-hook'
+    - $DOOMDIR/ init.el
+      doom-keybinds
+      doom-ui
+      doom-projects
+      doom-editor
+
+- hook: `before-init-hook'
+
+> $XDG_DATA_HOME/doom/$PROFILE/@/$VERSION/init.el   (replaces $EMACSDIR/init.el)
+  - $EMACSDIR/doom-{keybinds,ui,projects,editor}.el
+
+  @ doom-start
+
+  - hook: `doom-before-modules-init-hook'
+  - {$DOOMDIR,$EMACSDIR}/modules/*/*/init.el
+  - hook: `doom-after-modules-init-hook'
+  - hook: `doom-before-modules-config-hook'
+  - {$DOOMDIR,$EMACSDIR}/modules/*/*/config.el
+  - hook: `doom-after-modules-config-hook'
+  - $DOOMDIR/config.el
+  - `custom-file' or $DOOMDIR/custom.el
+
+- hook: `after-init-hook'
+- hook: `emacs-startup-hook'
+- hook: `window-setup-hook'
+- hook: `doom-init-ui-hook'
+- hook: `doom-after-init-hook'
+> After startup is complete:
+  - On first input:              `doom-first-input-hook'
+  - On first switched-to buffer: `doom-first-buffer-hook'
+  - On first opened file:        `doom-first-file-hook'
+```
+
+# Func/Macro name
+
+- `...!`
+- `+...--...`
+- `...--...`
+- `doom-...`
+- `.../...`
+
 # Customisation
 
 [zzamboni.org | My Doom Emacs configuration, with commentary](https://zzamboni.org/post/my-doom-emacs-configuration-with-commentary/)

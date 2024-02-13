@@ -1,5 +1,8 @@
-(deftheme fabrice-dark
-  "Created 2024-02-06.")
+;;; fabrice-dark-theme.el --- inspired by Atom One Dark -*- lexical-binding: t; no-byte-compile: t; -*-
+;;
+;;; Commentary:
+;;
+;;; Code:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -37,6 +40,19 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; (defun +face (name &rest args)
+;;   (list name (list (list t args))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(deftheme fabrice-dark
+  "Created 2024-02-06.")
+
+;; (custom-theme-set-faces THEME &rest ARGS)
+;;   ARGS: (FACE SPEC [NOW [COMMENT]])...
+;;   -> (defface FACE SPEC DOC &rest ARGS)
+;;   SPEC is alist ((DISPLAY . ATTS)...)
+;;   DISPLAY: t which matches all terminals
 (custom-theme-set-faces
  'fabrice-dark
 

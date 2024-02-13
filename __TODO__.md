@@ -1,5 +1,8 @@
 ---
 
+- Error in post-command-hook (vertico--exhibit): (void-function +vertico-basic-remote-all-completions)
+  Error in pre-command-hook (vertico--prepare): (void-function +vertico-basic-remote-all-completions)
+- C-s vs ivy ?
 - look doom config
 - check module autoload.el
 - vertico

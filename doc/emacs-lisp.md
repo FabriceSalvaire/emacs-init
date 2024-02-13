@@ -177,3 +177,30 @@ as a property list:
 `(plist-get PLIST PROP &optional PREDICATE)`
 Extract a value from a property list.
 PLIST is a property list, which is a list of the form (PROP1 VALUE1 PROP2 VALUE2...)
+
+# Symbol Properties
+
+- [Symbol Properties](https://www.gnu.org/software/emacs/manual/html_node/elisp/Symbol-Properties.html)
+- [Standard Properties](https://www.gnu.org/software/emacs/manual/html_node/elisp/Standard-Properties.html)
+
+```
+(put symbol property value)
+```
+
+# Autoload
+
+[Autoload (GNU Emacs Lisp Reference Manual)](https://www.gnu.org/software/emacs/manual/html_node/elisp/Autoload.html)
+
+The autoload facility lets you register the existence of a function or macro, but put off loading
+the file that defines it. The first call to the function automatically loads the proper library, in
+order to install the real definition and other associated code, then runs the real definition as if
+it had been loaded all along. Autoloading can also be triggered by looking up the documentation of
+the function or macro), and completion of variable and function names.
+
+There are two ways to set up an autoloaded function: by calling autoload, and by writing a “magic”
+comment in the source before the real definition
+
+```
+;;;###autoload
+(defun foo () ...)
+```
