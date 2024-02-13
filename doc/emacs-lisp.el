@@ -55,6 +55,12 @@ foo+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
+;; Number
+
+(1+ 1) ; ⇒ 2
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;; String
 ;; [Strings and Characters](https://www.gnu.org/software/emacs/manual/html_node/elisp/Strings-and-Characters.html)
 
@@ -85,6 +91,18 @@ foo+
 (setcdr alist 'bb) ; ⇒ bb and now alist = (aa . bb)
 
 (list 'a 'b 'c) ; ⇒ (a b c)
+
+;; returns t if object1 and object2 are the same object, and nil otherwise
+(eq object1 object2)
+(eq 'foo 'foo) ; ⇒ t
+(eq ?A ?A) ; ⇒ t
+(eq '(1 (2 (3))) '(1 (2 (3)))) ; ⇒ nil
+;; don't use for float or string !
+
+;; returns t if object1 and object2 have equal components, and nil otherwise
+(equal object1 object2)
+(equal "asdf" "asdf") ; ⇒ t
+(equal '(1 (2 (3))) '(1 (2 (3)))) ; ⇒ t
 
 ;; Return non-nil if ELT is an element of LIST.  Comparison done with eq.
 (memq ELT LIST)
@@ -128,9 +146,20 @@ foo+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; helper functions
+;; Variable
 
-(1+ 1) ; ⇒ 2
+;; Sets up local bindings for a certain set of variables, as specified by bindings,
+;; and then evaluates all of the forms in textual order.
+(setq y 2)
+(let ((y 1)
+      (z y))
+  (list y z)) ; ⇒ (1 2)
+
+;; like let, but it binds each variable right after computing its local value,
+;; before computing the local value for the next variable.
+(let* ((y 1)
+       (z y)) ; Use the just-established value of y
+  (list y z)) ; ⇒ (1 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -322,5 +351,16 @@ foo+
          1 2 3)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+;;
+;; Macro
+;;
 ;; [Macros](https://www.gnu.org/software/emacs/manual/html_node/elisp/Macros.html)
+;;
+;; Macros enable you to define new control constructs and other language features. A macro is
+;; defined much like a function, but instead of telling how to compute a value, it tells how to
+;; compute another Lisp expression which will in turn compute the value. We call this expression the
+;; expansion of the macro.
+
+(defmacro inc (var)
+   (list 'setq var (list '1+ var)))
+(macroexpand '(inc r)) ; ⇒ (setq r (1+ r))
