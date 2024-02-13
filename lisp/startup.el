@@ -12,8 +12,10 @@
 ;;     - start server
 ;;
 ;; See also early-init.el
+;; See doom-start.el
 ;;
-;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Startup-Summary.html#Startup-Summary
+;; Emacs Startup
+;;  https://www.gnu.org/software/emacs/manual/html_node/elisp/Startup-Summary.html#Startup-Summary
 ;;  1. ...
 ;;  2. set before-init-time
 ;;  6. load early-init.el
@@ -169,7 +171,9 @@
                    (time-subtract after-init-time before-init-time)))
            gcs-done))
 
+;; Fixme:
 (add-hook 'emacs-startup-hook #'_display-startup-time)
+;;(add-hook 'doom-after-init-hook #'_display-startup-time 110)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
