@@ -260,7 +260,8 @@ triggering hooks during startup."
   ;; Initialize `doom-switch-buffer-hook'
   (add-hook 'window-buffer-change-functions #'doom-run-switch-buffer-hooks-h)
   ;; `window-buffer-change-functions' doesn't trigger for files visited via the server.
-  (add-hook 'server-visit-hook #'doom-run-switch-buffer-hooks-h))
+  (add-hook 'server-visit-hook #'doom-run-switch-buffer-hooks-h)
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

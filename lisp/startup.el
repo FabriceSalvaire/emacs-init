@@ -12,29 +12,37 @@
 ;;     - start server
 ;;
 ;; See also early-init.el
-;; See doom-start.el
-;;
-;; Emacs Startup
-;;  https://www.gnu.org/software/emacs/manual/html_node/elisp/Startup-Summary.html#Startup-Summary
-;;  1. ...
-;;  2. set before-init-time
-;;  6. load early-init.el
-;;  7. call package-activate-all
-;;  8. initialize the window system
-;;  9. before-init-hook
-;; 14. load init.el
-;; 17. set after-init-time
-;; 18. run after-init-hook and delayed-warnings-hook
-;; 26. run emacs-startup-hook
-;; 28. run window-setup-hook
-;; 30. If a daemon was requested, it calls server-start
-;; 31. call emacs-session-restore
+;; See doom.el doom-start.el
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Custom hooks
+
+(defcustom doom-before-init-hook ()
+  "A hook run after Doom's core has initialized; before user configuration.
+
+This is triggered right before $DOOMDIR/init.el is loaded, in the context of
+early-init.el. Use this for configuration at the latest opportunity before the
+session becomes unpredictably complicated by user config, packages, etc. This
+runs in both interactive and non-interactive contexts, so guard hooks
+appropriately against `noninteractive' or the `cli' context (see
+`doom-context').
+
+In contrast, `before-init-hook' is run just after $DOOMDIR/init.el is loaded,
+but long before your modules and $DOOMDIR/config.el are loaded."
+  :group 'doom
+  :type 'hook)
+
+(defcustom doom-after-init-hook ()
+  "A hook run once Doom's core and modules, and the user's config are loaded.
+
+This triggers at the absolute latest point in the eager startup process, and
+runs in both interactive and non-interactive sessions, so guard hooks
+appropriately against `noninteractive' or the `cli' context."
+  :group 'doom
+  :type 'hook)
 
 (defcustom doom-first-buffer-hook ()
   "Transient hooks run before the first interactively opened buffer."
@@ -80,7 +88,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; See doom-startup.el
+;; See doom-start.el
 
 ;;; Reasonable defaults for interactive sessions
 
@@ -89,24 +97,23 @@
 ;; (setq auto-mode-case-fold nil)
 
 ;; PERF: Disable bidirectional text scanning for a modest performance boost.
-;;   I've set this to `nil' in the past, but the `bidi-display-reordering's docs
-;;   say that is an undefined state and suggest this to be just as good:
+;; I've set this to `nil' in the past, but the `bidi-display-reordering's docs say that is an
+;; undefined state and suggest this to be just as good:
 (setq-default bidi-display-reordering 'left-to-right
               bidi-paragraph-direction 'left-to-right)
 
-;; PERF: Disabling BPA makes redisplay faster, but might produce incorrect
-;;   reordering of bidirectional text with embedded parentheses (and other
-;;   bracket characters whose 'paired-bracket' Unicode property is non-nil).
+;; PERF: Disabling BPA makes redisplay faster, but might produce incorrect reordering of
+;; bidirectional text with embedded parentheses (and other bracket characters whose 'paired-bracket'
+;; Unicode property is non-nil).
 (setq bidi-inhibit-bpa t)  ; Emacs 27+ only
 
-;; Reduce rendering/line scan work for Emacs by not rendering cursors or regions
-;; in non-focused windows.
+;; Reduce rendering/line scan work for Emacs by not rendering cursors or regions in non-focused
+;; windows.
 (setq-default cursor-in-non-selected-windows nil)
 (setq highlight-nonselected-windows nil)
 
-;; More performant rapid scrolling over unfontified regions. May cause brief
-;; spells of inaccurate syntax highlighting right after scrolling, which should
-;; quickly self-correct.
+;; More performant rapid scrolling over unfontified regions. May cause brief spells of inaccurate
+;; syntax highlighting right after scrolling, which should quickly self-correct.
 (setq fast-but-imprecise-scrolling t)
 
 ;; Don't ping things that look like domain names.
@@ -115,19 +122,17 @@
 ;; Emacs "updates" its ui more often than it needs to, so slow it down slightly
 (setq idle-update-delay 1.0)  ; default is 0.5
 
-;; Font compacting can be terribly expensive, especially for rendering icon
-;; fonts on Windows. Whether disabling it has a notable affect on Linux and Mac
-;; hasn't been determined, but do it anyway, just in case. This increases memory
-;; usage, however!
+;; Font compacting can be terribly expensive, especially for rendering icon fonts on
+;; Windows. Whether disabling it has a notable affect on Linux and Mac hasn't been determined, but
+;; do it anyway, just in case. This increases memory usage, however!
 ;; (setq inhibit-compacting-font-caches t)
 
-;; Pure GTK builds only: this timeout adds latency to frame operations, like
-;; `make-frame-invisible', which are frequently called without a guard because
-;; it's inexpensive in non-PGTK builds. Lowering the timeout from the default
-;; 0.1 should make childframes and packages that manipulate them (like `lsp-ui',
-;; `company-box', and `posframe') feel much snappier. See emacs-lsp/lsp-ui#613.
-;; (eval-when! (boundp 'pgtk-wait-for-event-timeout)
-;;   (setq pgtk-wait-for-event-timeout 0.001))
+;; Pure GTK builds only: this timeout adds latency to frame operations, like `make-frame-invisible',
+;; which are frequently called without a guard because it's inexpensive in non-PGTK builds. Lowering
+;; the timeout from the default 0.1 should make childframes and packages that manipulate them (like
+;; `lsp-ui', `company-box', and `posframe') feel much snappier. See emacs-lsp/lsp-ui#613.
+(eval-when! (boundp 'pgtk-wait-for-event-timeout)
+  (setq pgtk-wait-for-event-timeout 0.001))
 
 ;; Increase how much is read from processes in a single chunk (default is 4kb).
 ;; This is further increased elsewhere, where needed (like our LSP module).
@@ -172,8 +177,9 @@
            gcs-done))
 
 ;; Fixme:
-(add-hook 'emacs-startup-hook #'_display-startup-time)
-;;(add-hook 'doom-after-init-hook #'_display-startup-time 110)
+;; (add-hook 'emacs-startup-hook #'_display-startup-time)
+;; (add-hook 'doom-after-init-hook #'_display-startup-time 110)
+(add-hook 'doom-first-buffer-hook #'_display-startup-time 110)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -196,17 +202,33 @@
 ;;
 ;; Run Hooks on...
 
+
+(defun qmessage (amessage)
+  (let ((inhibit-read-only t))
+    (with-current-buffer (messages-buffer)
+      (goto-char (point-max))
+      (when (not (bolp))
+        (insert "\n"))
+      (insert amessage)
+      (when (not (bolp))
+        (insert "\n")))))
+
 (defun _log/doom-first-buffer-hook ()
-  (message ">>> doom-first-buffer-hook"))
+  (qmessage ">>> doom-first-buffer-hook"))
 (add-hook 'doom-first-buffer-hook #'_log/doom-first-buffer-hook)
 
 (defun _log/doom-first-file-hook ()
-  (message ">>> doom-first-file-hook"))
+  (qmessage ">>> doom-first-file-hook"))
 (add-hook 'doom-first-file-hook #'_log/doom-first-file-hook)
 
 (defun _log/doom-first-input-hook ()
-  (message ">>> doom-first-input-hook"))
+  (qmessage ">>> doom-first-input-hook"))
 (add-hook 'doom-first-input-hook #'_log/doom-first-input-hook)
+
+(unless noninteractive
+  ;; This is the absolute latest a hook can run in Emacs' startup process.
+  (define-advice command-line-1 (:after (&rest _) run-after-init-hook)
+    (doom-run-hooks 'doom-after-init-hook)))
 
 (doom-run-hook-on 'doom-first-buffer-hook '(find-file-hook doom-switch-buffer-hook))
 (doom-run-hook-on 'doom-first-file-hook   '(find-file-hook dired-initial-position-hook))

@@ -70,6 +70,7 @@
                doom-lib/plist
                doom-lib/ui
                doom-lib/fonts
+               ;; loaded in -theme.el
                ;; doom-lib/doom-themes-base
                ;; doom-lib/doom-themes
                doom-lib/doom-ui
