@@ -3,7 +3,7 @@
 ;;
 ;;; Code:
 
-;; See also early-init.el
+;; See also `early-init.el` and `lisp/code/REAMDE.md`
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -34,60 +34,20 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defvar init--module-options nil)
-
-(defun init--load-modules (args)
-  "Helper to load Lisp files."
-  (catch ':stop
-    (dolist (module args)
-      (if (eq module ':stop)
-          (progn
-            (message "Stop sub-module loading")
-            (throw ':stop nil))
-        (let ((fist-char (substring (symbol-name module) 0 1)))
-          (if (equal fist-char "+")
-              (push  module init--module-options)
-            (let ((path (concat (symbol-name module) ".el")))
-              ;; (load FILE &optional NOERROR NOMESSAGE NOSUFFIX MUST-SUFFIX)
-              ;; (load path t t)
-              (load path nil nil)
-              )))))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; require `load-path`
+(load "core/bootstrap.el")
 
 (init--load-modules '(
                ;; instead to comment several lines to stop at some point
                ;; use keyword
                ;;   :stop
 
-               ;; 0 load early-init.el
-               ;; 1 load this init.el...
-
-               ;; Fixme: move
-               ;; load internal libraries
-               doom-lib/doom-lib
-               doom-lib/buffers
-               doom-lib/plist
-               doom-lib/ui
-               doom-lib/fonts
-               ;; loaded in -theme.el
-               ;; doom-lib/doom-themes-base
-               ;; doom-lib/doom-themes
-               doom-lib/doom-ui
-
-               startup
-               ;; packages
-               packages-straight
-               keybinding
-               ui
-               core
-
                user-functions
 
                ;; completion/previous ; buffer switch
                completion/company
                completion/vertico
-               edition
+               edition ; -> core ???
                ;; undo
                speller
 
@@ -111,8 +71,6 @@
                post-keybinding
                ))
 
-(message "init--module-options %s" init--module-options)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Custom Settings
@@ -121,6 +79,8 @@
 (load custom-file t t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Complete init startup
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1024 1024))
