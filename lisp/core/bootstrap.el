@@ -49,6 +49,7 @@
                core/startup
                ;; packages
                core/packages-straight
+               doom-lib/keys
                core/keybinding
                core/ui
                core/core
