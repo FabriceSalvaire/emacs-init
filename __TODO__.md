@@ -1,5 +1,7 @@
 ---
 
+- fond blanc au démarrage
+- merge bootstrap / startup, rename core ?
 - move defun etc. doom-lib
 - [X] Error in post-command-hook (vertico--exhibit): (void-function +vertico-basic-remote-all-completions)
   [X] Error in pre-command-hook (vertico--prepare): (void-function +vertico-basic-remote-all-completions)
