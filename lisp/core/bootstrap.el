@@ -46,13 +46,13 @@
                ;; doom-lib/doom-themes
                doom-lib/doom-ui
 
-               core/startup
+               startup
                ;; packages
-               core/packages-straight
+               packages-straight
                doom-lib/keys
-               core/keybinding
-               core/ui
-               core/core
+               keybinding
+               ui
+               core
                ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -19,18 +19,23 @@
 ;;
 ;; Path Settings
 
-;; user-emacs-directory -> "~/.config/emacs-legacy/"
+;; user-emacs-directory -> "~/.config/emacs/"
 
 (defconst local_path_prefix "/home/common/emacs") ; this is the only absolut path for Emacs files
-;; (defconst local_checkout_path (file-name-concat local_path_prefix "checkout"))
-;; (defconst local_emacs_site_lisp_path (file-name-concat local_checkout_path "emacs-site-lisp"))
 (defconst local_emacs_d_path (file-name-concat local_path_prefix "lisp"))
 (defconst local_theme_path (file-name-concat local_path_prefix "themes"))
 
 (add-to-list 'load-path local_emacs_d_path)
+(add-to-list 'load-path (file-name-concat local_emacs_d_path "doom-lib"))
+(add-to-list 'load-path (file-name-concat local_emacs_d_path "core"))
+(add-to-list 'load-path (file-name-concat local_emacs_d_path "modules"))
 (add-to-list 'load-path local_theme_path)
-;; (add-to-list 'load-path local_emacs_site_lisp_path)
+
 (add-to-list 'custom-theme-load-path local_theme_path)
+
+;; (add-to-list 'load-path local_emacs_site_lisp_path)
+;; (defconst local_checkout_path (file-name-concat local_path_prefix "checkout"))
+;; (defconst local_emacs_site_lisp_path (file-name-concat local_checkout_path "emacs-site-lisp"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -65,7 +70,6 @@
                lang/web
                checker
                git
-               +foo
 
                ;; finally
                post-keybinding
