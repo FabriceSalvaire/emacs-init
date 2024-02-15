@@ -54,22 +54,22 @@
                completion/vertico
                edition ; -> core ???
                ;; undo
-               speller
+               checkers/speller
 
-               file-manager
+               emacs/file-manager
                sysadmin
 
-               tree-sitter
-               ;; code-completion
-               magit
+               tools/tree-sitter
+               ;; code-completion/code-completion
+               tools/magit
                ;; lang/lang
                lang/emacs-lisp
                lang/markdown
                lang/c-java
                lang/python
                lang/web
-               checker
-               git
+               checkers/checker
+               tools/git
 
                ;; finally
                post-keybinding
