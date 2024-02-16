@@ -150,7 +150,7 @@ or if the current buffer is read-only or not file-visiting."
 
 (defun doom--make-font-specs (face font)
   ;; font is unused
-  ;; (message ">>> Run doom--make-font-specs %s %s" face font)
+  ;; (doom-log "Run doom--make-font-specs %s %s" face font)
   (let* ((base-specs (cadr (assq 'user (get face 'theme-face))))
          (base-specs (or base-specs '((t nil))))
          (attrs '(:family :foundry :slant :weight :height :width))
@@ -165,13 +165,13 @@ or if the current buffer is read-only or not file-visiting."
           (dolist (attr attrs)
             (setq plist (plist-put plist attr (face-attribute face attr)))))
         (push (list display plist) new-specs)))
-    ;; (message ">>> %s" new-specs)
+    ;; (doom-log "%s" new-specs)
     (nreverse new-specs)))
 
 
 (defun doom-init-fonts-h (&optional reload)
   "Loads `doom-font'."
-  (message ">>> Run doom-init-fonts-h %s" doom-font)
+  (doom-log "Run doom-init-fonts-h %s" doom-font)
   (dolist (map `((default . ,doom-font)
                  (fixed-pitch . ,doom-font)
                  (fixed-pitch-serif . ,doom-serif-font)
@@ -214,7 +214,7 @@ or if the current buffer is read-only or not file-visiting."
 
 (defun doom-init-theme-h (&rest _)
   "Load the theme specified by `doom-theme' in FRAME."
-  (message ">>> Run doom-init-theme-h %s" doom-theme)
+  (doom-log "Run doom-init-theme-h %s" doom-theme)
   (when (and doom-theme (not (custom-theme-enabled-p doom-theme)))
     (load-theme doom-theme t)))
 
@@ -246,7 +246,7 @@ or if the current buffer is read-only or not file-visiting."
 
 These should be done as late as possible, as to avoid/minimize prematurely
 triggering hooks during startup."
-  (message ">>> Run doom-init-ui-h")
+  (doom-log "Run doom-init-ui-h")
   (doom-run-hooks 'doom-init-ui-hook)
 
   (add-hook 'kill-buffer-query-functions #'doom-protect-fallback-buffer-h)
