@@ -1,11 +1,20 @@
 ;;; keys.el --- keys -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;
+;; Fixme: clean evil...
+;;
+;; See core/keybinding.el
+;;
 ;;; Code:
 
-;; See core/keybinding.el
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Fixme: clean evil...
+(defvar doom-leader-alt-key "M-SPC"
+  "An alternative leader prefix key, used for Insert and Emacs states, and for non-evil users.")
+
+(defvar doom-localleader-alt-key "M-SPC m"
+  "The localleader prefix key, for major-mode specific commands.
+ Used for Insert and Emacs states, and for non-evil users.")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -19,101 +28,109 @@
 (defalias 'undefine-key! #'general-unbind)
 
 ;; Prevent "X starts with non-prefix key Y" errors except at startup.
-;; (add-hook 'doom-after-modules-init-hook #'general-auto-unbind-keys)
+;; Advise define-key to automatically unbind keys when necessary.
+;; Fixme: check doom-after-modules-init-hook run time
+(add-hook 'doom-after-modules-init-hook #'general-auto-unbind-keys)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; ;; HACK: `map!' uses this instead of `define-leader-key!' because it consumes
-;; ;;   20-30% more startup time, so we reimplement it ourselves.
-;; (defmacro doom--define-leader-key (&rest keys)
-;;   (let (prefix forms wkforms)
-;;     (while keys
-;;       (let ((key (pop keys))
-;;             (def (pop keys)))
-;;         (if (keywordp key)
-;;             (when (memq key '(:prefix :infix))
-;;               (setq prefix def))
-;;           (when prefix
-;;             (setq key `(general--concat t ,prefix ,key)))
-;;           (let* ((udef (cdr-safe (doom-unquote def)))
-;;                  (bdef (if (general--extended-def-p udef)
-;;                            (general--extract-def (general--normalize-extended-def udef))
-;;                          def)))
-;;             (unless (eq bdef :ignore)
-;;               (push `(define-key doom-leader-map (general--kbd ,key)
-;;                        ,bdef)
-;;                     forms))
-;;             (when-let (desc (cadr (memq :which-key udef)))
-;;               (prependq!
-;;                wkforms `((which-key-add-key-based-replacements
-;;                            (general--concat t doom-leader-alt-key ,key)
-;;                            ,desc)
-;;                          (which-key-add-key-based-replacements
-;;                            (general--concat t doom-leader-key ,key)
-;;                            ,desc))))))))
-;;     (macroexp-progn
-;;      (append (and wkforms `((after! which-key ,@(nreverse wkforms))))
-;;              (nreverse forms)))))
+;; HACK: `map!' uses this instead of `define-leader-key!' because it consumes
+;;   20-30% more startup time, so we reimplement it ourselves.
+(defmacro doom--define-leader-key (&rest keys)
+  (let (prefix forms wkforms)
+    (while keys
+      (let ((key (pop keys))
+            (def (pop keys)))
+        (if (keywordp key)
+            (when (memq key '(:prefix :infix))
+              (setq prefix def))
+          (when prefix
+            (setq key `(general--concat t ,prefix ,key)))
+          (let* ((udef (cdr-safe (doom-unquote def)))
+                 (bdef (if (general--extended-def-p udef)
+                           (general--extract-def (general--normalize-extended-def udef))
+                         def)))
+            (unless (eq bdef :ignore)
+              (push `(define-key doom-leader-map (general--kbd ,key)
+                       ,bdef)
+                    forms))
+            (when-let (desc (cadr (memq :which-key udef)))
+              (prependq!
+               wkforms `((which-key-add-key-based-replacements
+                           (general--concat t doom-leader-alt-key ,key)
+                           ,desc)
+                         (which-key-add-key-based-replacements
+                           (general--concat t doom-leader-key ,key)
+                           ,desc))))))))
+    (macroexp-progn
+     (append (and wkforms `((after! which-key ,@(nreverse wkforms))))
+             (nreverse forms)))))
 
-;; (defmacro define-leader-key! (&rest args)
-;;   "Define <leader> keys.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Uses `general-define-key' under the hood, but does not support :states,
-;; :wk-full-keys or :keymaps. Use `map!' for a more convenient interface.
+(defmacro define-leader-key! (&rest args)
+  "Define <leader> keys.
 
-;; See `doom-leader-key' and `doom-leader-alt-key' to change the leader prefix."
-;;   `(general-define-key
-;;     :states nil
-;;     :wk-full-keys nil
-;;     :keymaps 'doom-leader-map
-;;     ,@args))
+Uses `general-define-key' under the hood, but does not support :states,
+:wk-full-keys or :keymaps. Use `map!' for a more convenient interface.
 
-;; (defmacro define-localleader-key! (&rest args)
-;;   "Define <localleader> key.
+See `doom-leader-key' and `doom-leader-alt-key' to change the leader prefix."
+  `(general-define-key
+    :states nil
+    :wk-full-keys nil
+    :keymaps 'doom-leader-map
+    ,@args))
 
-;; Uses `general-define-key' under the hood, but does not support :major-modes,
-;; :states, :prefix or :non-normal-prefix. Use `map!' for a more convenient
-;; interface.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; See `doom-localleader-key' and `doom-localleader-alt-key' to change the
-;; localleader prefix."
-;;   (if (modulep! :editor evil)
-;;       ;; :non-normal-prefix doesn't apply to non-evil sessions (only evil's
-;;       ;; emacs state)
-;;       `(general-define-key
-;;         :states '(normal visual motion emacs insert)
-;;         :major-modes t
-;;         :prefix doom-localleader-key
-;;         :non-normal-prefix doom-localleader-alt-key
-;;         ,@args)
-;;     `(general-define-key
-;;       :major-modes t
-;;       :prefix doom-localleader-alt-key
-;;       ,@args)))
+(defmacro define-localleader-key! (&rest args)
+  "Define <localleader> key.
 
-;; ;; PERF: We use a prefix commands instead of general's
-;; ;;   :prefix/:non-normal-prefix properties because general is incredibly slow
-;; ;;   binding keys en mass with them in conjunction with :states -- an effective
-;; ;;   doubling of Doom's startup time!
-;; (define-prefix-command 'doom/leader 'doom-leader-map)
-;; (define-key doom-leader-map [override-state] 'all)
+Uses `general-define-key' under the hood, but does not support :major-modes,
+:states, :prefix or :non-normal-prefix. Use `map!' for a more convenient
+interface.
 
-;; ;; Bind `doom-leader-key' and `doom-leader-alt-key' as late as possible to give
-;; ;; the user a chance to modify them.
-;; (add-hook! 'doom-after-init-hook
-;;   (defun doom-init-leader-keys-h ()
-;;     "Bind `doom-leader-key' and `doom-leader-alt-key'."
-;;     (let ((map general-override-mode-map))
-;;       (if (not (featurep 'evil))
-;;           (progn
-;;             (cond ((equal doom-leader-alt-key "C-c")
-;;                    (set-keymap-parent doom-leader-map mode-specific-map))
-;;                   ((equal doom-leader-alt-key "C-x")
-;;                    (set-keymap-parent doom-leader-map ctl-x-map)))
-;;             (define-key map (kbd doom-leader-alt-key) 'doom/leader))
-;;         (evil-define-key* '(normal visual motion) map (kbd doom-leader-key) 'doom/leader)
-;;         (evil-define-key* '(emacs insert) map (kbd doom-leader-alt-key) 'doom/leader))
-;;       (general-override-mode +1))))
+See `doom-localleader-key' and `doom-localleader-alt-key' to change the
+localleader prefix."
+  ;; (if (modulep! :editor evil)
+  ;;     ;; :non-normal-prefix doesn't apply to non-evil sessions (only evil's
+  ;;     ;; emacs state)
+  ;;     `(general-define-key
+  ;;       :states '(normal visual motion emacs insert)
+  ;;       :major-modes t
+  ;;       :prefix doom-localleader-key
+  ;;       :non-normal-prefix doom-localleader-alt-key
+  ;;       ,@args)
+  `(general-define-key
+    :major-modes t
+    :prefix doom-localleader-alt-key
+    ,@args))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; PERF: We use a prefix commands instead of general's
+;;   :prefix/:non-normal-prefix properties because general is incredibly slow
+;;   binding keys en mass with them in conjunction with :states -- an effective
+;;   doubling of Doom's startup time!
+(define-prefix-command 'doom/leader 'doom-leader-map)
+(define-key doom-leader-map [override-state] 'all)
+
+;; Bind `doom-leader-key' and `doom-leader-alt-key' as late as possible to give
+;; the user a chance to modify them.
+(add-hook! 'doom-after-init-hook
+  (defun doom-init-leader-keys-h ()
+    "Bind `doom-leader-key' and `doom-leader-alt-key'."
+    (let ((map general-override-mode-map))
+      (if (not (featurep 'evil))
+          (progn
+            (cond ((equal doom-leader-alt-key "C-c")
+                   (set-keymap-parent doom-leader-map mode-specific-map))
+                  ((equal doom-leader-alt-key "C-x")
+                   (set-keymap-parent doom-leader-map ctl-x-map)))
+            (define-key map (kbd doom-leader-alt-key) 'doom/leader))
+        (evil-define-key* '(normal visual motion) map (kbd doom-leader-key) 'doom/leader)
+        (evil-define-key* '(emacs insert) map (kbd doom-leader-alt-key) 'doom/leader))
+      (general-override-mode +1))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -162,12 +179,12 @@
 
               ((keywordp key)
                (pcase key
-                 ;; (:leader
-                 ;;  (doom--map-commit)
-                 ;;  (setq doom--map-fn 'doom--define-leader-key))
-                 ;; (:localleader
-                 ;;  (doom--map-commit)
-                 ;;  (setq doom--map-fn 'define-localleader-key!))
+                 (:leader
+                  (doom--map-commit)
+                  (setq doom--map-fn 'doom--define-leader-key))
+                 (:localleader
+                  (doom--map-commit)
+                  (setq doom--map-fn 'define-localleader-key!))
                  (:after
                   (doom--map-nested (list 'after! (pop rest)) rest)
                   (setq rest nil))

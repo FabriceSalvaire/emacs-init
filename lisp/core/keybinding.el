@@ -1,12 +1,14 @@
 ;;; keybinding.el --- keybinding -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;
-;; A centralized keybinds system, integrated with `which-key' to preview available keybindings. All
-;; built into one powerful macro: `map!'.
+;; Fixme: clean evil...
+;;
+;; A centralized keybinds system, integrated with `which-key' to preview available keybindings.
+;; All built into one powerful macro: `map!'.
+;;
+;; See doom-lib/keys.el for library code.
 ;;
 ;;; Code:
-
-;; Fixme: clean evil...
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

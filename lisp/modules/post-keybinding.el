@@ -4,8 +4,7 @@
 ;;
 ;; Key Bindings
 ;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; List all regularly used key bindings.
 ;;
 ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Commands.html
 ;;
@@ -26,6 +25,12 @@
 ;;   Alt L   : 64
 ;;   Hyper_L Super_L
 ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Sensible default key bindings for non-evil users
+(setq doom-leader-alt-key      "C-c"
+      doom-localleader-alt-key "C-c l")
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; M-x speedbar
