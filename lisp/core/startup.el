@@ -213,18 +213,6 @@ appropriately against `noninteractive' or the `cli' context."
       (when (not (bolp))
         (insert "\n")))))
 
-(defun _log/doom-first-buffer-hook ()
-  (qmessage ">>> doom-first-buffer-hook"))
-(add-hook 'doom-first-buffer-hook #'_log/doom-first-buffer-hook)
-
-(defun _log/doom-first-file-hook ()
-  (qmessage ">>> doom-first-file-hook"))
-(add-hook 'doom-first-file-hook #'_log/doom-first-file-hook)
-
-(defun _log/doom-first-input-hook ()
-  (qmessage ">>> doom-first-input-hook"))
-(add-hook 'doom-first-input-hook #'_log/doom-first-input-hook)
-
 (unless noninteractive
   ;; This is the absolute latest a hook can run in Emacs' startup process.
   (define-advice command-line-1 (:after (&rest _) run-after-init-hook)

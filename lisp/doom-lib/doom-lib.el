@@ -2,7 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
-;;; Custom error types
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Custom error types
+
 (define-error 'doom-error "An unexpected Doom error")
 (define-error 'doom-nosync-error "Doom hasn't been initialized yet; did you remember to run 'doom sync' in the shell?" 'doom-error)
 (define-error 'doom-core-error "Unexpected error in Doom's core" 'doom-error)
@@ -13,10 +16,11 @@
 (define-error 'doom-package-error "Error with packages" 'doom-error)
 (define-error 'doom-profile-error "Error while processing profiles" 'doom-error)
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Logging
+;; Logging
 
+;; To enable logging starts Emacs using `--debug-init`
 (defvar doom-inhibit-log (not (or noninteractive init-file-debug))
   "If non-nil, suppress `doom-log' output.")
 
@@ -39,6 +43,7 @@
            ;;  ":")
            args)))
 
+
 (defmacro doom-log (message &rest args)
   "Log a message in *Messages*.
 
@@ -48,9 +53,9 @@ debug mode is off. Return non-nil."
   (declare (debug t))
   `(unless doom-inhibit-log (doom--log ,message ,@args)))
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Helpers
+;; Helpers
 
 (defun doom--resolve-hook-forms (hooks)
   "Converts a list of modes into a list of hook symbols.
@@ -86,11 +91,11 @@ list is returned as-is."
                           (intern (format "doom--setq-%s-for-%s-h"
                                           var mode))))))
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Public library
+;; Public library
 
-(define-obsolete-function-alias 'doom-enlist 'ensure-list "v3.0.0")
+;; (define-obsolete-function-alias 'doom-enlist 'ensure-list "v3.0.0")
 
 (defun doom-unquote (exp)
   "Return EXP unquoted."
@@ -99,11 +104,13 @@ list is returned as-is."
     (setq exp (cadr exp)))
   exp)
 
+
 (defun doom-keyword-intern (str)
   "Converts STR (a string) into a keyword (`keywordp')."
   (declare (pure t) (side-effect-free t))
   (cl-check-type str string)
   (intern (concat ":" str)))
+
 
 (defun doom-keyword-name (keyword)
   "Returns the string name of KEYWORD (`keywordp') minus the leading colon."
@@ -111,7 +118,9 @@ list is returned as-is."
   (cl-check-type keyword keyword)
   (substring (symbol-name keyword) 1))
 
+
 (defalias 'doom-partial #'apply-partially)
+
 
 (defun doom-rpartial (fn &rest args)
   "Return a partial application of FUN to right-hand ARGS.
@@ -122,6 +131,7 @@ at the values with which this function was called."
   (declare (side-effect-free t))
   (lambda (&rest pre-args)
     (apply fn (append pre-args args))))
+
 
 (defun doom-lookup-key (keys &rest keymaps)
   "Like `lookup-key', but search active keymaps if KEYMAP is omitted."
@@ -140,6 +150,7 @@ at the values with which this function was called."
              if (keymapp keymap)
              if (lookup-key keymap keys)
              return it)))
+
 
 (defun doom-load (path &optional noerror)
   "Load PATH and handle any Doom errors that arise from it.
@@ -167,6 +178,7 @@ If NOERROR, don't throw an error if PATH doesn't exist."
                    ('doom-error))
              (list path e)))))
 
+
 (defun doom-require (feature &optional filename noerror)
   "Like `require', but handles and enhances Doom errors.
 
@@ -180,6 +192,7 @@ Can also load Doom's subfeatures, e.g. (doom-require 'doom-lib 'files)"
                                (symbol-name filename))
            (symbol-name feature))
          noerror))))
+
 
 (defun doom-load-envvars-file (file &optional noerror)
   "Read and set envvars from FILE.
@@ -206,6 +219,7 @@ unreadable. Returns the names of envvars that were changed."
               (set-time-zone-rule newtz))))
         env))))
 
+
 (defvar doom--hook nil)
 (defun doom-run-hook (hook)
   "Run HOOK (a hook function) with better error handling.
@@ -217,6 +231,7 @@ Meant to be used with `run-hook-wrapped'."
      (signal 'doom-hook-error (list hook e))))
   ;; return nil so `run-hook-wrapped' won't short circuit
   nil)
+
 
 (defun doom-run-hooks (&rest hooks)
   "Run HOOKS (a list of hook variable symbols) with better error handling.
@@ -233,6 +248,7 @@ Is used as advice to replace `run-hooks'."
                   (cadr e))
                 (caddr e)))
        (signal 'doom-hook-error (cons hook (cdr e)))))))
+
 
 (defun doom-run-hook-on (hook-var trigger-hooks)
   "Configure HOOK-VAR to be invoked exactly once when any of the TRIGGER-HOOKS
@@ -272,6 +288,7 @@ TRIGGER-HOOK is a list of quoted hooks and/or sharp-quoted functions."
             ((add-hook hook fn -101)))
       fn)))
 
+
 (defun doom-compile-functions (&rest fns)
   "Queue FNS to be byte/natively-compiled after a brief delay."
   (with-memoization (get 'doom-compile-function 'timer)
@@ -288,9 +305,9 @@ TRIGGER-HOOK is a list of quoted hooks and/or sharp-quoted functions."
                   (cancel-timer (get 'doom-compile-function 'timer))
                   (put 'doom-compile-function 'timer nil))))))
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Sugars
+;; Sugars
 
 (defmacro file! ()
   "Return the file of the file this macro was called."
@@ -303,13 +320,16 @@ TRIGGER-HOOK is a list of quoted hooks and/or sharp-quoted functions."
    buffer-file-name   ; for `eval'
    (error "file!: cannot deduce the current file path")))
 
+
 (defmacro dir! ()
   "Return the directory of the file this macro was called."
    (let (file-name-handler-alist)
      (file-name-directory (macroexpand '(file!)))))
 
+
 ;; REVIEW Should I deprecate this? The macro's name is so long...
 (defalias 'letenv! 'with-environment-variables)
+
 
 (defmacro letf! (bindings &rest body)
   "Temporarily rebind function, macros, and advice in BODY.
@@ -358,6 +378,7 @@ NAME, ARGLIST, and BODY are the same as `defun', `defun*', `defmacro', and
                  (setq type (list 'symbol-function type)))
                (list 'cl-letf (list (cons type rest)) body)))))))
 
+
 (defmacro quiet! (&rest forms)
   "Run FORMS without generating any output.
 
@@ -379,6 +400,7 @@ echo-area, but not to *Messages*."
                (save-silently t))
            (prog1 ,@forms (message ""))))))
 
+
 (defmacro eval-if! (cond then &rest body)
   "Expands to THEN if COND is non-nil, to BODY otherwise.
 COND is checked at compile/expansion time, allowing BODY to be omitted entirely
@@ -389,12 +411,14 @@ macros that could safely be removed at compile time."
       then
     (macroexp-progn body)))
 
+
 (defmacro eval-when! (cond &rest body)
   "Expands to BODY if CONDITION is non-nil at compile/expansion time.
 See `eval-if!' for details on this macro's purpose."
   (declare (indent 1))
   (when (eval cond)
     (macroexp-progn body)))
+
 
 (defmacro versionp! (v1 comp v2 &rest comps)
   "Perform compound version checks.
@@ -420,6 +444,8 @@ Can chain these comparisons by adding more (COMPn Vn) pairs afterwards.
                                          (v2 ,v2))
                                      (and (not ,form) ,forms))))
           forms))))
+
+
 ;; PERF: Store in symbol plist for ultra-fast lookups at this scale.
 (setplist 'versionp! '(>  version-list-<
                        >= version-list-<=
@@ -428,7 +454,8 @@ Can chain these comparisons by adding more (COMPn Vn) pairs afterwards.
                        =  version-list-=
                        /= version-list-=))
 
-;;; Closure factories
+
+;; Closure factories
 (defmacro lambda! (arglist &rest body)
   "Returns (cl-function (lambda ARGLIST BODY...))
 The closure is wrapped in `cl-function', meaning ARGLIST will accept anything
@@ -458,6 +485,7 @@ ARGLIST."
          (allow-other-keys arglist))
       ,@body)))
 
+
 (setplist 'doom--fn-crawl '(%2 2 %3 3 %4 4 %5 5 %6 6 %7 7 %8 8 %9 9))
 (defun doom--fn-crawl (data args)
   (cond ((symbolp data)
@@ -478,6 +506,7 @@ ARGLIST."
            (while (< i len)
              (doom--fn-crawl (elt data i) args)
              (cl-incf i))))))
+
 
 (defmacro fn! (&rest args)
   "Return an lambda with implicit, positional arguments.
@@ -520,12 +549,14 @@ minus font-locking and the outer function call, plus some minor optimizations."
                 ,@(and (aref argv 0) '(&rest %*))))
      ,@args))
 
+
 (defmacro cmd! (&rest body)
   "Returns (lambda () (interactive) ,@body)
 A factory for quickly producing interaction commands, particularly for keybinds
 or aliases."
   (declare (doc-string 1) (pure t) (side-effect-free t))
   `(lambda (&rest _) (interactive) ,@body))
+
 
 (defmacro cmd!! (command &optional prefix-arg &rest args)
   "Returns a closure that interactively calls COMMAND with ARGS and PREFIX-ARG.
@@ -539,6 +570,7 @@ COMMAND. This macro is meant to be used as a target for keybinds (e.g. with
              #'funcall-interactively
            #'call-interactively)
         ,command ,@args))))
+
 
 (defmacro cmds! (&rest branches)
   "Returns a dispatcher that runs the a command in BRANCHES.
@@ -574,7 +606,9 @@ See `general-key-dispatch' for what other arguments it accepts in BRANCHES."
                                      defs)
                            (t ,fallback))))))))
 
+
 (defalias 'kbd! #'general-simulate-key)
+
 
 ;; For backwards compatibility
 (defalias 'λ!  #'cmd!)
@@ -585,6 +619,7 @@ See `general-key-dispatch' for what other arguments it accepts in BRANCHES."
 (defmacro appendq! (sym &rest lists)
   "Append LISTS to SYM in place."
   `(setq ,sym (append ,sym ,@lists)))
+
 
 (defmacro setq! (&rest settings)
   "A more sensible `setopt' for setting customizable variables.
@@ -597,6 +632,7 @@ Unlike `setopt', this won't needlessly pull in dependencies."
             collect `(funcall (or (get ',var 'custom-set) #'set-default-toplevel-value)
                               ',var ,val))))
 
+
 (defmacro delq! (elt list &optional fetcher)
   "`delq' ELT from LIST in-place.
 
@@ -606,6 +642,7 @@ If FETCHER is a function, ELT is used as the key in LIST (an alist)."
                         elt)
                      ,list)))
 
+
 (defmacro pushnew! (place &rest values)
   "Push VALUES sequentially into PLACE, if they aren't already present.
 This is a variadic `cl-pushnew'."
@@ -613,12 +650,13 @@ This is a variadic `cl-pushnew'."
     `(dolist (,var (list ,@values) (with-no-warnings ,place))
        (cl-pushnew ,var ,place :test #'equal))))
 
+
 (defmacro prependq! (sym &rest lists)
   "Prepend LISTS to SYM in place."
   `(setq ,sym (append ,@lists ,sym)))
 
 
-;;; Loading
+;; Loading
 (defmacro add-load-path! (&rest dirs)
   "Add DIRS to `load-path', relative to the current file.
 The current file is the file from which `add-to-load-path!' is used."
@@ -626,6 +664,7 @@ The current file is the file from which `add-to-load-path!' is used."
          file-name-handler-alist)
      (dolist (dir (list ,@dirs))
        (cl-pushnew (expand-file-name dir) load-path :test #'string=))))
+
 
 (defmacro after! (package &rest body)
   "Evaluate BODY after PACKAGE have loaded.
@@ -672,6 +711,7 @@ things you want byte-compiled in them! Like function/macro definitions."
                (setq body `((after! ,next ,@body)))))
             (`(after! (:and ,@package) ,@body))))))
 
+
 (defmacro load! (filename &optional path noerror)
   "Load a file relative to the current executing file (`load-file-name').
 
@@ -684,6 +724,7 @@ If NOERROR is non-nil, don't throw an error if the file doesn't exist."
   `(doom-load
     (file-name-concat ,(or path `(dir!)) ,filename)
     ,noerror))
+
 
 (defmacro defer-until! (condition &rest body)
   "Run BODY when CONDITION is true (checks on `after-load-functions'). Meant to
@@ -701,6 +742,7 @@ serve as a predicated alternative to `after!'."
                           ,@body)))
            (put ',fn 'permanent-local-hook t)
            (add-hook 'after-load-functions #',fn)))))
+
 
 (defmacro defer-feature! (feature &rest fns)
   "Pretend FEATURE hasn't been loaded yet, until FEATURE-hook or FNS run.
@@ -726,8 +768,10 @@ to reverse this and trigger `after!' blocks at a more reasonable time."
            (dolist (fn ',fns)
              (advice-remove fn #',advice-fn)))))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Hooks
 
-;;; Hooks
 (defmacro add-transient-hook! (hook-or-function &rest forms)
   "Attaches a self-removing function to HOOK-OR-FUNCTION.
 
@@ -752,6 +796,7 @@ advised)."
              ((symbolp sym)
               (put ',fn 'permanent-local-hook t)
               (add-hook sym #',fn ,append?))))))
+
 
 (defmacro add-hook! (hooks &rest rest)
   "A convenience macro for adding N functions to M hooks.
@@ -809,6 +854,7 @@ This macro accepts, in order:
                 `(remove-hook hook func ,local-p)
               `(add-hook hook func ,(or depth append-p) ,local-p)))))))
 
+
 (defmacro remove-hook! (hooks &rest rest)
   "A convenience macro for removing N functions from M hooks.
 
@@ -819,6 +865,7 @@ If N and M = 1, there's no benefit to using this macro over `remove-hook'.
 \(fn HOOKS [:append :local] FUNCTIONS)"
   (declare (indent defun) (debug t))
   `(add-hook! ,hooks :remove ,@rest))
+
 
 (defmacro setq-hook! (hooks &rest var-vals)
   "Sets buffer-local variables on HOOKS.
@@ -831,6 +878,7 @@ If N and M = 1, there's no benefit to using this macro over `remove-hook'.
                        ,(format "%s = %s" var (pp-to-string val))
                        (setq-local ,var ,val))
             collect `(add-hook ',hook #',fn -90))))
+
 
 (defmacro unsetq-hook! (hooks &rest vars)
   "Unbind setq hooks on HOOKS for VARS.
@@ -866,6 +914,7 @@ DOCSTRING and BODY are as in `defun'.
          (dolist (target (cdr targets))
            (advice-add target (car targets) #',symbol))))))
 
+
 (defmacro undefadvice! (symbol _arglist &optional docstring &rest body)
   "Undefine an advice called SYMBOL.
 
@@ -884,107 +933,110 @@ testing advice (when combined with `rotate-text').
        (dolist (target (cdr targets))
          (advice-remove target #',symbol)))))
 
+
 (defmacro defbackport! (type symbol &rest body)
   "Backport a function/macro/alias from later versions of Emacs."
   (declare (indent defun) (doc-string 4))
   (unless (fboundp (doom-unquote symbol))
     `(,type ,symbol ,@body)))
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Backports
+;; Backports
 
-;; `format-spec' wasn't autoloaded until 28.1
-(defbackport! autoload 'format-spec "format-spec")
+;; ;; `format-spec' wasn't autoloaded until 28.1
+;; (defbackport! autoload 'format-spec "format-spec")
+;;
+;; ;; Introduced in Emacs 28.1
+;; (defbackport! defun ensure-list (object)
+;;   "Return OBJECT as a list.
+;; If OBJECT is already a list, return OBJECT itself.  If it's
+;; not a list, return a one-element list containing OBJECT."
+;;   (declare (pure t) (side-effect-free t))
+;;   (if (listp object) object (list object)))
+;;
+;; ;; Introduced in Emacs 28.1
+;; (defbackport! defun always (&rest _args)
+;;   "Do nothing and return t.
+;; This function accepts any number of ARGUMENTS, but ignores them.
+;; Also see `ignore'."
+;;   t)
+;;
+;; ;; Introduced in Emacs 28.1
+;; (defbackport! defun file-name-concat (directory &rest components)
+;;   "Append COMPONENTS to DIRECTORY and return the resulting string.
+;;
+;; Elements in COMPONENTS must be a string or nil.
+;; DIRECTORY or the non-final elements in COMPONENTS may or may not end
+;; with a slash -- if they don't end with a slash, a slash will be
+;; inserted before contatenating."
+;;   (mapconcat
+;;    #'identity
+;;    (cl-loop for str in (cons directory components)
+;;             if (and str (/= 0 (length str))
+;;                     (if (string-suffix-p "/" str)
+;;                         (substring str 0 -1)
+;;                       str))
+;;             collect it)
+;;    "/"))
+;;
+;; ;; Introduced in Emacs 28.1
+;; (defbackport! defmacro with-environment-variables (variables &rest body)
+;;   "Set VARIABLES in the environment and execute BODY.
+;; VARIABLES is a list of variable settings of the form (VAR VALUE),
+;; where VAR is the name of the variable (a string) and VALUE
+;; is its value (also a string).
+;;
+;; The previous values will be be restored upon exit."
+;;   (declare (indent 1) (debug (sexp body)))
+;;   (unless (consp variables)
+;;     (error "Invalid VARIABLES: %s" variables))
+;;   `(let ((process-environment (copy-sequence process-environment)))
+;;      ,@(cl-loop for var in variables
+;;                 collect `(setenv ,(car var) ,(cadr var)))
+;;      ,@body))
+;;
+;; ;; Introduced in Emacs 28.1
+;; (defbackport! defun file-name-with-extension (filename extension)
+;;   "Return FILENAME modified to have the specified EXTENSION.
+;; The extension (in a file name) is the part that begins with the last \".\".
+;; This function removes any existing extension from FILENAME, and then
+;; appends EXTENSION to it.
+;;
+;; EXTENSION may include the leading dot; if it doesn't, this function
+;; will provide it.
+;;
+;; It is an error if FILENAME or EXTENSION is empty, or if FILENAME
+;; is in the form of a directory name according to `directory-name-p'.
+;;
+;; See also `file-name-sans-extension'."
+;;   (let ((extn (string-trim-left extension "[.]")))
+;;     (cond ((string-empty-p filename)
+;;            (error "Empty filename"))
+;;           ((string-empty-p extn)
+;;            (error "Malformed extension: %s" extension))
+;;           ((directory-name-p filename)
+;;            (error "Filename is a directory: %s" filename))
+;;           ((concat (file-name-sans-extension filename) "." extn)))))
+;;
+;; ;; Introduced in Emacs 29+
+;; (defbackport! defmacro with-memoization (place &rest code)
+;;   "Return the value of CODE and stash it in PLACE.
+;; If PLACE's value is non-nil, then don't bother evaluating CODE
+;; and return the value found in PLACE instead."
+;;   (declare (indent 1) (debug (gv-place body)))
+;;   (gv-letplace (getter setter) place
+;;     `(or ,getter
+;;          ,(macroexp-let2 nil val (macroexp-progn code)
+;;             `(progn
+;;                ,(funcall setter val)
+;;                ,val)))))
+;;
+;; ;; Introduced in Emacs 29+ (emacs-mirror/emacs@f117b5df4dc6)
+;; (defbackport! defalias 'bol #'line-beginning-position)
+;; (defbackport! defalias 'eol #'line-end-position)
 
-;; Introduced in Emacs 28.1
-(defbackport! defun ensure-list (object)
-  "Return OBJECT as a list.
-If OBJECT is already a list, return OBJECT itself.  If it's
-not a list, return a one-element list containing OBJECT."
-  (declare (pure t) (side-effect-free t))
-  (if (listp object) object (list object)))
-
-;; Introduced in Emacs 28.1
-(defbackport! defun always (&rest _args)
-  "Do nothing and return t.
-This function accepts any number of ARGUMENTS, but ignores them.
-Also see `ignore'."
-  t)
-
-;; Introduced in Emacs 28.1
-(defbackport! defun file-name-concat (directory &rest components)
-  "Append COMPONENTS to DIRECTORY and return the resulting string.
-
-Elements in COMPONENTS must be a string or nil.
-DIRECTORY or the non-final elements in COMPONENTS may or may not end
-with a slash -- if they don't end with a slash, a slash will be
-inserted before contatenating."
-  (mapconcat
-   #'identity
-   (cl-loop for str in (cons directory components)
-            if (and str (/= 0 (length str))
-                    (if (string-suffix-p "/" str)
-                        (substring str 0 -1)
-                      str))
-            collect it)
-   "/"))
-
-;; Introduced in Emacs 28.1
-(defbackport! defmacro with-environment-variables (variables &rest body)
-  "Set VARIABLES in the environment and execute BODY.
-VARIABLES is a list of variable settings of the form (VAR VALUE),
-where VAR is the name of the variable (a string) and VALUE
-is its value (also a string).
-
-The previous values will be be restored upon exit."
-  (declare (indent 1) (debug (sexp body)))
-  (unless (consp variables)
-    (error "Invalid VARIABLES: %s" variables))
-  `(let ((process-environment (copy-sequence process-environment)))
-     ,@(cl-loop for var in variables
-                collect `(setenv ,(car var) ,(cadr var)))
-     ,@body))
-
-;; Introduced in Emacs 28.1
-(defbackport! defun file-name-with-extension (filename extension)
-  "Return FILENAME modified to have the specified EXTENSION.
-The extension (in a file name) is the part that begins with the last \".\".
-This function removes any existing extension from FILENAME, and then
-appends EXTENSION to it.
-
-EXTENSION may include the leading dot; if it doesn't, this function
-will provide it.
-
-It is an error if FILENAME or EXTENSION is empty, or if FILENAME
-is in the form of a directory name according to `directory-name-p'.
-
-See also `file-name-sans-extension'."
-  (let ((extn (string-trim-left extension "[.]")))
-    (cond ((string-empty-p filename)
-           (error "Empty filename"))
-          ((string-empty-p extn)
-           (error "Malformed extension: %s" extension))
-          ((directory-name-p filename)
-           (error "Filename is a directory: %s" filename))
-          ((concat (file-name-sans-extension filename) "." extn)))))
-
-;; Introduced in Emacs 29+
-(defbackport! defmacro with-memoization (place &rest code)
-  "Return the value of CODE and stash it in PLACE.
-If PLACE's value is non-nil, then don't bother evaluating CODE
-and return the value found in PLACE instead."
-  (declare (indent 1) (debug (gv-place body)))
-  (gv-letplace (getter setter) place
-    `(or ,getter
-         ,(macroexp-let2 nil val (macroexp-progn code)
-            `(progn
-               ,(funcall setter val)
-               ,val)))))
-
-;; Introduced in Emacs 29+ (emacs-mirror/emacs@f117b5df4dc6)
-(defbackport! defalias 'bol #'line-beginning-position)
-(defbackport! defalias 'eol #'line-end-position)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (provide 'doom-lib)
 ;;; doom-lib.el ends here
