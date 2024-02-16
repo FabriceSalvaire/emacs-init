@@ -1,6 +1,6 @@
 ;;; config/default/config.el -*- lexical-binding: t; -*-
 
-(message "load config.el")
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defvar +default-want-RET-continue-comments t
   "If non-nil, RET will continue commented lines.")
@@ -21,9 +21,9 @@
                    helm-read-file-map))))
   "A list of all the keymaps used for the minibuffer.")
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Reasonable defaults
+;; Reasonable defaults
 
 ;;;###package avy
 (setq avy-all-windows nil
@@ -32,6 +32,7 @@
       ;; the unpredictability of this (when enabled) makes it a poor default
       avy-single-candidate-jump nil)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (after! epa
   ;; With GPG 2.1+, this forces gpg-agent to use the Emacs minibuffer to prompt
@@ -57,6 +58,7 @@
     (unless (local-variable-p 'epa-file-encrypt-to)
       (setq-local epa-file-encrypt-to (default-value 'epa-file-encrypt-to)))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (after! woman
   ;; The woman-manpath default value does not necessarily match man. If we have
@@ -72,6 +74,7 @@
     (when manpath
       (setq woman-manpath manpath))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package! drag-stuff
   :defer t
@@ -81,14 +84,15 @@
         "<M-left>"  #'drag-stuff-left
         "<M-right>" #'drag-stuff-right))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;###package tramp
 (unless (featurep :system 'windows)
   (setq tramp-default-method "ssh")) ; faster than the default scp
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Smartparens config
+;; Smartparens config
 
 (when (modulep! +smartparens)
   ;; You can disable :unless predicates with (sp-pair "'" nil :unless nil)
@@ -252,9 +256,9 @@
       ;; TODO Fix this upstream, in doom-snippets, instead
       (setq sp-python-insert-colon-in-function-definitions nil))))
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Keybinding fixes
+;; Keybinding fixes
 
 ;; Highjacks backspace to delete up to nearest column multiple of `tab-width' at
 ;; a time. If you have smartparens enabled, it will also:
@@ -301,53 +305,11 @@ Continues comments if executed from a commented line. Consults
 (after! tabulated-list
   (define-key tabulated-list-mode-map "q" #'quit-window))
 
-;; OS specific fixes
-(when (featurep :system 'macos)
-  ;; Fix MacOS shift+tab
-  (define-key key-translation-map [S-iso-lefttab] [backtab])
-  ;; Fix conventional OS keys in Emacs
-  (map! "s-`" #'other-frame  ; fix frame-switching
-        ;; fix OS window/frame navigation/manipulation keys
-        "s-w" #'delete-window
-        "s-W" #'delete-frame
-        "s-n" #'+default/new-buffer
-        "s-N" #'make-frame
-        "s-q" (if (daemonp) #'delete-frame #'save-buffers-kill-terminal)
-        "C-s-f" #'toggle-frame-fullscreen
-        ;; Restore somewhat common navigation
-        "s-l" #'goto-line
-        ;; Restore OS undo, save, copy, & paste keys (without cua-mode, because
-        ;; it imposes some other functionality and overhead we don't need)
-        "s-f" (if (modulep! :completion vertico) #'consult-line #'swiper)
-        "s-z" #'undo
-        "s-Z" #'redo
-        "s-c" (if (featurep 'evil) #'evil-yank #'copy-region-as-kill)
-        "s-v" #'yank
-        "s-s" #'save-buffer
-        "s-x" #'execute-extended-command
-        :v "s-x" #'kill-region
-        ;; Buffer-local font scaling
-        "s-+" #'doom/reset-font-size
-        "s-=" #'doom/increase-font-size
-        "s--" #'doom/decrease-font-size
-        ;; Conventional text-editing keys & motions
-        "s-a" #'mark-whole-buffer
-        "s-/" (cmd! (save-excursion (comment-line 1)))
-        :n "s-/" #'evilnc-comment-or-uncomment-lines
-        :v "s-/" #'evilnc-comment-operator
-        :gi  [s-backspace] #'doom/backward-kill-to-bol-and-indent
-        :gi  [s-left]      #'doom/backward-to-bol-or-indent
-        :gi  [s-right]     #'doom/forward-to-last-non-comment-or-eol
-        :gi  [M-backspace] #'backward-kill-word
-        :gi  [M-left]      #'backward-word
-        :gi  [M-right]     #'forward-word))
-
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Keybind schemes
+;; Keybind schemes
 
-;; Custom help keys -- these aren't under `+bindings' because they ought to be
-;; universal.
+;; Custom help keys -- these aren't under `+bindings' because they ought to be universal.
 (define-key! help-map
   ;; new keybinds
   "'"    #'describe-char
@@ -427,6 +389,8 @@ Continues comments if executed from a commented line. Consults
   ;; replaces `describe-package' b/c redundant w/ `doom/help-packages'
   "P"    #'find-library)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (after! which-key
   (let ((prefix-re (regexp-opt (list doom-leader-key doom-leader-alt-key))))
     (cl-pushnew `((,(format "\\`\\(?:<\\(?:\\(?:f1\\|help\\)>\\)\\|C-h\\|%s h\\) d\\'" prefix-re))
@@ -439,6 +403,7 @@ Continues comments if executed from a commented line. Consults
                   nil . "bindings")
                 which-key-replacement-alist)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (when (modulep! +bindings)
   ;; Make M-x harder to miss
@@ -495,10 +460,35 @@ Continues comments if executed from a commented line. Consults
          :gn "S-s-RET"      #'+default/newline-above
          :gn [S-s-return]   #'+default/newline-above)))
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Bootstrap configs
+;; Bootstrap configs
 
-(if (featurep 'evil)
-    (load! "+evil")
-  (load! "+emacs"))
+;; (load! "+emacs"))
+
+(require 'projectile) ; we need its keybinds immediately
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Reasonable defaults
+
+(setq shift-select-mode t)
+(delete-selection-mode +1)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package! expand-region
+  :commands (er/contract-region er/mark-symbol er/mark-word)
+  :config
+  (defadvice! doom--quit-expand-region-a (&rest _)
+    "Properly abort an expand-region region."
+    :before '(evil-escape doom/escape)
+    (when (memq last-command '(er/expand-region er/contract-region))
+      (er/contract-region 0))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Keybinds
+
+(when (modulep! +bindings)
+  (load! "+emacs-bindings"))
