@@ -1,7 +1,8 @@
 ;;; lang/emacs-lisp/autoload.el -*- lexical-binding: t; -*-
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Library
+;; Library
 
 ;;;###autoload
 (defun +emacs-lisp-eval (beg end)
@@ -34,9 +35,9 @@ to a pop up buffer."
 Intended to replace `lisp-outline-level'."
   (- (match-end 1) (match-beginning 1)))
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Handlers
+;; Handlers
 
 (defun +emacs-lisp--module-at-point ()
   "Return (CATEGORY MODULE FLAG) at point inside a `doom!' block."
@@ -120,8 +121,8 @@ if it's callable, `apropos' otherwise."
         ((call-interactively #'helpful-at-point))))
 
 ;; DEPRECATED Remove when 28 support is dropped.
-(unless (fboundp 'lisp--local-defform-body-p)
-  (fset 'lisp--local-defform-body-p #'ignore))
+;; (unless (fboundp 'lisp--local-defform-body-p)
+;;   (fset 'lisp--local-defform-body-p #'ignore))
 
 ;;;###autoload
 (defun +emacs-lisp-indent-function (indent-point state)
@@ -172,9 +173,9 @@ https://emacs.stackexchange.com/questions/10230/how-to-indent-keywords-aligned"
                    (method
                     (funcall method indent-point state))))))))
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Commands
+;; Commands
 
 ;;;###autoload
 (defun +emacs-lisp/open-repl ()
@@ -225,9 +226,9 @@ https://emacs.stackexchange.com/questions/10230/how-to-indent-keywords-aligned"
   (interactive)
   (eval-defun nil))
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Hooks
+;; Hooks
 
 (autoload 'straight-register-file-modification "straight")
 ;;;###autoload
@@ -412,9 +413,9 @@ This generally applies to your private config (`doom-user-dir') or Doom's source
         (add-hook 'after-save-hook #'+emacs-lisp-non-package-mode nil t))
       (funcall modesym +1))))
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Fontification
+;; Fontification
 
 ;;;###autoload
 (defun +emacs-lisp-truncate-pin ()
@@ -468,9 +469,9 @@ library/userland functions"
                       (throw 'matcher t)))))))
     nil))
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Advice
+;; Advice
 
 ;;;###autoload (put 'map! 'indent-plists-as-data t)
 ;;;###autoload

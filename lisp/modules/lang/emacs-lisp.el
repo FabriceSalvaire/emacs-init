@@ -1,4 +1,4 @@
-;;; lang/emacs-lisp/config.el -*- lexical-binding: t; -*-
+;;; lang/emacs-lisp.el -*- lexical-binding: t; -*-
 
 (load "lang/emacs-lisp.autoload.el")
 
@@ -30,7 +30,8 @@ See `+emacs-lisp-non-package-mode' for details.")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; (use-package elisp-mode
+;; Fixme:
+;;   (use-package elisp-mode
 (use-package emacs
   :ensure nil
   :mode ("\\.Cask\\'" . emacs-lisp-mode)
@@ -148,22 +149,22 @@ See `+emacs-lisp-non-package-mode' for details.")
                             (if (< (length str) limit) "" truncated))))
         ret)))
 
-  ;; (map! :localleader
-  ;;       :map (emacs-lisp-mode-map lisp-interaction-mode-map)
-  ;;       :desc "Expand macro" "m" #'macrostep-expand
-  ;;       (:prefix ("d" . "debug")
-  ;;         "f" #'+emacs-lisp/edebug-instrument-defun-on
-  ;;         "F" #'+emacs-lisp/edebug-instrument-defun-off)
-  ;;       (:prefix ("e" . "eval")
-  ;;         "b" #'eval-buffer
-  ;;         "d" #'eval-defun
-  ;;         "e" #'eval-last-sexp
-  ;;         "r" #'eval-region
-  ;;         "l" #'load-library)
-  ;;       (:prefix ("g" . "goto")
-  ;;         "f" #'find-function
-  ;;         "v" #'find-variable
-  ;;         "l" #'find-library))
+  (map! :localleader
+        :map (emacs-lisp-mode-map lisp-interaction-mode-map)
+        :desc "Expand macro" "m" #'macrostep-expand
+        (:prefix ("d" . "debug")
+          "f" #'+emacs-lisp/edebug-instrument-defun-on
+          "F" #'+emacs-lisp/edebug-instrument-defun-off)
+        (:prefix ("e" . "eval")
+          "b" #'eval-buffer
+          "d" #'eval-defun
+          "e" #'eval-last-sexp
+          "r" #'eval-region
+          "l" #'load-library)
+        (:prefix ("g" . "goto")
+          "f" #'find-function
+          "v" #'find-variable
+          "l" #'find-library))
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -207,6 +208,8 @@ See `+emacs-lisp-non-package-mode' for details.")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; overseer
+;;   Ert-runner Integration Into Emacs
+;;   https://github.com/tonini/overseer.el
 
 (autoload 'overseer-test "overseer" nil t)
 ;; Properly lazy load overseer by not loading it so early:
@@ -214,8 +217,8 @@ See `+emacs-lisp-non-package-mode' for details.")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;
-;;
+;; Cask support for Flycheck
+;;   https://github.com/flycheck/flycheck-cask
 
 (use-package flycheck-cask
   ;; :when (and (modulep! :checkers syntax)
@@ -227,6 +230,9 @@ See `+emacs-lisp-non-package-mode' for details.")
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; flycheck-package — Flycheck checker for elisp package metadata
+;;   https://github.com/purcell/flycheck-package
 
 (use-package flycheck-package
   ;; :when (and (modulep! :checkers syntax)
@@ -236,33 +242,37 @@ See `+emacs-lisp-non-package-mode' for details.")
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; elisp-demos — Demonstrate Emacs Lisp APIs
+;;   https://github.com/xuchunyang/elisp-demos
 
 (use-package elisp-demos
   :defer t
   :init
   (advice-add #'describe-function-1 :after #'elisp-demos-advice-describe-function-1)
   (advice-add #'helpful-update :after #'elisp-demos-advice-helpful-update)
+
   :config
   ;; Add Doom's core and module demo files, so additional demos can be specified
   ;; by end-users (in $DOOMDIR/demos.org), by modules (modules/X/Y/demos.org),
   ;; or Doom's core (lisp/demos.org).
-  (dolist (file (doom-module-locate-paths (doom-module-list) "demos.org"))
-    (add-to-list 'elisp-demos-user-files file))
+  ;; (dolist (file (doom-module-locate-paths (doom-module-list) "demos.org"))
+  ;;   (add-to-list 'elisp-demos-user-files file))
 
   ;; HACK: These functions open Org files non-interactively without any
   ;;   performance optimizations. Given how prone org-mode is to being tied to
   ;;   expensive functionality, this will often introduce unexpected freezes
   ;;   without this advice.
   ;; TODO: PR upstream?
-  (defadvice! +emacs-lisp--optimize-org-init-a (fn &rest args)
-    "Disable unrelated functionality to optimize calls to `org-mode'."
-    :around #'elisp-demos--export-json-file
-    :around #'elisp-demos--symbols
-    :around #'elisp-demos--syntax-highlight
-    (let ((org-inhibit-startup t)
-          enable-dir-local-variables
-          org-mode-hook)
-      (apply fn args)))
+  ;; (defadvice! +emacs-lisp--optimize-org-init-a (fn &rest args)
+  ;;   "Disable unrelated functionality to optimize calls to `org-mode'."
+  ;;   :around #'elisp-demos--export-json-file
+  ;;   :around #'elisp-demos--symbols
+  ;;   :around #'elisp-demos--syntax-highlight
+  ;;   (let ((org-inhibit-startup t)
+  ;;         enable-dir-local-variables
+  ;;         org-mode-hook)
+  ;;     (apply fn args)))
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -301,4 +311,5 @@ See `+emacs-lisp-non-package-mode' for details.")
 ;; (def-project-mode! +emacs-lisp-ert-mode
 ;;   :modes '(emacs-lisp-mode)
 ;;   :match "/test[/-].+\\.el$"
+
 ;;   :add-hooks '(overseer-enable-mode))

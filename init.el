@@ -62,14 +62,21 @@
                tools/tree-sitter
                ;; code-completion/code-completion
                tools/magit
-               ;; lang/lang
-               lang/emacs-lisp
-               lang/markdown
+               tools/git
+
+               emacs/electric
+
                lang/c-java
+               lang/emacs-lisp
+               lang/json
+               ;; lang/markdown
                lang/python
                lang/web
+               lang/yaml
+               ;; lang/lang
+               ;; lang/javasctript
+
                checkers/checker
-               tools/git
 
                ;; finally
                post-keybinding
