@@ -1,8 +1,7 @@
+This directory contains lisp code from Doom Emacs.
 See also `__doom_sync_notes__.md`
 
 # Content
-
-This directory contains lisp code from Doom Emacs:
 
 ``` sh
 ag --nofilename '^\(' | sed -e 's/ .*//' | sort | uniq
@@ -29,7 +28,7 @@ ag --nonumbers '^\(defun'
 (setplist
 ```
 
-# defun
+## defun
 
 ```
 buffers.el

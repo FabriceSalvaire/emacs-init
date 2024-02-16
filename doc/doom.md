@@ -46,6 +46,17 @@ The overall load order is as follows:
   - On first opened file:        `doom-first-file-hook'
 ```
 
+- `config.el` is loaded at the end
+
+# Debug
+
+- [How to debug issues - Guides & Tutorials - Doom Emacs Discourse](https://discourse.doomemacs.org/t/how-to-debug-issues/55)
+
+The *Messages* buffer can be accessed with either:
+- `M-x view-echo-area-messages`
+- `M-x switch-to-buffer` RET *Messages*.
+- `C-h e` 
+
 # Func/Macro name
 
 - `...!`
@@ -56,7 +67,7 @@ The overall load order is as follows:
 
 # Customisation
 
-[zzamboni.org | My Doom Emacs configuration, with commentary](https://zzamboni.org/post/my-doom-emacs-configuration-with-commentary/)
+[zzamboni.org | My Doom Emacs configuration, with commentary](https://zzamboni.org/post/my-doom-emacs-configuration-with-commentary)
 
 # Shortcuts
 

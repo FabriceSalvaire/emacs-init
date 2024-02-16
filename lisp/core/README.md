@@ -1,5 +1,7 @@
 **Lisp libraries (defun...) from Doom Emacs must lie in ``doom-lib`` directory**
 
+To enable logging starts Emacs using `--debug-init`. See `doom-lib.el`.
+
 # Emacs Startup
 
 - [Startup Summary](https://www.gnu.org/software/emacs/manual/html_node/elisp/Startup-Summary.html#Startup-Summary)
