@@ -1,14 +1,16 @@
 ;;; tools/magit/autoload.el -*- lexical-binding: t; -*-
 
-;; HACK Magit complains loudly (but harmlessly) when it can't determine its own
-;;      version in a sparse clone. Since I'd rather not compromise on shallow
-;;      clones, I've gimped `magit-version' so it doesn't complain (unless
-;;      called interactively).
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; HACK Magit complains loudly (but harmlessly) when it can't determine its own version in a sparse
+;; clone. Since I'd rather not compromise on shallow clones, I've gimped `magit-version' so it
+;; doesn't complain (unless called interactively).
 ;;;###autoload
 (defadvice! +magit--ignore-version-a (fn &rest args)
   :around #'magit-version
   (let ((inhibit-message (not (called-interactively-p 'any))))
     (apply fn args)))
+
 
 ;;;###autoload
 (defun +magit-display-buffer-fn (buffer)
@@ -45,6 +47,7 @@
 
              ('(+magit--display-buffer-in-direction))))))
 
+
 (defun +magit--display-buffer-in-direction (buffer alist)
   "`display-buffer-alist' handler that opens BUFFER in a direction.
 
@@ -78,8 +81,9 @@ window that already exists in that direction. It will split otherwise."
       (selected-window))))
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Auto-revert
+;; Auto-revert
 
 (defvar +magit--stale-p nil)
 
@@ -92,6 +96,7 @@ window that already exists in that direction. It will split otherwise."
             (vc-refresh-state)
             (force-mode-line-update))
         (revert-buffer t t t)))))
+
 
 ;;;###autoload
 (defun +magit-mark-stale-buffers-h ()
@@ -106,15 +111,16 @@ modified."
         (with-current-buffer buffer
           (setq-local +magit--stale-p t))))))
 
+
 ;;;###autoload
 (defun +magit-revert-buffer-maybe-h ()
   "Update `vc' and `git-gutter' if out of date."
   (when +magit--stale-p
     (+magit--revert-buffer (current-buffer))))
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Commands
+;; Commands
 
 ;;;###autoload
 (defun +magit/quit (&optional kill-buffer)
@@ -133,12 +139,14 @@ kill all magit buffers for this repo."
                     (window-list))
         (+magit/quit-all))))
 
+
 ;;;###autoload
 (defun +magit/quit-all ()
   "Kill all magit buffers for the current repository."
   (interactive)
   (mapc #'+magit--kill-buffer (magit-mode-get-buffers))
   (+magit-mark-stale-buffers-h))
+
 
 (defun +magit--kill-buffer (buf)
   "TODO"
@@ -151,6 +159,7 @@ kill all magit buffers for this repo."
               (run-with-timer 5 nil #'+magit--kill-buffer buf)
             (kill-process process)
             (kill-buffer buf)))))))
+
 
 ;;;###autoload
 (defun +magit/start-code-review (arg)
