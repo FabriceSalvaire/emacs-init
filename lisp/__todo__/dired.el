@@ -1,10 +1,16 @@
 ;;; tools/dired/config.el -*- lexical-binding: t; -*-
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defvar +dired-dirvish-icon-provider 'nerd-icons
   "Icon provider to use for dirvish when the module is enabled.")
 
-(use-package! dired
-  :commands dired-jump
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Fixme: doom
+;; (use-package dired
+(use-package emacs
+  ;; :commands dired-jump
   :init
   (setq dired-dwim-target t  ; suggest a target for moving/copying intelligently
         dired-hide-details-hide-symlink-targets nil
@@ -16,17 +22,18 @@
         ;; Ask whether destination dirs should get created when copying/removing files.
         dired-create-destination-dirs 'ask
         ;; Where to store image caches
-        image-dired-dir (concat doom-cache-dir "image-dired/")
-        image-dired-db-file (concat image-dired-dir "db.el")
-        image-dired-gallery-dir (concat image-dired-dir "gallery/")
-        image-dired-temp-image-file (concat image-dired-dir "temp-image")
-        image-dired-temp-rotate-image-file (concat image-dired-dir "temp-rotate-image")
+        ;; Fixme: doom
+        ;; image-dired-dir (concat doom-cache-dir "image-dired/")
+        ;; image-dired-db-file (concat image-dired-dir "db.el")
+        ;; image-dired-gallery-dir (concat image-dired-dir "gallery/")
+        ;; image-dired-temp-image-file (concat image-dired-dir "temp-image")
+        ;; image-dired-temp-rotate-image-file (concat image-dired-dir "temp-rotate-image")
         ;; Screens are larger nowadays, we can afford slightly larger thumbnails
         image-dired-thumb-size 150)
   :config
-  (set-popup-rule! "^\\*image-dired"
-    :slot 20 :size 0.8 :select t :quit nil :ttl 0)
-  (set-evil-initial-state! 'image-dired-display-image-mode 'emacs)
+  ;; Fixme: doom
+  ;; (set-popup-rule! "^\\*image-dired" :slot 20 :size 0.8 :select t :quit nil :ttl 0)
+  ;; (set-evil-initial-state! 'image-dired-display-image-mode 'emacs)
 
   (let ((args (list "-ahl" "-v" "--group-directories-first")))
     (when (featurep :system 'bsd)
@@ -59,23 +66,54 @@ Fixes #3939: unsortable dired entries on Windows."
     :before-while #'dired-buffer-stale-p
     (not (eq revert-buffer-function #'dired-virtual-revert)))
 
-  (map! :map dired-mode-map
-        ;; Kill all dired buffers on q
-        :ng "q" #'+dired/quit-all
-        ;; To be consistent with ivy/helm+wgrep integration
-        "C-c C-e" #'wdired-change-to-wdired-mode))
+  ;; Fixme: doom ng
+  ;; (map! :map dired-mode-map
+  ;;       ;; Kill all dired buffers on q
+  ;;       :ng "q" #'+dired/quit-all
+  ;;       ;; To be consistent with ivy/helm+wgrep integration
+  ;;       "C-c C-e" #'wdired-change-to-wdired-mode)
+  )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use-package! dired-rsync
+;; https://www.gnu.org/software/emacs/manual/html_node/dired-x/Omitting-Files-in-Dired.html
+;; Fixme: symbol value as variable is void
+;;(add-hook 'dired-mode-hook #'(lambda ()
+;;                               ;; Set dired-x buffer-local variables here.
+;;                               ;; dired-omit-toggle M-o
+;;                               ;; (setq dired-omit-files-p t)
+;;                               (setq dired-omit-files
+;;                                     ;; do not wish to see `dot' files (files starting with a `.')
+;;                                     ;;  '(dired-omit-files "^\\.$")
+;;                                     (concat dired-omit-files "\\|^\\..+$"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Support for rsync from Emacs dired buffers
+;;   https://github.com/stsquad/dired-rsync
+
+(use-package dired-rsync
   :general (dired-mode-map "C-c C-r" #'dired-rsync))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; diredfl — Extra Emacs font lock rules for a more colourful dired
+;;   https://github.com/purcell/diredfl
 
-(use-package! diredfl
+(use-package diredfl
   :hook (dired-mode . diredfl-mode))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; https://github.com/punassuming/ranger.el
+;; This is a minor mode that runs within dired, it emulates many of ranger's features. This minor
+;; mode shows a stack of parent directories, and updates the parent buffers, while you're navigating
+;; the file system. The preview window takes some of the ideas from Peep-Dired, to display previews
+;; for the selected files, in the primary dired buffer.
 
-(use-package! ranger
-  :when (modulep! +ranger)
+(use-package ranger
+  :disabled
+  ;; :when (modulep! +ranger)
   :after dired
   :init (setq ranger-override-dired t)
   :config
@@ -130,15 +168,21 @@ we have to clean it up ourselves."
         ranger-show-literal nil
         ranger-hide-cursor nil))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Dirvish — improved dired
+;;   https://github.com/alexluigit/dirvish
 
-(use-package! dirvish
-  :when (modulep! +dirvish)
+(use-package dirvish
+  :disabled
+  ;; :when (modulep! +dirvish)
   :defer t
   :init (after! dired (dirvish-override-dired-mode))
   :hook (dired-mode . dired-omit-mode)
+
   :config
   (require 'dired-x)
-  (setq dirvish-cache-dir (concat doom-cache-dir "dirvish/")
+  (setq ; dirvish-cache-dir (concat doom-cache-dir "dirvish/")
         dirvish-hide-details nil
         dirvish-attributes '(git-msg)
         dired-omit-files (concat dired-omit-files "\\|^\\..*$"))
@@ -154,11 +198,16 @@ we have to clean it up ourselves."
         :localleader
         "h" #'dired-omit-mode))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; https://github.com/rainstormstudio/nerd-icons-dired
 
-(use-package! nerd-icons-dired
-  :when (modulep! +icons)
-  :unless (modulep! +dirvish)
+(use-package nerd-icons-dired
+  :disabled
+  ;; :when (modulep! +icons)
+  ;; :unless (modulep! +dirvish)
   :hook (dired-mode . nerd-icons-dired-mode)
+
   :config
   (defadvice! +dired-disable-icons-in-wdired-mode-a (&rest _)
     :before #'wdired-change-to-wdired-mode
@@ -170,9 +219,19 @@ we have to clean it up ourselves."
     :after #'wdired-change-to-dired-mode
     (nerd-icons-dired-mode +wdired-icons-enabled)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Extra features for Dired
+;; https://www.gnu.org/software/emacs/manual/html_mono/dired-x.html
 
-(use-package! dired-x
-  :unless (modulep! +ranger)
+;; (add-hook 'dired-load-hook #'(lambda ()
+;;                                (load "dired-x")
+;;                                ;; Set dired-x global variables here.
+;;                                ))
+
+(use-package dired-x
+  :disabled
+  ;; :unless (modulep! +ranger)
   :hook (dired-mode . dired-omit-mode)
   :config
   (setq dired-omit-verbose nil
@@ -203,31 +262,49 @@ we have to clean it up ourselves."
             ("\\.md\\'" ,cmd))))
   (map! :map dired-mode-map
         :localleader
-        "h" #'dired-omit-mode))
+        "h" #'dired-omit-mode)
+  )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; dired-mode interface for fd
+;;   https://github.com/yqrashawn/fd-dired
 
-(use-package! fd-dired
+(use-package fd-dired
+  :disabled
   :when doom-projectile-fd-binary
   :defer t
   :init
   (global-set-key [remap find-dired] #'fd-dired)
-  (set-popup-rule! "^\\*F\\(?:d\\|ind\\)\\*$" :ignore t))
+  (set-popup-rule! "^\\*F\\(?:d\\|ind\\)\\*$" :ignore t)
+  )
 
-(use-package! dired-aux
-  :defer t
-  :config
-  (setq dired-create-destination-dirs 'ask
-        dired-vc-rename-file t))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;;
+
+;; (use-package dired-aux
+;;   :defer t
+;;   :config
+;;   (setq dired-create-destination-dirs 'ask
+;;         dired-vc-rename-file t))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Show git info in Emacs dired
+;;   https://github.com/clemera/dired-git-info
 
 ;;;###package dired-git-info
-(map! :after dired
-      :map (dired-mode-map ranger-mode-map)
-      :ng ")" #'dired-git-info-mode)
+;; Fixme: doom
+;; (map! :after dired
+;;       :map (dired-mode-map ranger-mode-map)
+;;       :ng ")" #'dired-git-info-mode)
 (setq dgi-commit-message-format "%h %cs %s"
       dgi-auto-hide-details-p nil)
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Wdired.html
+;; Wdired is a special mode that allows you to perform file operations by editing the Dired buffer directly.
 (after! wdired
-  ;; Temporarily disable `dired-git-info-mode' when entering wdired, due to
-  ;; reported incompatibilities.
+  ;; Temporarily disable `dired-git-info-mode' when entering wdired, due to reported incompatibilities.
   (defvar +dired--git-info-p nil)
   (defadvice! +dired--disable-git-info-a (&rest _)
     :before #'wdired-change-to-wdired-mode
