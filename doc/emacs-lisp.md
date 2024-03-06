@@ -7,6 +7,10 @@
 #`foo -> (function foo) see quote
 ```
 
+## Emacs Help Tools
+
+`M-x shortdoc-display-group`
+
 ## References
 
 - https://www.gnu.org/software/emacs/manual/html_node/elisp/index.html
@@ -14,6 +18,8 @@
 
 - [Common Lisp](https://lisp-lang.org)
 - [Common Lisp Extensions](https://www.gnu.org/software/emacs/manual/html_mono/cl.html)
+
+- [Emacs's Builtin Elisp Cheat Sheet - Mastering Emacs](https://www.masteringemacs.org/article/emacs-builtin-elisp-cheat-sheet)
 
 ## eval-when-compile
 

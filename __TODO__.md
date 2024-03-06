@@ -1,5 +1,15 @@
 ---
 
+- dired
+- magit
+- speller...
+- check completion
+
+- merge theme
+- dired icon
+- `map! :ng`
+- use-package `after-call:`
+- read general doc and check key binding
 - doom disable *Message*...
 - fond blanc au démarrage
 - merge bootstrap / startup, rename core ?
@@ -88,7 +98,7 @@ This package maps ordinary graphemes (characters) to fancy ligatures, if both yo
 - [ ] `undo.el`
 - [ ] `user-functions.el`
 
-# Doom Review
+# Doom Core Review
 
 - [ ] `cli/....el`
 
@@ -136,6 +146,8 @@ This package maps ordinary graphemes (characters) to fancy ligatures, if both yo
   - highlight-numbers
   - Hide the mode line in completion popups
 
+# Doom Modules Review
+
 - [ ] `app/calendar/config.el`
 - [ ] `app/emms/config.el`
 - [ ] `app/everywhere/config.el`
@@ -151,17 +163,17 @@ This package maps ordinary graphemes (characters) to fancy ligatures, if both yo
        [tumashu/company-posframe](https://github.com/tumashu/company-posframe)
 - [ ] `completion/helm/config.el`
 - [ ] `completion/ido/config.el`
-- [!] `completion/ivy/config.el`
-- [ ] `completion/vertico/config.el`
+- [?] `completion/ivy/config.el`
+- [!] `completion/vertico/config.el` recommanded
 
-- [ ] `config/default/autoload/default.el`
-- [ ] `config/default/autoload/deferred.el`
-- [ ] `config/default/autoload/files.el`
-- [ ] `config/default/autoload/search.el`
-- [ ] `config/default/autoload/text.el`
+- [C] `config/default/autoload/default.el`
+- [C] `config/default/autoload/deferred.el`
+- [C] `config/default/autoload/files.el`
+- [C] `config/default/autoload/search.el`
+- [C] `config/default/autoload/text.el`
 - [!] `config/default/config.el`
-- [ ] `config/default/+emacs-bindings.el`
-- [ ] `config/default/+emacs.el`
+- [!] `config/default/+emacs-bindings.el`
+- [!] `config/default/+emacs.el`
 - [ ] `config/literate/cli.el`
 
 - [ ] `editor/evil/config.el`
@@ -180,7 +192,7 @@ This package maps ordinary graphemes (characters) to fancy ligatures, if both yo
 - [ ] `emacs/electric/config.el`
 - [?] `emacs/ibuffer/config.el`
 - [!] `emacs/undo/config.el`
-- [ ] `emacs/vc/config.el`
+- [!] `emacs/vc/config.el`
 - [ ] `email/mu4e/config.el`
 - [ ] `email/notmuch/config.el`
 - [ ] `email/wanderlust/config.el`
@@ -267,9 +279,9 @@ This package maps ordinary graphemes (characters) to fancy ligatures, if both yo
 - [ ] `tools/direnv/config.el`
 - [ ] `tools/docker/config.el`
 - [ ] `tools/editorconfig/config.el`
-- [ ] `tools/ein/config.el`
+- [?] `tools/ein/config.el`
 - [ ] `tools/eval/config.el`
-- [ ] `tools/lookup/config.el`
+- [!] `tools/lookup/config.el`
 - [!] `tools/lsp/config.el`
 - [!] `tools/magit/config.el`
 - [ ] `tools/pass/config.el`
@@ -277,7 +289,7 @@ This package maps ordinary graphemes (characters) to fancy ligatures, if both yo
 - [ ] `tools/prodigy/config.el`
 - [ ] `tools/taskrunner/config.el`
 - [ ] `tools/terraform/config.el`
-- [!] `tools/tree-sitter/config.el`
+- [?] `tools/tree-sitter/config.el`
 - [ ] `tools/upload/config.el`
 
 - [ ] `ui/deft/config.el`
@@ -290,7 +302,7 @@ This package maps ordinary graphemes (characters) to fancy ligatures, if both yo
 - [!] `ui/indent-guides/config.el`
 - [!] `ui/ligatures/config.el`
 - [!] `ui/minimap/config.el`
-- [!] `ui/modeline/config.el`
+- [!] `ui/modeline/config.el` doom-modeline
 - [ ] `ui/nav-flash/config.el`
 - [ ] `ui/neotree/config.el`
 - [ ] `ui/ophints/config.el`

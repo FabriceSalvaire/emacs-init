@@ -228,3 +228,7 @@ Emacs packages like company, flycheck and projectile.
 # Markdown
 
 Preview ne marche pas bien, c'est moche, les tables ne sont pas misent en forme.
+
+# Color
+
+`M-x list-colors-display`
