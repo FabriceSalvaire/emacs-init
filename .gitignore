@@ -16,6 +16,8 @@ tree-sitter/
 
 doc/vscode-colors.jsonc
 examples/
-files-for-test/.dir-locals.el
-files-for-test/space.el
-files-for-test/test
+files-for-test/
+lisp/__unused__/completion.el
+themes/doom-one-theme.el
+themes/doom-themes
+toto.py
