@@ -60,7 +60,6 @@ Only has an effect in GUI Emacs.")
   ;; ~/.cache/git/credential. However, if ~/.git-credential-cache/ exists, then
   ;; it is used instead. Magit seems to be hardcoded to use the latter, so here
   ;; we override it to have more correct behavior.
-  ;; Fixme: doom-glob
   ;; (unless (file-exists-p "~/.git-credential-cache/")
   ;;   (setq magit-credential-cache-daemon-socket
   ;;         (doom-glob (or (getenv "XDG_CACHE_HOME")
@@ -94,6 +93,7 @@ Only has an effect in GUI Emacs.")
         magit-display-buffer-function #'+magit-display-buffer-fn
         magit-bury-buffer-function #'magit-mode-quit-window)
   ;; Fixme: doom
+  ;;   modules/ui/popup/autoload/settings.el
   ;; (set-popup-rule! "^\\(?:\\*magit\\|magit:\\| \\*transient\\*\\)" :ignore t)
   (add-hook 'magit-popup-mode-hook #'hide-mode-line-mode)
 
