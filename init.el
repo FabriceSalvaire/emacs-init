@@ -56,7 +56,8 @@
                ;; undo
                checkers/speller
 
-               emacs/file-manager
+               ;; emacs/file-manager
+               emacs/dired
                sysadmin
 
                tools/tree-sitter
