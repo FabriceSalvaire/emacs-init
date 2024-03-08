@@ -12,6 +12,10 @@ Each function takes three argument. The beginning position of the region to
 capture, the end position, and the output buffer.")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; markdown-mode
+;; https://jblevins.org/projects/markdown-mode
+;; https://github.com/jrblevin/markdown-mode
 
 (use-package markdown-mode
   :mode ("/README\\(?:\\.md\\)?\\'" . gfm-mode)
@@ -49,19 +53,23 @@ capture, the end position, and the output buffer.")
   ;;   (add-to-list 'org-src-lang-modes '("md" . markdown)))
 
   :config
-  (set-flyspell-predicate! '(markdown-mode gfm-mode)
-    #'+markdown-flyspell-word-p)
-  (set-lookup-handlers! '(markdown-mode gfm-mode)
-    ;; `markdown-follow-thing-at-point' may open an external program or a
-    ;; buffer. No good way to tell, so pretend it's async.
-    :file '(markdown-follow-thing-at-point :async t))
+  ;; Fixme: doom
+  ;; modules/checkers/spell/autoload/+flyspell.el
+  ;; (set-flyspell-predicate! '(markdown-mode gfm-mode)
+  ;;                          #'+markdown-flyspell-word-p)
+  ;; Fixme: doom lookup
+  ;; modules/tools/lookup/autoload/lookup.el
+  ;; (set-lookup-handlers! '(markdown-mode gfm-mode)
+  ;;   ;; `markdown-follow-thing-at-point' may open an external program or a
+  ;;   ;; buffer. No good way to tell, so pretend it's async.
+  ;;   :file '(markdown-follow-thing-at-point :async t))
 
   (sp-local-pair '(markdown-mode gfm-mode) "`" "`"
                  :unless '(:add sp-point-before-word-p sp-point-before-same-p))
 
   ;; Highly rust blocks correctly
-  (when (modulep! :lang rust)
-    (add-to-list 'markdown-code-lang-modes '("rust" . rustic-mode)))
+  ;; (when (modulep! :lang rust)
+  (add-to-list 'markdown-code-lang-modes '("rust" . rustic-mode))
 
   ;; Don't trigger autofill in code blocks (see `auto-fill-mode')
   (setq-hook! 'markdown-mode-hook
