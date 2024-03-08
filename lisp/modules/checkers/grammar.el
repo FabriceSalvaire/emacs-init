@@ -1,40 +1,75 @@
 ;;; checkers/grammar/config.el -*- lexical-binding: t; -*-
 
-(use-package! langtool
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Language Tool
+;;   https://github.com/PillFall/Emacs-LanguageTool.el
+;;   https://github.com/mhayashi1120/Emacs-langtool
+
+(use-package langtool
+  :defer t
   :commands (langtool-check
              langtool-check-done
+             langtool-correct-buffer
              langtool-show-message-at-point
-             langtool-correct-buffer)
-  :init (setq langtool-default-language "en-US")
+             ;; languagetool-clear-suggestions
+             ;; languagetool-correct-at-point
+             ;; languagetool-set-language
+             ;; languagetool-server-mode
+             ;; languagetool-server-start
+             ;; languagetool-server-stop
+             )
+  :init
+  (setq langtool-default-language "en-GB")
   :config
-  (unless (or langtool-bin
-              langtool-language-tool-jar
-              langtool-java-classpath)
-    (cond ((setq langtool-bin
-                 (or (executable-find "languagetool-commandline")
-                     (executable-find "languagetool"))))  ; for nixpkgs.languagetool
-          ((featurep :system 'macos)
-           (cond
-            ;; is user using home brew?
-            ((file-directory-p "/usr/local/Cellar/languagetool")
-             (setq langtool-language-tool-jar
-                   (locate-file "libexec/languagetool-commandline.jar"
-                                (doom-files-in "/usr/local/Cellar/languagetool"
-                                               :type 'dirs
-                                               :depth 2))))
-            ;; macports compatibility
-            ((file-directory-p "/opt/local/share/java/LanguageTool")
-             (setq langtool-java-classpath "/opt/local/share/java/LanguageTool/*"))))
-          ((featurep :system 'linux)
-           (setq langtool-java-classpath "/usr/share/languagetool:/usr/share/java/languagetool/*")))))
+  (setq languagetool-java-arguments '("-Dfile.encoding=UTF-8")
+        languagetool-console-command "/usr/local/stow/LanguageTool/languagetool-commandline.jar"
+        languagetool-server-command  "/usr/local/stow/LanguageTool/languagetool-server.jar"
+        )
+  ;; Fixme: Doom
+  ;; (unless (or langtool-bin
+  ;;             langtool-language-tool-jar
+  ;;             langtool-java-classpath)
+  ;;   (cond ((setq langtool-bin
+  ;;                (or (executable-find "languagetool-commandline")
+  ;;                    (executable-find "languagetool"))))  ; for nixpkgs.languagetool
+  ;;         ((featurep :system 'linux)
+  ;;          (setq langtool-java-classpath "/usr/share/languagetool:/usr/share/java/languagetool/*"))))
+  )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; flycheck-languagetool
+;;   https://github.com/emacs-languagetool/flycheck-languagetool
+;;   https://dev.languagetool.org/http-server
 
-;; Detects weasel words, passive voice and duplicates. Proselint would be a
-;; better choice.
-(use-package! writegood-mode
-  :hook (org-mode markdown-mode rst-mode asciidoc-mode latex-mode LaTeX-mode)
+;; (use-package flycheck-languagetool
+;;   :disabled
+;;   :hook (text-mode . (lambda () (require 'flycheck-languagetool)))
+;;   :init
+;;   (setq flycheck-languagetool-commandline-jar "/usr/local/stow/LanguageTool/languagetool-commandline.jar"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Writegood Mode
+;;   https://github.com/bnbeckwith/writegood-mode
+;; Detects weasel words, passive voice and duplicates.
+
+;; Proselint would be a better choice.
+;; https://github.com/amperser/proselint
+;; Emacs via Flycheck or via Flymake
+
+(use-package writegood-mode
+  :disabled
+  :hook (asciidoc-mode
+         latex-mode
+         LaTeX-mode
+         markdown-mode
+         org-mode
+         rst-mode)
   :config
-  (map! :localleader
-        :map writegood-mode-map
-        "g" #'writegood-grade-level
-        "r" #'writegood-reading-ease))
+  ;; (map! :localleader
+  ;;       :map writegood-mode-map
+  ;;       "g" #'writegood-grade-level
+  ;;       "r" #'writegood-reading-ease)
+  )
