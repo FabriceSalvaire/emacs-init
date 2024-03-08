@@ -49,35 +49,54 @@
 
                user-functions
 
-               ;; completion/previous ; buffer switch
+               edition ; -> core ???
+
+               ;; Completion
                completion/company
                completion/vertico
-               edition ; -> core ???
-               ;; undo
-               checkers/speller
-
-               ;; emacs/file-manager
-               emacs/dired
-               sysadmin
-
-               tools/tree-sitter
+               ;; completion/previous ; buffer switch
                ;; code-completion/code-completion
+
+               ;; UI
+               ;; indent-guides
+               ;; indent-guides
+               ;; minimap
+               ;; modeline
+               ;; vc-gutter
+
+               ;; Editor
+               ;; multiple-cursors
+               ;; snippets
+
+               ;; Emacs
+               emacs/dired
+               emacs/electric
+               ;; emacs/file-manager
+               ;; undo
+
+               ;; Checkers
+               checkers/syntax
+               checkers/spell
+               checkers/grammar
+               ;; checkers/checker
+
+               ;; Tools
+               tools/tree-sitter
                tools/magit
                tools/git
 
-               emacs/electric
-
+               ;; Lang
                lang/c-java
                lang/emacs-lisp
                lang/json
-               ;; lang/markdown
+               lang/markdown
                lang/python
                lang/web
                lang/yaml
                ;; lang/lang
                ;; lang/javasctript
 
-               checkers/checker
+               sysadmin
 
                ;; finally
                post-keybinding
