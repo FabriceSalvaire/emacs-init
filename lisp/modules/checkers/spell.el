@@ -1,6 +1,11 @@
 ;;; checkers/spell/config.el -*- lexical-binding: t; -*-
 
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Spelling.html
+;; M-$ ispell-word
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(load "checkers/flyspell.autoload.el")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -172,18 +177,30 @@
   ;; In order to lazy load its config we need to pretend it isn't loaded.
   (defer-feature! flyspell flyspell-mode flyspell-prog-mode)
   :init
-  (add-hook! '(org-mode-hook
-               markdown-mode-hook
+  ;; Fixme: :config ???
+  (add-hook! '(
                TeX-mode-hook
-               rst-mode-hook
-               mu4e-compose-mode-hook
+               git-commit-mode-hook
+               markdown-mode-hook
                message-mode-hook
-               git-commit-mode-hook)
+               mu4e-compose-mode-hook
+               org-mode-hook
+               rst-mode-hook
+               ; LaTeX-mode-hook
+               )
              #'flyspell-mode)
 
-  (add-hook! '(yaml-mode-hook
+  (add-hook! '(
+               c++-mode-hook
+               c-mode-hook
                conf-mode-hook
-               prog-mode-hook)
+               java-mode-hook
+               javascript-mode-hook
+               prog-mode-hook
+               python-mode-hook
+               qml-mode-hook
+               yaml-mode-hook
+               )
              #'flyspell-prog-mode)
 
   :config
@@ -221,10 +238,40 @@ e.g. proselint and langtool."
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun flyspell-on-for-buffer-type ()
+  "Enable Flyspell appropriately for the major mode of the current buffer.  Uses `flyspell-prog-mode' for modes derived from `prog-mode', so only strings and comments get checked.  All other buffers get `flyspell-mode' to check all text.  If flyspell is already enabled, does nothing."
+  (interactive)
+  (if (not (symbol-value flyspell-mode)) ; if not already on
+      (progn
+        (if (derived-mode-p 'prog-mode)
+            (progn
+              (message "Flyspell on (code)")
+              (flyspell-prog-mode))
+          ;; else
+          (progn
+            (message "Flyspell on (text)")
+            (flyspell-mode 1)))
+        ;; I tried putting (flyspell-buffer) here but it didn't seem to work
+        )))
+
+
+(defun flyspell-toggle ()
+  "Turn Flyspell on if it is off, or off if it is on.  When turning on, it uses `flyspell-on-for-buffer-type' so code-vs-text is handled appropriately."
+  (interactive)
+  (if (symbol-value flyspell-mode)
+      (progn ; flyspell is on, turn it off
+        (message "Flyspell off")
+        (flyspell-mode -1))
+    ;; else - flyspell is off, turn it on
+    (flyspell-on-for-buffer-type)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; flyspell-correct
 ;;   https://github.com/d12frosted/flyspell-correct
 ;;   Distraction-free words correction with flyspell via selected interface.
+;;   Correcting misspelled words with flyspell using favourite interface.
 
 (use-package flyspell-correct
   :commands flyspell-correct-previous
@@ -236,6 +283,9 @@ e.g. proselint and langtool."
   (require 'flyspell-correct-popup nil t) ; only use popup if no compatible completion UI is enabled
   (setq flyspell-popup-correct-delay 0.8)
   (define-key popup-menu-keymap [escape] #'keyboard-quit)
+
+  ;; :after flyspell
+  ;; :bind (:map flyspell-mode-map ("C-;" . flyspell-correct-wrapper))
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -246,11 +296,35 @@ e.g. proselint and langtool."
 
 (use-package flyspell-lazy
   :after flyspell
+  ;; Fixme:
+  ;;   :custom
+  ;;   (flyspell-lazy-idle-seconds 2)
   :config
   (setq flyspell-lazy-idle-seconds 1
         flyspell-lazy-window-idle-seconds 3)
   ;; Fix #3357: flyspell-lazy inhibits flyspell entirely in message-mode
   ;; derivatives (e.g. for notmuch users).
   (setq-hook! 'message-mode-hook flyspell-lazy-disallow-buffers nil)
-  (flyspell-lazy-mode +1)
+  (flyspell-lazy-mode +1) ; Fixme: +1 ???
   )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; (use-package flyspell-correct-ivy
+;;   :after flyspell-correct
+;;   )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Fixme: ???
+;; (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
+;; (autoload 'flyspell-delay-command "flyspell" "Delay on command." t)
+;; (autoload 'tex-mode-flyspell-verify "flyspell" "" t)
+
+;; (add-hook 'find-file-hook 'flyspell-on-for-buffer-type)
+
+;; Flyspell will run a series of predicate functions to determine if a word should be spell checked.
+;; (with-eval-after-load 'flyspell
+;;   (progn
+;;     (set-flyspell-predicate! '(markdown-mode gfm-mode)  #'+markdown-flyspell-word-p)
+;;     ))
