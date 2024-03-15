@@ -5,6 +5,8 @@
 - speller...
 - check completion
 
+- eglot modules/tools/lsp/config.el modules/tools/lsp/+eglot.el
+- yasnippet modules/editor/snippets
 - merge theme
 - dired icon
 - `map! :ng`
